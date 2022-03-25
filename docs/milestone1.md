@@ -16,14 +16,14 @@
 * Users have private messages with other users 
 
 ### Wireframe Site Layout
-![wireframe1](./wireframe1.png)
-![wireframe2](./wireframe2.png)
+![wireframe1](./milestone1imgs/wireframe1.png)
+![wireframe2](./milestone1imgs/wireframe2.png)
 
 ### HTML Mockups
-![HomePage](./HomePage.png)
-![Login](./Login.png)
-![SignUp](./SignUp.png)
-![Prefernces](./Preferences.png)
-![Matches](./Matches.png)
-![Chat](./chat.png)
-![Profiles](./Profile.png)
+![HomePage](./milestone1imgs/HomePage.png)
+![Login](./milestone1imgs/Login.png)
+![SignUp](./milestone1imgs/SignUp.png)
+![Prefernces](./milestone1imgs/Preferences.png)
+![Matches](./milestone1imgs/Matches.png)
+![Chat](./milestone1imgs/chat.png)
+![Profiles](./milestone1imgs/Profile.png)
