@@ -13,6 +13,7 @@
 
 }
 
+<<<<<<< HEAD
 .bg-content {
   position: relative;
 }
@@ -31,3 +32,16 @@
   border: 2px solid black;
   padding: 2px;
 }
+=======
+  .bg-content {
+    position: relative;
+  }
+
+  .chat-box {
+    height: 400px;
+  }
+
+  .chat-msg {
+    width: 42%;
+  }
+>>>>>>> 16d5381 (fixed chat page)
