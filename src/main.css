@@ -1,13 +1,7 @@
 .bg-wrap {
-<<<<<<< HEAD
-  overflow: hidden;
-  position: relative;
-}
-=======
     overflow: hidden;
     position: relative;
   }
->>>>>>> ba051b0ba05617c5b0127058c4832fa69e68476f
 
 .bg-bg {
   opacity: 0.6;
@@ -19,6 +13,7 @@
 
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
@@ -48,6 +43,8 @@
   padding: 2px;
 }
 =======
+=======
+>>>>>>> 990560c (yes)
   .bg-content {
     position: relative;
   }
@@ -59,5 +56,8 @@
   .chat-msg {
     width: 42%;
   }
+<<<<<<< HEAD
 >>>>>>> 16d5381 (fixed chat page)
 >>>>>>> ba051b0ba05617c5b0127058c4832fa69e68476f
+=======
+>>>>>>> 990560c (yes)
