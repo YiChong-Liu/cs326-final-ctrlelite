@@ -1,16 +1,14 @@
 .bg-wrap {
     overflow: hidden;
     position: relative;
-  }
+}
 
 .bg-bg {
   opacity: 0.6;
   position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
-  height: auto;
-
+  height: 100%;
+  background-size: cover;
 }
 
 .bg-content {
@@ -32,15 +30,12 @@
   padding: 2px;
 }
 
-  .bg-content {
-    position: relative;
-  }
 
-  .chat-box {
+.chat-box {
     height: 400px;
-  }
+}
 
-  .chat-msg {
+.chat-msg {
     width: 42%;
-  }
+}
 
