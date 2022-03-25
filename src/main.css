@@ -3,33 +3,31 @@
     position: relative;
   }
 
-  .bg-bg {
-    opacity: 0.6;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: auto;
+.bg-bg {
+  opacity: 0.6;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
 
-  }
+}
 
-  .bg-content {
-    position: relative;
-  }
+.bg-content {
+  position: relative;
+}
 
-<<<<<<< HEAD
-  .g-signin2{
-    width: 100%;
-  }
+.g-signin2 {
+  width: 100%;
+}
 
-  .g-signin2 > div{
-    margin: 0 auto;
-  }
-=======
+.g-signin2 > div {
+  margin: 0 auto;
+}
+
 .text-box{
   width:100%;
-  min-height: 40px; 
-  border: 2px solid black; 
+  min-height: 40px;
+  border: 2px solid black;
   padding: 2px;
 }
->>>>>>> 217216a2a36dbf8d3cecc437f12b1b9160b264aa
