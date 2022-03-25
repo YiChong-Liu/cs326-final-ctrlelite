@@ -13,11 +13,6 @@
 
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> ba051b0ba05617c5b0127058c4832fa69e68476f
 .bg-content {
   position: relative;
 }
@@ -26,12 +21,6 @@
   width: 100%;
 }
 
-<<<<<<< HEAD
-.g-signin2>div {
-  margin: 0 auto;
-}
-
-=======
 .g-signin2 > div {
   margin: 0 auto;
 }
@@ -42,9 +31,7 @@
   border: 2px solid black;
   padding: 2px;
 }
-=======
-=======
->>>>>>> 990560c (yes)
+
   .bg-content {
     position: relative;
   }
@@ -56,8 +43,4 @@
   .chat-msg {
     width: 42%;
   }
-<<<<<<< HEAD
->>>>>>> 16d5381 (fixed chat page)
->>>>>>> ba051b0ba05617c5b0127058c4832fa69e68476f
-=======
->>>>>>> 990560c (yes)
+
