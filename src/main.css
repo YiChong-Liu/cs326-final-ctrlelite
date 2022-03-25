@@ -16,3 +16,10 @@
   .bg-content {
     position: relative;
   }
+
+.text-box{
+  width:100%;
+  min-height: 40px; 
+  border: 2px solid black; 
+  padding: 2px;
+}
