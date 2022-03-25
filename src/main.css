@@ -4,7 +4,7 @@
   }
 
   .bg-bg {
-    opacity: 0.7;
+    opacity: 0.6;
     position: absolute;
     left: 0;
     top: 0;
@@ -15,4 +15,12 @@
 
   .bg-content {
     position: relative;
+  }
+
+  .g-signin2{
+    width: 100%;
+  }
+
+  .g-signin2 > div{
+    margin: 0 auto;
   }
