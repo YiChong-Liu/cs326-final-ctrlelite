@@ -1,43 +1,27 @@
 .bg-wrap {
-    overflow: hidden;
-    position: relative;
-  }
+  overflow: hidden;
+  position: relative;
+}
 
-  .bg-bg {
-    opacity: 0.6;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: auto;
+.bg-bg {
+  opacity: 0.6;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
 
-  }
+}
 
-  .bg-content {
-    position: relative;
-  }
+.bg-content {
+  position: relative;
+}
 
-  .g-signin2{
-    width: 100%;
-  }
+.g-signin2 {
+  width: 100%;
+}
 
-  .g-signin2 > div{
-    margin: 0 auto;
-  }
+.g-signin2>div {
+  margin: 0 auto;
+}
 
-  .mt-0 {
-    margin-top: 0 !important;
-  }
-
-  .ms-1 {
-    margin-left: ($spacer * .25) !important;
-  }
-
-  .px-2 {
-    padding-left: ($spacer * .5) !important;
-    padding-right: ($spacer * .5) !important;
-  }
-
-  .p-3 {
-    padding: $spacer !important;
-  }
