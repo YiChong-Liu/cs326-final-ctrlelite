@@ -8,10 +8,10 @@ app.get('/', (req, res) => {
 });
 
 
-// POST
+// PUT
 
 // Accept a new Match
-app.post('/matches/acceptedMatch', (req, res) => {
+app.put('/matches/acceptedMatch', (req, res) => {
   // TODO authenticate & authorize via JWT
 
   // Get the user and their proposed partner
@@ -24,7 +24,7 @@ app.post('/matches/acceptedMatch', (req, res) => {
   res.status(200).send({otherUser: otherGuy, matchAccepted: true});
 });
 // Add a new User
-app.post('/users/newUser', (req, res) => {
+app.put('/users/newUser', (req, res) => {
   // TODO authenticate & authorize via JWT
 
   // Get the user and their proposed partner
@@ -36,6 +36,28 @@ app.post('/users/newUser', (req, res) => {
   // TODO return HTTP header / JSON response with real data
   res.status(200).send({accepted: true, email: e, password: pass});
 });
+// Update a User's Preferences
+app.put('/update/userPreferences', (req, res) => {
+  // Get userID and Preference Object from request
+  const uID = req.query.userID;
+  const pref = req.query.preferences;
+
+  // Response
+  res.status(200).send({worked: true, user: uID, preferences: pref});
+});
+// Update/Change a User's Password
+app.put('/update/userPassword', (req, res) => {
+  // Get userID and new password from request
+  const uID = req.query.userID;
+  const pass = req.query.password;
+
+  // Response
+  res.status(200).send({worked: true, user: uID, password: pass});
+});
+
+
+// POST
+
 // Send a Message
 app.post('/msg/newChatMsg', (req, res) => {
   // Get from and to user and the msg
@@ -47,24 +69,6 @@ app.post('/msg/newChatMsg', (req, res) => {
 
   // TODO return HTTP header / JSON response with real data
   res.status(200).send({worked: true, msg_content: msg});
-});
-// Update a User's Preferences
-app.post('/update/userPreferences', (req, res) => {
-  // Get userID and Preference Object from request
-  const uID = req.query.userID;
-  const pref = req.query.preferences;
-
-  // Response
-  res.status(200).send({worked: true, user: uID, preferences: pref});
-});
-// Update/Change a User's Password
-app.post('/update/userPassword', (req, res) => {
-  // Get userID and new password from request
-  const uID = req.query.userID;
-  const pass = req.query.password;
-
-  // Response
-  res.status(200).send({worked: true, user: uID, password: pass});
 });
 
 
