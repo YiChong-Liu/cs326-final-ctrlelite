@@ -28,9 +28,10 @@ function insert(database, dataEntry){
  * 
  * @param {String} database Database to find in
  * @param {String} whereQuery Query to find the desired row(or rows) eg. "userID='1234' AND userToID='4321'"
+ * @param {String} orderBy Query to determnine the the way to order the results eg. "timestamp DESC"
  */
-function find(database, whereQuery){
-    let query = `SELECT * FROM ${database} WHERE ${whereQuery};`;
+function find(database, whereQuery, orderBy){
+    let query = (orderBy) ? `SELECT * FROM ${database} WHERE ${whereQuery} ORDER BY ${orderBy};` : `SELECT * FROM ${database} WHERE ${whereQuery}`;
     console.log(query);
 }
 
@@ -92,12 +93,55 @@ function getUserData(userID){
     const bedtime = Math.random()*200 + 2000;
     const importance = () => Math.random()*10;
 
+    //Test the query ouput for eventual SQL
     const preferences = find("Preferences", `userID='${userID}'`);
-    const profile = finde("Profile", `userID='${userID}'`)
+    const profile = find("Profile", `userID='${userID}'`)
 
     return {uID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{name:randomName, bio:loremBio, profilePicture:randomImg}}
 }
 
+/**Gets the messages between the two users.
+ * 
+ * @param {String} userIDFrom The user making the request
+ * @param {String} userIDTo The other user involved with the request
+ * @returns {Object: {fromMsgs: []Messages, toMsgs: []Messages}} Returns two list of chat objects
+ */
+function getMessages(userIDFrom, userIDTo){
+    let userFromMsgs = [];
+    let userToMsgs = [];
+
+    const randomMsg = () => faker.lorem.paragraph();
+
+    for(let i = 0; i < 10; ++i){
+        userFromMsgs.push(randomMsg());
+        userToMsgs.push(randomMsg());
+    }
+
+    //Test the query ouput for eventual SQL
+    const userToMsgsResults = find("chat", `userFromID=${userIDFrom} AND userToID=${userIDTo}`);
+    const userFromMsgsResults = find("chat", `userFromID=${userIDTo} AND userToID=${userIDFrom}`);
+
+    return {fromMsgs: userFromMsgs, toMsgs: userToMsgs};
+}
+
+/**
+ * 
+ * @param {String} userID user to find matches from
+ * @returns {[]Matches} Returns all user matches
+ */
+function getMatches(userID){
+    let userMatches = [];
+    const randomUUID = () => faker.database.uuid();
+
+    for(let i = 0; i < 10; ++i){
+        userMatches.push(randomUUID());
+    }
+
+    //Test the query ouput for eventual SQL
+    const userMatchesResults = find("matches", `userID1='${userIDFrom}' OR userID2='${userIDTo}'`);
+
+    return userMatches;
+}
 
 
 /**-------------------------------------------------------------
