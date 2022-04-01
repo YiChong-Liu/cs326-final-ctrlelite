@@ -43,8 +43,11 @@ app.put('/update/userPreferences', (req, res) => {
   const uID = req.query.userID;
   const pref = req.query.preferences;
 
+  // Attempt to update this user's preferencess
+  const res = db.updateUserPreferences(uID, pref);
+
   // Response
-  res.status(200).send({worked: true, user: uID, preferences: pref});
+  res.status(200).send({worked: res, user: uID, preferences: pref});
 });
 // Update/Change a User's Password
 app.put('/update/userPassword', (req, res) => {
@@ -127,8 +130,11 @@ app.delete('/delete/user', (req, res) => {
   // Get Data from the Request
   const id = req.query.userID;
 
+  // Attempt to delete this user
+  const res = db.deleteUser(id);
+
   // Send Response
-  res.status(200).send({worked: true, userID: id});
+  res.status(200).send({worked: res, userID: id});
 });
 // Delete a Match
 app.delete('/delete/match', (req, res) => {
@@ -136,8 +142,11 @@ app.delete('/delete/match', (req, res) => {
   const ufID = req.query.userFromID;
   const mtID = req.query.matchToID;
 
+  // Attempt to Delete this match
+  const res = db.deleteMatch(ufID, mtID);
+
   // Send Response
-  res.status(200).send({worked: true, userFrom: ufID, userTo: mtID});
+  res.status(200).send({worked: res, userFrom: ufID, userTo: mtID});
 });
 
 
