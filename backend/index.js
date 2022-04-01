@@ -1,4 +1,5 @@
 import express from 'express';
+import * as db from './database.js';
 
 const app = express();
 const port = 3000;
@@ -81,8 +82,11 @@ app.get('/msg/fetch', (req, res) => {
   const receiver = req.query.userTo;
   const amt = req.query.msgAmt;
 
+  // Gather the message data
+  const data = db.getMessages(sender, receiver, amt);
+
   // Send Response
-  res.status(200).send({worked: true, amount: amt});
+  res.status(200).send({worked: true, messageData: data});
 });
 // Grab a User's Matches
 app.get('/matches', (req, res) => {
