@@ -85,7 +85,7 @@ function findAndDelete(database, whereQuery){
  * @param {String} userID User id to get data of
  * @returns {Object: {uId: String, preferences: Object, profile: Object}} Profile and Preferences to return
  */
-function getUserData(userID){
+export function getUserData(userID){
     const randomName = faker.name.findName();
     const randomImg = faker.image.avatar();
     const loremBio = faker.lorem.paragraph();
@@ -106,13 +106,13 @@ function getUserData(userID){
  * @param {String} userIDTo The other user involved with the request
  * @returns {Object: {fromMsgs: []Messages, toMsgs: []Messages}} Returns two list of chat objects
  */
-function getMessages(userIDFrom, userIDTo){
+export function getMessages(userIDFrom, userIDTo, numMessages){
     let userFromMsgs = [];
     let userToMsgs = [];
 
     const randomMsg = () => faker.lorem.paragraph();
 
-    for(let i = 0; i < 10; ++i){
+    for(let i = 0; i < numMessages; ++i){
         userFromMsgs.push(randomMsg());
         userToMsgs.push(randomMsg());
     }
@@ -129,7 +129,7 @@ function getMessages(userIDFrom, userIDTo){
  * @param {String} userID user to find matches from
  * @returns {[]Matches} Returns all user matches
  */
-function getMatches(userID){
+export function getMatches(userID){
     let userMatches = [];
     const randomUUID = () => faker.database.uuid();
 
@@ -150,6 +150,8 @@ function getMatches(userID){
  * 
  * --------------------------------------------------------------
  */
+
+export function updateUserPreferences(userID)
 
 /**-------------------------------------------------------------
  * 
