@@ -1,9 +1,12 @@
+// Import Packages
 import express from 'express';
 import * as db from './database.js';
 
+// Initialize express
 const app = express();
 const port = 3000;
 
+// Default API Welcome Message
 app.get('/', (req, res) => {
     res.send('Hello World!')
 });
