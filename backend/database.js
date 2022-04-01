@@ -130,7 +130,7 @@ export function getMessages(userIDFrom, userIDTo, numMessages=20){
  */
 export function getMatches(userID){
     let userMatches = [];
-    const randomUUID = () => faker.database.uuid();
+    const randomUUID = () => faker.datatype.uuid();
 
     for(let i = 0; i < 10; ++i){
         userMatches.push(randomUUID());
@@ -150,6 +150,13 @@ export function getMatches(userID){
  * --------------------------------------------------------------
  */
 
+export function updateUserPreferences(userID, userPreferences){
+    let preferences = [];
+    for(const key of Object.keys(userPreferences)){
+        preferences.push({Column:key, Data:userPreferences[key]});
+    }
+    findAndUpdate("Preferences", `userID='${userID}'`, preferences);
+}
 
 /**-------------------------------------------------------------
  *
