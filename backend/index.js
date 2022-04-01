@@ -93,16 +93,22 @@ app.get('/matches', (req, res) => {
   // Get Data from the Request
   const id = req.query.user;
 
+  // Gather user Matches
+  const data = db.getMatches(id);
+
   // Send Response
-  res.status(200).send({worked: true, userID: id});
+  res.status(200).send({worked: true, user_ID: id, user_matches: data});
 });
 // Grab a User's Profile and Preferences
 app.get('/user/data', (req, res) => {
   // Get Data from the Request
   const id = req.query.user;
 
+  // Gather user Data
+  const data = db.getUserData(id);
+
   // Send Response
-  res.status(200).send({worked: true, userID: id});
+  res.status(200).send({worked: true, user_ID: id, user_data: data});
 });
 // Grab a User's Matches
 app.get('/matches/potentialMatches', (req, res) => {
