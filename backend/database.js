@@ -12,6 +12,7 @@ const faker = fakerObj.default;
  *
  * @param {String} database Name of the database to enter
  * @param {[{Column:String, Data:String}]} dataEntry Data to enter.
+ * @return {Boolean} Returns true if it was successfully inserted, false otherwise
  */
 function insert(database, dataEntry){
     let columns = '';
@@ -22,6 +23,7 @@ function insert(database, dataEntry){
     }
     let query = `INSERT INTO ${database} (${columns}) VALUES (${values});`;
     console.log(query);
+    return true; //TODO: Make this return success value of query
 }
 
 /**
@@ -29,10 +31,12 @@ function insert(database, dataEntry){
  * @param {String} database Database to find in
  * @param {String} whereQuery Query to find the desired row(or rows) eg. "userID='1234' AND userToID='4321'"
  * @param {String} orderBy Query to determnine the the way to order the results eg. "timestamp DESC"
+ * @return {[]} Return the data found
  */
 function find(database, whereQuery, orderBy){
     let query = (orderBy) ? `SELECT * FROM ${database} WHERE ${whereQuery} ORDER BY ${orderBy};` : `SELECT * FROM ${database} WHERE ${whereQuery}`;
     console.log(query);
+    return []; //TODO: Make this return data
 }
 
 
@@ -41,6 +45,7 @@ function find(database, whereQuery, orderBy){
  * @param {String} database Database to update
  * @param {String} whereQuery Query to find the desired row(or rows) eg. "userFromID='1234' AND userToID='4321'"
  * @param {[{Column:String, Data:String}]} dataEntry Data to update
+ * @returns {Boolean} Returns true if it was successfully updated, false otherwise
  */
 function findAndUpdate(database, whereQuery, dataEntry){
     let columns = '';
@@ -51,16 +56,19 @@ function findAndUpdate(database, whereQuery, dataEntry){
     }
     let query = `UPDATE ${database} (${columns}) VALUES (${values}) WHERE ${whereQuery};`;
     console.log(query);
+    return true; //TODO: Make this return success value of query
 }
 
 /**Find and delete a row(or rows) in a database.
  *
  * @param {String} database Database to update
  * @param {String} whereQuery Query to find the desired row(or rows) eg. "userFromID='1234' AND userToID='4321'"
+ * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 function findAndDelete(database, whereQuery){
     let query = `DELETE * FROM ${database} WHERE ${whereQuery};`;
     console.log(query);
+    return true; //TODO: Make this return success value of query
 }
 
 
@@ -71,6 +79,38 @@ function findAndDelete(database, whereQuery){
  * --------------------------------------------------------------
  */
 
+/** Creates a new user in the users table
+ * 
+ * @param {String} email User email
+ * @param {String} password User password
+ * @returns {Boolean} Returns if the insert was successfull
+ */
+export function createNewUser(email, password){
+    const newUuid = faker.datatype.uuid();
+
+    return insert('Users', [{Column: 'userID', Data: newUUId}, {Column: 'email', Data: email}, {Column: 'password', Data: password}]);
+}
+
+/** Creates a new match between two users
+ * 
+ * @param {String} userID1 User1 ID
+ * @param {String} userID2 User2 ID
+ * @returns {Boolean} Returns if the insert was successfull
+ */
+export function createMatch(userID1, userID2){
+    return insert('Matches', [{Column: 'userID1', Data: userID1}, {Column: 'userID2', Data:userID2}]);
+}
+
+/** Adds a new message between two users.
+ * 
+ * @param {String} userFromID The user sending the message
+ * @param {String} userToID The user recieving the message
+ * @param {String} Message The message sent
+ * @returns 
+ */
+export function createMessage(userFromID, userToID, Message){
+    return insert('chat', [{Column: 'userFromID', Data: userFromID}, {Column: 'userToID', Data:userToID}, {Column: 'message', Data: Message}]);
+}
 
 
 /**-------------------------------------------------------------
@@ -160,7 +200,7 @@ export function updateUserPreferences(userID, userPreferences){
     for(const key of Object.keys(userPreferences)){
         preferences.push({Column:key, Data:userPreferences[key]});
     }
-    findAndUpdate("Preferences", `userID='${userID}'`, preferences);
+    return findAndUpdate("Preferences", `userID='${userID}'`, preferences);
 }
 
 /**-------------------------------------------------------------
@@ -173,9 +213,10 @@ export function updateUserPreferences(userID, userPreferences){
 /**Deletes a user from the user table
  * 
  * @param {String} userID 
+ * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 export function deleteUser(userID){
-    findAndDelete("Users", `userID='${userID}'`);
+    return findAndDelete("Users", `userID='${userID}'`);
 }
 
 
@@ -183,7 +224,8 @@ export function deleteUser(userID){
  * 
  * @param {String} userID1 First user in the match
  * @param {String} userID2 Second user in the match
+ * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 export function deleteMatch(userID1, userID2){
-    findAndDelete("Users", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID21})'`);
+    return findAndDelete("Users", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID21})'`);
 }
