@@ -137,7 +137,7 @@ export function getMatches(userID){
     }
 
     //Test the query ouput for eventual SQL
-    const userMatchesResults = find("matches", `userID1='${userIDFrom}' OR userID2='${userIDTo}'`);
+    const userMatchesResults = find("matches", `userID1='${userID}' OR userID2='${userIDTo}'`);
 
     return userMatches;
 }
@@ -150,6 +150,11 @@ export function getMatches(userID){
  * --------------------------------------------------------------
  */
 
+/**Updates the user preferences in the database
+ * 
+ * @param {String} userID UserID to update
+ * @param {Object} userPreferences New Preferences
+ */
 export function updateUserPreferences(userID, userPreferences){
     let preferences = [];
     for(const key of Object.keys(userPreferences)){
@@ -164,3 +169,21 @@ export function updateUserPreferences(userID, userPreferences){
  *
  * --------------------------------------------------------------
  */
+
+/**Deletes a user from the user table
+ * 
+ * @param {String} userID 
+ */
+export function deleteUser(userID){
+    findAndDelete("Users", `userID='${userID}'`);
+}
+
+
+/**Deletes matches from the Match table
+ * 
+ * @param {String} userID1 First user in the match
+ * @param {String} userID2 Second user in the match
+ */
+export function deleteMatch(userID1, userID2){
+    findAndDelete("Users", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID21})'`);
+}
