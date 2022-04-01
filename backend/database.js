@@ -106,7 +106,7 @@ export function getUserData(userID){
  * @param {String} userIDTo The other user involved with the request
  * @returns {Object: {fromMsgs: []Messages, toMsgs: []Messages}} Returns two list of chat objects
  */
-export function getMessages(userIDFrom, userIDTo, numMessages){
+export function getMessages(userIDFrom, userIDTo, numMessages=20){
     let userFromMsgs = [];
     let userToMsgs = [];
 
@@ -151,7 +151,13 @@ export function getMatches(userID){
  * --------------------------------------------------------------
  */
 
-export function updateUserPreferences(userID)
+export function updateUserPreferences(userID, userPreferences){
+    let preferences = [];
+    for(const key of Object.keys(userPreferences)){
+        preferences.push({"Column":key, "Data": userPreferences[key]});
+    }
+    findAndUpdate('Preferences', `userID='${userID}'`, preferences);
+}
 
 /**-------------------------------------------------------------
  * 
