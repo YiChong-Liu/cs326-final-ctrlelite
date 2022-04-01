@@ -23,9 +23,10 @@ app.put('/matches/acceptedMatch', (req, res) => {
   const myself = req.query.primaryUserID;
 
   // TODO database call to run them
+  const result = db.createMatch(otherGuy, myself);
 
   // TODO return HTTP header / JSON response with real data
-  res.status(200).send({otherUser: otherGuy, matchAccepted: true});
+  res.status(200).send({worked: result, otherUser: otherGuy, matchAccepted: true});
 });
 // Add a new User
 app.put('/users/newUser', (req, res) => {
@@ -36,9 +37,10 @@ app.put('/users/newUser', (req, res) => {
   const pass = req.query.password;
 
   // TODO database call to run them
+  const result = db.createNewUser(e, pass);
 
   // TODO return HTTP header / JSON response with real data
-  res.status(200).send({accepted: true, email: e, password: pass});
+  res.status(200).send({accepted: result, email: e, password: pass});
 });
 // Update a User's Preferences
 app.put('/update/userPreferences', (req, res) => {
@@ -73,9 +75,10 @@ app.post('/msg/newChatMsg', (req, res) => {
   const msg = req.query.msg;
 
   // TODO actual databasing
+  const result = db.createMessage(sender, receiver, msg);
 
   // TODO return HTTP header / JSON response with real data
-  res.status(200).send({worked: true, msg_content: msg});
+  res.status(200).send({worked: result, msg_content: msg});
 });
 
 
