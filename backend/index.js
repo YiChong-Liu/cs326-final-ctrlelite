@@ -1,9 +1,12 @@
+// Import Packages
 import express from 'express';
 import * as db from './database.js';
 
+// Initialize express
 const app = express();
 const port = 3000;
 
+// Default API Welcome Message
 app.get('/', (req, res) => {
     res.send('Hello World!')
 });
@@ -44,10 +47,10 @@ app.put('/update/userPreferences', (req, res) => {
   const pref = req.query.preferences;
 
   // Attempt to update this user's preferencess
-  const res = db.updateUserPreferences(uID, pref);
+  const result = db.updateUserPreferences(uID, pref);
 
   // Response
-  res.status(200).send({worked: res, user: uID, preferences: pref});
+  res.status(200).send({worked: result, user: uID, preferences: pref});
 });
 // Update/Change a User's Password
 app.put('/update/userPassword', (req, res) => {
@@ -131,10 +134,10 @@ app.delete('/delete/user', (req, res) => {
   const id = req.query.userID;
 
   // Attempt to delete this user
-  const res = db.deleteUser(id);
+  const result = db.deleteUser(id);
 
   // Send Response
-  res.status(200).send({worked: res, userID: id});
+  res.status(200).send({worked: result, userID: id});
 });
 // Delete a Match
 app.delete('/delete/match', (req, res) => {
@@ -143,14 +146,14 @@ app.delete('/delete/match', (req, res) => {
   const mtID = req.query.matchToID;
 
   // Attempt to Delete this match
-  const res = db.deleteMatch(ufID, mtID);
+  const result = db.deleteMatch(ufID, mtID);
 
   // Send Response
-  res.status(200).send({worked: res, userFrom: ufID, userTo: mtID});
+  res.status(200).send({worked: result, userFrom: ufID, userTo: mtID});
 });
 
 
 // Start the Server
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Hosting server on port: ${port}`)
 });
