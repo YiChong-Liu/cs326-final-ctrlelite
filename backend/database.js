@@ -34,7 +34,7 @@ function insert(database, dataEntry){
  * @return {[]} Return the data found
  */
 function find(database, whereQuery, orderBy){
-    let query = (orderBy) ? `SELECT * FROM ${database} WHERE ${whereQuery} ORDER BY ${orderBy};` : `SELECT * FROM ${database} WHERE ${whereQuery}`;
+    let query = (orderBy) ? `SELECT * FROM ${database} WHERE ${whereQuery} ORDER BY ${orderBy};` : `SELECT * FROM ${database} WHERE ${whereQuery};`;
     console.log(query);
     return []; //TODO: Make this return data
 }
@@ -106,7 +106,7 @@ export function createMatch(userID1, userID2){
  * @param {String} userFromID The user sending the message
  * @param {String} userToID The user recieving the message
  * @param {String} Message The message sent
- * @returns 
+ * @returns {Boolean} Returns if the insert was successfull
  */
 export function createMessage(userFromID, userToID, Message){
     return insert('chat', [{Column: 'userFromID', Data: userFromID}, {Column: 'userToID', Data:userToID}, {Column: 'message', Data: Message}]);
