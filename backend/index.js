@@ -1,4 +1,5 @@
-const express = require('express');
+import express from 'express';
+
 const app = express();
 const port = 3000;
 
@@ -47,6 +48,25 @@ app.post('/msg/newChatMsg', (req, res) => {
   // TODO return HTTP header / JSON response with real data
   res.status(200).send({worked: true, msg_content: msg});
 });
+// Update a User's Preferences
+app.post('/update/userPreferences', (req, res) => {
+  // Get userID and Preference Object from request
+  const uID = req.query.userID;
+  const pref = req.query.preferences;
+
+  // Response
+  res.status(200).send({worked: true, user: uID, preferences: pref});
+});
+// Update/Change a User's Password
+app.post('/update/userPassword', (req, res) => {
+  // Get userID and new password from request
+  const uID = req.query.userID;
+  const pass = req.query.password;
+
+  // Response
+  res.status(200).send({worked: true, user: uID, password: pass});
+});
+
 
 // GET
 
@@ -59,6 +79,51 @@ app.get('/msg/fetch', (req, res) => {
 
   // Send Response
   res.status(200).send({worked: true, amount: amt});
+});
+// Grab a User's Matches
+app.get('/matches', (req, res) => {
+  // Get Data from the Request
+  const id = req.query.user;
+
+  // Send Response
+  res.status(200).send({worked: true, userID: id});
+});
+// Grab a User's Profile and Preferences
+app.get('/user/data', (req, res) => {
+  // Get Data from the Request
+  const id = req.query.user;
+
+  // Send Response
+  res.status(200).send({worked: true, userID: id});
+});
+// Grab a User's Matches
+app.get('/matches/potentialMatches', (req, res) => {
+  // Get Data from the Request
+  const id = req.query.user;
+
+  // Send Response
+  res.status(200).send({worked: true, userID: id});
+});
+
+
+// DELETE
+
+// Delete a User
+app.delete('/delete/user', (req, res) => {
+  // Get Data from the Request
+  const id = req.query.userID;
+
+  // Send Response
+  res.status(200).send({worked: true, userID: id});
+});
+// Delete a Match
+app.delete('/delete/match', (req, res) => {
+  // Get Data from the Request
+  const ufID = req.query.userFromID;
+  const mtID = req.query.matchToID;
+
+  // Send Response
+  res.status(200).send({worked: true, userFrom: ufID, userTo: mtID});
 });
 
 
