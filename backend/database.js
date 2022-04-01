@@ -1,5 +1,5 @@
-import * as faker from '@faker-js/faker'
-
+import * as fakerObj from '@faker-js/faker'
+const faker = fakerObj.default;
 
 /**-------------------------------------------------------------
  *
@@ -109,7 +109,6 @@ export function getUserData(userID){
 export function getMessages(userIDFrom, userIDTo, numMessages=20){
     let userFromMsgs = [];
     let userToMsgs = [];
-
     const randomMsg = () => faker.lorem.paragraph();
 
     for(let i = 0; i < numMessages; ++i){
@@ -118,8 +117,8 @@ export function getMessages(userIDFrom, userIDTo, numMessages=20){
     }
 
     //Test the query ouput for eventual SQL
-    const userToMsgsResults = find("chat", `userFromID=${userIDFrom} AND userToID=${userIDTo}`);
-    const userFromMsgsResults = find("chat", `userFromID=${userIDTo} AND userToID=${userIDFrom}`);
+    const userToMsgsResults = find("chat", `userFromID='${userIDFrom}' AND userToID='${userIDTo}'`);
+    const userFromMsgsResults = find("chat", `userFromID='${userIDTo}' AND userToID='${userIDFrom}'`);
 
     return {fromMsgs: userFromMsgs, toMsgs: userToMsgs};
 }
