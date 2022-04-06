@@ -17,9 +17,11 @@ const faker = fakerObj.default;
 function insert(database, dataEntry){
     let columns = '';
     let values = '';
+    let i = 0;
     for(const dataPoint of dataEntry){
-        columns += `${datapoint.Column}, `;
-        values += `${dataPoint.Data}, `;
+        columns += i !== dataEntry.length - 1? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
+        values += i !== dataEntry.length - 1? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
+        i++;
     }
     let query = `INSERT INTO ${database} (${columns}) VALUES (${values});`;
     console.log(query);
@@ -50,9 +52,11 @@ function find(database, whereQuery, orderBy){
 function findAndUpdate(database, whereQuery, dataEntry){
     let columns = '';
     let values = '';
+    let i = 0;
     for(const dataPoint of dataEntry){
-        columns += `${datapoint.Column}, `;
-        values += `${dataPoint.Data}, `;
+        columns += i !== dataEntry.length - 1 ? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
+        values += i !== dataEntry.length - 1? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
+        i++;
     }
     let query = `UPDATE ${database} (${columns}) VALUES (${values}) WHERE ${whereQuery};`;
     console.log(query);
@@ -86,7 +90,7 @@ function findAndDelete(database, whereQuery){
  * @returns {Boolean} Returns if the insert was successfull
  */
 export function createNewUser(email, password){
-    const newUuid = faker.datatype.uuid();
+    const newUUId = faker.datatype.uuid();
 
     return insert('Users', [{Column: 'userID', Data: newUUId}, {Column: 'email', Data: email}, {Column: 'password', Data: password}]);
 }
@@ -157,8 +161,8 @@ export function getMessages(userIDFrom, userIDTo, numMessages=20){
     }
 
     //Test the query ouput for eventual SQL
-    const userToMsgsResults = find("chat", `userFromID='${userIDFrom}' AND userToID='${userIDTo}'`);
-    const userFromMsgsResults = find("chat", `userFromID='${userIDTo}' AND userToID='${userIDFrom}'`);
+    const userToMsgsResults = find("chat", `userFromID='${userIDFrom}' AND userToID='${userIDTo}'`, "timestamp DESC");
+    const userFromMsgsResults = find("chat", `userFromID='${userIDTo}' AND userToID='${userIDFrom}'`, "timestamp DESC");
 
     return {fromMsgs: userFromMsgs, toMsgs: userToMsgs};
 }
@@ -177,7 +181,7 @@ export function getMatches(userID){
     }
 
     //Test the query ouput for eventual SQL
-    const userMatchesResults = find("matches", `userID1='${userID}' OR userID2='${userIDTo}'`);
+    const userMatchesResults = find("matches", `userID1='${userID}' OR userID2='${userID}'`);
 
     return userMatches;
 }
@@ -227,5 +231,5 @@ export function deleteUser(userID){
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 export function deleteMatch(userID1, userID2){
-    return findAndDelete("Users", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID21})'`);
+    return findAndDelete("Users", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`);
 }

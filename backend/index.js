@@ -46,7 +46,7 @@ app.put('/users/newUser', (req, res) => {
 app.put('/update/userPreferences', (req, res) => {
   // Get userID and Preference Object from request
   const uID = req.query.userID;
-  const pref = req.query.preferences;
+  const pref = JSON.parse(req.query.preferences);
 
   // Attempt to update this user's preferencess
   const result = db.updateUserPreferences(uID, pref);
@@ -125,7 +125,7 @@ app.get('/matches/potentialMatches', (req, res) => {
   const id = req.query.user;
 
   // Send Response
-  res.status(200).send({worked: true, userID: id});
+  res.status(200).send({worked: true, userID: id, potentialMatches: []});
 });
 
 
