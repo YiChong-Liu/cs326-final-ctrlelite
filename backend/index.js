@@ -60,8 +60,10 @@ app.put('/update/userPassword', (req, res) => {
   const uID = req.query.userID;
   const pass = req.query.password;
 
+  const result = db.updateUserPassword(uID, pass);
+
   // Response
-  res.status(200).send({worked: true, user: uID, password: pass});
+  res.status(200).send({worked: result, user: uID, password: pass});
 });
 
 
