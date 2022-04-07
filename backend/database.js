@@ -20,7 +20,7 @@ function insert(database, dataEntry){
     let i = 0;
     for(const dataPoint of dataEntry){
         columns += i !== dataEntry.length - 1? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
-        values += i !== dataEntry.length - 1? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
+        values += i !== dataEntry.length - 1? `${dataPoint.Data}, ` : `${dataPoint.Data}`;
         i++;
     }
     let query = `INSERT INTO ${database} (${columns}) VALUES (${values});`;
@@ -55,7 +55,7 @@ function findAndUpdate(database, whereQuery, dataEntry){
     let i = 0;
     for(const dataPoint of dataEntry){
         columns += i !== dataEntry.length - 1 ? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
-        values += i !== dataEntry.length - 1? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
+        values += i !== dataEntry.length - 1? `${dataPoint.Data}, ` : `${dataPoint.Data}`;
         i++;
     }
     let query = `UPDATE ${database} (${columns}) VALUES (${values}) WHERE ${whereQuery};`;
@@ -205,6 +205,16 @@ export function updateUserPreferences(userID, userPreferences){
         preferences.push({Column:key, Data:userPreferences[key]});
     }
     return findAndUpdate("Preferences", `userID='${userID}'`, preferences);
+}
+
+/**Updates the given users password in the database
+ * 
+ * @param {String} userID UserID to update
+ * @param {String} password New password
+ * @returns 
+ */
+export function updateUserPassword(userID, password){
+    return findAndUpdate("Users", `userID=${userID}`, [{Column:'password', Data:`'${password}'`}]);
 }
 
 /**-------------------------------------------------------------
