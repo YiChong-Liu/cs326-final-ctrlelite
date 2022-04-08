@@ -39,3 +39,6 @@
     width: 42%;
 }
 
+.no_underline {
+  text-decoration: none;
+}
