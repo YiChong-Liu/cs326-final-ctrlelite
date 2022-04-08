@@ -186,6 +186,19 @@ export function getMatches(userID){
     return userMatches;
 }
 
+/**
+ * 
+ * @param {String} userID 
+ * @returns {String} Returns the hashed users password stored in the db
+ */
+export function getPasswordHash(userID){
+    let password = faker.internet.password();
+
+    //Test for sql result
+    const passwordResult = find("users", `userID=${userID}`);
+    return password;
+}
+
 
 /**-------------------------------------------------------------
  *

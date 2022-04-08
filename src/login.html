@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./js/login.js" defer></script>
 
     <title>Login | Rentern</title>
   </head>
@@ -39,20 +40,20 @@
       <div class="col-md-6">
         <h1 class="text-center">Login</h1>
         <hr>
-        <form class="justify-content-center" action="#">
+        <form class="justify-content-center text-center" action="matches.html" method="POST">
           <div class="input-group mb-3">
-            <span class="input-group-text">Username</span>
-            <input type="text" class="form-control" id="username" placeholder="Email Address" aria-label="Email">
+            <span class="input-group-text">Email</span>
+            <input name="email" type="email" class="form-control" id="email" placeholder="Email Address" aria-label="Email">
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text">Password</span>
-            <input type="text" class="form-control" id="password" placeholder="Password" aria-label="Password">
+            <input name="password" type="password" class="form-control" id="password" placeholder="Password" aria-label="Password" minlength="8" required>
           </div>
+          <a><button id="login" type="submit" class="btn btn-primary mb-6 mt-3">Login</button></a>
         </form>
       </div>
     </div>
     <div class="text-center">
-      <a href="matches.html"><button type="button" class="btn btn-primary mb-6 mt-3">Login</button></a>
       <p class="mb-6 mt-3">
         ----------------------------- or connect with --------------------------
       </p>
