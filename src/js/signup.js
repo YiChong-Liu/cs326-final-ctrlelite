@@ -1,3 +1,4 @@
+
 $('#registerCheck').click(function() {
 	if ($('#submit_button').is(':disabled')) {
     	$('#submit_button').removeAttr('disabled');
