@@ -144,6 +144,25 @@ export function getUserData(userID){
     return {uID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{name:randomName, bio:loremBio, profilePicture:randomImg}}
 }
 
+/** Checks if the user is in the database
+ * 
+ * @param {String} userID UserID to check
+ * @returns Boolean if the user exists in the database
+ */
+export function idExists(userID){
+    return (find("user", `userID='${userID}'`).length == 0);
+}
+
+/**Checks if a match between users exists
+ * 
+ * @param {String} userID1 
+ * @param {String} userID2 
+ * @returns Boolean
+ */
+export function matchExists(userID1, userID2){
+    return (find("matches", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`).length == 0);
+}
+
 /**Gets the messages between the two users.
  *
  * @param {String} userIDFrom The user making the request
@@ -195,7 +214,7 @@ export function getPasswordHash(userID){
     let password = faker.internet.password();
 
     //Test for sql result
-    const passwordResult = find("users", `userID=${userID}`);
+    const passwordResult = find("users", `userID='${userID}'`);
     return password;
 }
 
