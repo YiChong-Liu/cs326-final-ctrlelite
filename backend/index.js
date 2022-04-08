@@ -1,14 +1,53 @@
 // Import Packages
 import express from 'express';
+import logger from 'morgan';
+import jwtSigner from 'jsonwebtoken';
+const { sign } = jwtSigner;
+import jwt from 'express-jwt';
+import cookieParser from 'cookie-parser';
 import * as db from './database.js';
 
 // Initialize express
 const app = express();
 const port = 3000;
 
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
 // Default API Welcome Message
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+  res.send('Hello World!');
+});
+
+const SUPER_SECRET = '8253c11f1244dd66854a026f537d68c350527cebb5678da5c05410e51ddbe32587a3464be4867aa5367f7b4bd4f23fd795ab61b0eed63a30e5f47c73384f222e';
+
+// LOGIN
+app.use(jwt({
+  secret: SUPER_SECRET,
+  algorithms: ['HS256'],
+  getToken: function fromHeaderOrCookie(req) {
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+        return req.headers.authorization.split(' ')[1];
+    } else if (req.cookies && req.cookies.auth) {
+      return req.cookies.auth;
+    }
+    return null;
+  }
+}).unless({path: ['/login/passwd', '/users/newUser']}));
+
+app.post('/login/passwd', async (req, res) => {
+  const options = req.body;
+  console.log(options);
+  const passwordValidated = true;
+  if (passwordValidated) {
+    const signedJWT = sign({user: options.email}, SUPER_SECRET, { expiresIn: '1 day' });
+    res.cookie('auth', signedJWT, { maxAge: 43200000 });
+    res.redirect("http://localhost:5500/src/userPreferences.html").status(301);
+  } else {
+    res.status(401).send("BOO");
+  }
 });
 
 
