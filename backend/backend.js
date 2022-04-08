@@ -25,7 +25,7 @@ app.use(jwt({
     }
     return null;
   }
-}).unless({path: ['/login/passwd', '/users/newUser']}));
+}).unless({path: ['api/login/passwd', 'api/users/newUser']}));
 
 app.post('/login/passwd', async (req, res) => {
   const options = req.body;
