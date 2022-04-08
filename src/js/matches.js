@@ -44,8 +44,16 @@ function newMatch(user_data){
     matchDIV.appendChild(wrapper);
 }
 
-let response = await fetch("http://localhost:3000/matches");
-if(response.worked){
-    responseJSON = await response.json();   
+let response = await fetch("/api/matches");
+if(response.ok){
+    let responseJSON = await response.json();  
+    for(const match of responseJSON.user_matches){
+        let matchResponse = await fetch("api/user/data?user=" + match);
+        if(matchResponse.ok){
+            let matchJSON = await matchResponse.json();
+            console.log(matchJSON);
+            newMatch(matchJSON.user_data);
+        }
+    } 
     console.log(responseJSON);
 }
