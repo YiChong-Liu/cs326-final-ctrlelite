@@ -74,8 +74,9 @@ app.put('/users/newUser', (req, res) => {
 // Update a User's Preferences
 app.put('/update/userPreferences', (req, res) => {
   // Get userID and Preference Object from request
-  const uID = req.query.userID;
-  const pref = JSON.parse(req.query.preferences);
+  console.log(req.body);
+  const uID = req.body.userID;
+  const pref = req.body.preferences;
 
   // Attempt to update this user's preferencess
   const result = db.updateUserPreferences(uID, pref);
