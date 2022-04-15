@@ -2,11 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend for Rentern",
-  "main": "index.js",
+  "main": "./backend/index.js",
   "scripts": {
-    "heroku-run": "npm ci && npm start",
-    "start": "node index.js",
-    "debug": "node --inspect-brk index.js",
+    "start": "node ./backend/index.js",
+    "debug": "node --inspect-brk ./backend/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
