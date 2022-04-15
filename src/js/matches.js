@@ -20,7 +20,7 @@ function newMatch(user_data){
     contentDiv.appendChild(profileLinkDiv);
     let profileLink = document.createElement('a');
     profileLink.classList.add('link-primary');
-    profileLink.innerHTML = `<h2>${user_data.profile.name}</h2>`;
+    profileLink.innerHTML = `<h2>${user_data.profile.userName}</h2>`;
     profileLink.href = "profile.html?userID=" + user_data.user_ID;
     profileLinkDiv.appendChild(profileLink);
 
@@ -49,7 +49,7 @@ let response = await fetch("/api/matches");
 if(response.ok){
     let responseJSON = await response.json();  
     for(const match of responseJSON.user_matches){
-        let matchResponse = await fetch("api/user/data?user=" + match);
+        let matchResponse = await fetch(`api/user/data?user=${match}`);
         if(matchResponse.ok){
             let matchJSON = await matchResponse.json();
             console.log(matchJSON);

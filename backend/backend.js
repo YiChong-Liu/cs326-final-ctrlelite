@@ -126,7 +126,6 @@ app.post('/msg/newChatMsg', (req, res) => {
   res.status(200).send({worked: result, msg_content: msg});
 });
 
-
 // GET
 
 // Grab a Conversation of Messages
