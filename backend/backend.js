@@ -168,8 +168,13 @@ app.get('/matches/potentialMatches', (req, res) => {
   // Get Data from the Request
   const id = req.query.user;
 
+  let matches = [];
+  for(let i = 0; i < 10; ++i){
+    matches.push(db.getUserData(id));
+  }
+  
   // Send Response
-  res.status(200).send({worked: true, userID: id, potentialMatches: []});
+  res.status(200).send({worked: true, userID: id, potentialMatches: matches});
 });
 
 
