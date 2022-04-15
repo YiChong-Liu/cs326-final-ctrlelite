@@ -1,218 +1,237 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>User Preferences | Rentern</title>
-  </head>
-  <body>
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-      <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Rentern</span>
-      </a>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Matches</a></li>
-        <li class="nav-item"><a href="profile.html" class="nav-link">Profiles</a></li>
-        <li class="nav-item"><a href="index.html" class="nav-link">Logout</a></li>
-      </ul>
-    </header>
+  <title>User Preferences | Rentern</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
 
-    <div class="container">
-      <div class="card">
-        <!--Header-->
-        <div class="card-header text-center">
-          <h1>User Preferences</h1>
+<body>
+
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+      <span class="fs-4">Rentern</span>
+    </a>
+
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="matches.html" class="nav-link">Matches</a></li>
+      <li class="nav-item"><a href="profile.html" class="nav-link">Profiles</a></li>
+      <li class="nav-item"><a href="index.html" class="nav-link">Logout</a></li>
+    </ul>
+  </header>
+
+
+  <div class="container">
+    <div class="card">
+      <!--Header-->
+      <div class="card-header text-center">
+        <h1>User Preferences</h1>
+      </div>
+
+      <!--Body-->
+      <div class="card-body">
+
+        <!-- Gender-->
+        <h3>Gender:</h3>
+        <hr>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender_male">
+          <label class="form-check-label" for="gender_male">
+            Male
+          </label>
         </div>
-
-        <!--Body-->
-        <div class="card-body">
-
-          <!-- Gender-->
-          <h3>Gender:</h3><hr>
-
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender_male">
-            <label class="form-check-label" for="gender_male">
-              Male
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender_female">
-            <label class="form-check-label" for="gender_female">
-              Female
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender_nonbinary">
-            <label class="form-check-label" for="gender_nonbinary">
-              Non binary
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender_any">
-            <label class="form-check-label" for="gender_any">
-              I don't care about it
-            </label>
-          </div><br /><br />
-          <label for="customRange3" class="form-label">Importance</label>
-          <input type="range" class="form-range" min="0" max="10" step="0.5" id="gender_rangeBar"><br /><br />
-
-
-          <!-- Age-->
-          <h3>Age:</h3><hr>
-
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_teen">
-            <label class="form-check-label" for="age_teen">
-              18 - 25
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_middle">
-            <label class="form-check-label" for="age_middle">
-              26 - 35
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_senior">
-            <label class="form-check-label" for="age_senior">
-              36 - 55
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_elderly">
-            <label class="form-check-label" for="age_elderly">
-              56 and above
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_any">
-            <label class="form-check-label" for="age_any">
-              I don't care about it
-            </label>
-          </div><br /><br />
-          <label for="customRange3" class="form-label">Importance</label>
-          <input type="range" class="form-range" min="0" max="10" step="0.5" id="age_rangeBar"><br /><br />
-
-
-          <!-- Housing type-->
-          <h3>Housing Type:</h3><hr>
-
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="house_apartment">
-            <label class="form-check-label" for="house_apartment">
-              Apartment
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="house_townhouse">
-            <label class="form-check-label" for="house_townhouse">
-              Townhouse
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="house_condo">
-            <label class="form-check-label" for="house_condo">
-              Condo
-            </label>
-          </div><br /><br />
-          <label for="customRange3" class="form-label">Importance</label>
-          <input type="range" class="form-range" min="0" max="10" step="0.5" id="house_rangeBar"><br /><br />
-
-
-          <!--Sleeping Habits-->
-          <h3>When I Sleep I Prefer:</h3><hr>
-
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="sleep_noNoise">
-            <label class="form-check-label" for="sleep_noNoise">
-              No noise
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="sleep_aLittleNoise">
-            <label class="form-check-label" for="sleep_aLittleNoise">
-              A little noise
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="sleep_aLotOfNoise">
-            <label class="form-check-label" for="sleep_anyNoise">
-              I don't care about it
-            </label>
-          </div><br /><br />
-
-          <label for="customRange3" class="form-label">Importance</label>
-          <input type="range" class="form-range" min="0" max="10" step="0.5" id="sleep_rangeBar"><br /><br />
-
-          <!-- Roommate -->
-          <h3>I Expect My Roommate To Be:</h3><hr>
-
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="clean_very">
-            <label class="form-check-label" for="clean_very">
-              Very clean
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="clean_somewhat">
-            <label class="form-check-label" for="clean_somewhat">
-              Somewhat clean
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="clean_not">
-            <label class="form-check-label" for="clean_not">
-              I don't care about it
-            </label>
-          </div><br /><br />
-
-          <label for="customRange3" class="form-label">Importance</label>
-          <input type="range" class="form-range" min="0" max="10" step="0.5" id="clean_rangeBar"><br /><br />
-
-          <!--Sleeping Habits-->
-          <h3>In Terms of Sharing:</h3><hr>
-
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="share_everything">
-            <label class="form-check-label" for="share_everything">
-              I share everything
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="share_some">
-            <label class="form-check-label" for="sleep_aLittleNoise">
-              Must have my permission
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="share_none">
-            <label class="form-check-label" for="sleep_anyNoise">
-              I choose not to share my private stuff
-            </label>
-          </div><br /><br />
-
-          <label for="customRange3" class="form-label">Importance</label>
-          <input type="range" class="form-range" min="0" max="10" step="0.5" id="share_rangeBar"><br /><br />
-
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender_female">
+          <label class="form-check-label" for="gender_female">
+            Female
+          </label>
         </div>
-
-        <!--Footer-->
-        <div class="card-footer text-muted text-center">
-          <button id="preferencesSubmit" class="btn btn-primary">Submit</button>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender_nonbinary">
+          <label class="form-check-label" for="gender_nonbinary">
+            Non binary
+          </label>
         </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender_any">
+          <label class="form-check-label" for="gender_any">
+            I don't care about it
+          </label>
+        </div><br /><br />
+        <label for="customRange3" class="form-label">Importance</label>
+        <input type="range" class="form-range" min="0" max="10" step="0.5" id="gender_rangeBar"><br /><br />
+
+
+        <!-- Age-->
+        <h3>Age:</h3>
+        <hr>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_teen">
+          <label class="form-check-label" for="age_teen">
+            18 - 25
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_middle">
+          <label class="form-check-label" for="age_middle">
+            26 - 35
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_senior">
+          <label class="form-check-label" for="age_senior">
+            36 - 55
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_elderly">
+          <label class="form-check-label" for="age_elderly">
+            56 and above
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="age_any">
+          <label class="form-check-label" for="age_any">
+            I don't care about it
+          </label>
+        </div><br /><br />
+        <label for="customRange3" class="form-label">Importance</label>
+        <input type="range" class="form-range" min="0" max="10" step="0.5" id="age_rangeBar"><br /><br />
+
+
+        <!-- Housing type-->
+        <h3>Housing Type:</h3>
+        <hr>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="house_apartment">
+          <label class="form-check-label" for="house_apartment">
+            Apartment
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="house_townhouse">
+          <label class="form-check-label" for="house_townhouse">
+            Townhouse
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="house_condo">
+          <label class="form-check-label" for="house_condo">
+            Condo
+          </label>
+        </div><br /><br />
+        <label for="customRange3" class="form-label">Importance</label>
+        <input type="range" class="form-range" min="0" max="10" step="0.5" id="house_rangeBar"><br /><br />
+
+
+        <!--Sleeping Habits-->
+        <h3>When I Sleep I Prefer:</h3>
+        <hr>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="sleep_noNoise">
+          <label class="form-check-label" for="sleep_noNoise">
+            No noise
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="sleep_aLittleNoise">
+          <label class="form-check-label" for="sleep_aLittleNoise">
+            A little noise
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="sleep_aLotOfNoise">
+          <label class="form-check-label" for="sleep_anyNoise">
+            I don't care about it
+          </label>
+        </div><br /><br />
+
+        <label for="customRange3" class="form-label">Importance</label>
+        <input type="range" class="form-range" min="0" max="10" step="0.5" id="sleep_rangeBar"><br /><br />
+
+        <!-- Roommate -->
+        <h3>I Expect My Roommate To Be:</h3>
+        <hr>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="clean_very">
+          <label class="form-check-label" for="clean_very">
+            Very clean
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="clean_somewhat">
+          <label class="form-check-label" for="clean_somewhat">
+            Somewhat clean
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="clean_not">
+          <label class="form-check-label" for="clean_not">
+            I don't care about it
+          </label>
+        </div><br /><br />
+
+        <label for="customRange3" class="form-label">Importance</label>
+        <input type="range" class="form-range" min="0" max="10" step="0.5" id="clean_rangeBar"><br /><br />
+
+        <!--Sleeping Habits-->
+        <h3>In Terms of Sharing:</h3>
+        <hr>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="share_everything">
+          <label class="form-check-label" for="share_everything">
+            I share everything
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="share_some">
+          <label class="form-check-label" for="sleep_aLittleNoise">
+            Must have my permission
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="share_none">
+          <label class="form-check-label" for="sleep_anyNoise">
+            I choose not to share my private stuff
+          </label>
+        </div><br /><br />
+
+        <label for="customRange3" class="form-label">Importance</label>
+        <input type="range" class="form-range" min="0" max="10" step="0.5" id="share_rangeBar"><br /><br />
+
+      </div>
+
+      <!--Footer-->
+      <div class="card-footer text-muted text-center">
+        <button id="preferencesSubmit" class="btn btn-primary">Submit</button>
       </div>
     </div>
+  </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+
+</body>
+
 </html>

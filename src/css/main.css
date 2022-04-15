@@ -8,7 +8,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .bg-content {
@@ -44,6 +44,10 @@
 
 .chat-msg {
     width: 42%;
+}
+
+.text-center {
+  margin-top: 30px;
 }
 
 
