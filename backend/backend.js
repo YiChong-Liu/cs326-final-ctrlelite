@@ -34,7 +34,7 @@ app.post('/login/passwd', async (req, res) => {
   if (passwordValidated) {
     const signedJWT = sign({user: options.email}, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
-    res.redirect("/userPreferences.html");
+    res.redirect("/personalProfile.html");
   } else {
     res.status(401).send("BOO");
   }
@@ -74,11 +74,24 @@ app.put('/users/newUser', (req, res) => {
 // Update a User's Preferences
 app.put('/update/userPreferences', (req, res) => {
   // Get userID and Preference Object from request
-  const uID = req.query.userID;
-  const pref = JSON.parse(req.query.preferences);
+  console.log(req.body);
+  const uID = req.body.userID;
+  const pref = req.body.preferences;
 
   // Attempt to update this user's preferencess
   const result = db.updateUserPreferences(uID, pref);
+
+  // Response
+  res.status(200).send({worked: result, user: uID, preferences: pref});
+});
+// Update a User's Preferences
+app.put('/update/userProfile', (req, res) => {
+  // Get userID and Preference Object from request
+  const uID = req.query.userID;
+  const profile = JSON.parse(req.body);
+
+  // Attempt to update this user's preferencess
+  const result = db.updateUserProfile(uID, profile);
 
   // Response
   res.status(200).send({worked: result, user: uID, preferences: pref});

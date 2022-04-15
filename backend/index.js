@@ -6,7 +6,7 @@ import backendRouter from './backend.js';
 const app = express();
 const port = 3000;
 app.use(logger('dev'));
-app.use('/', express.static('../src'));
+app.use('/', express.static('./src'));
 app.use('/api', backendRouter);
 
 

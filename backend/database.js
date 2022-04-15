@@ -141,7 +141,7 @@ export function getUserData(userID){
     const preferences = find("Preferences", `userID='${userID}'`);
     const profile = find("Profile", `userID='${userID}'`)
 
-    return {user_ID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{name:randomName, bio:loremBio, profilePicture:randomImg}}
+    return {user_ID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{userName:randomName, bio:loremBio, profilePicture:randomImg}}
 }
 
 /** Checks if the user is in the database
@@ -237,6 +237,19 @@ export function updateUserPreferences(userID, userPreferences){
         preferences.push({Column:key, Data:userPreferences[key]});
     }
     return findAndUpdate("Preferences", `userID='${userID}'`, preferences);
+}
+
+/**Updates the user profile in the database
+ * 
+ * @param {String} userID UserID to update
+ * @param {Object} userProfile New Profile
+ */
+ export function updateUserProfile(userID, userProfile){
+    let profile = [];
+    for(const key of Object.keys(userProfile)){
+        profile.push({Column:key, Data:userProfile[key]});
+    }
+    return findAndUpdate("Profiles", `userID='${userID}'`, profile);
 }
 
 /**Updates the given users password in the database
