@@ -1,3 +1,5 @@
+import * as utils from "main.js";
+
 const profilePicture = document.getElementById('profile-picture');
 const uploadImg = document.getElementById('img-upload');
 const saveProfile = document.getElementById('save-profile');
@@ -16,5 +18,6 @@ uploadImg.addEventListener("change", (e) => {
 });
 
 saveProfile.addEventListener("click", async(e) => {
-    await fetch("/api/update/userProfile", {method:"PUT", body: {bio: bio.value, profilePicture: profilePicture, userName: nameField}});
+    
+    let response = await fetch('/api/update/userProfile', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'userID': "user", 'profile': {userName: nameField.value, bio: bio.value, profilePicture: profilePicture.src}})});
 });

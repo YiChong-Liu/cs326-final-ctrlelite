@@ -87,14 +87,15 @@ app.put('/update/userPreferences', (req, res) => {
 // Update a User's Preferences
 app.put('/update/userProfile', (req, res) => {
   // Get userID and Preference Object from request
-  const uID = req.query.userID;
-  const profile = JSON.parse(req.body);
+  console.log(req.body);
+  const uID = req.body.userID;
+  const profile = req.body.profile;
 
   // Attempt to update this user's preferencess
   const result = db.updateUserProfile(uID, profile);
 
   // Response
-  res.status(200).send({worked: result, user: uID, preferences: pref});
+  res.status(200).send({worked: result, user: uID, profile: profile});
 });
 // Update/Change a User's Password
 app.put('/update/userPassword', (req, res) => {
