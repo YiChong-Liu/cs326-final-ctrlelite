@@ -141,7 +141,7 @@ export function getUserData(userID){
     const preferences = find("Preferences", `userID='${userID}'`);
     const profile = find("Profile", `userID='${userID}'`)
 
-    return {uID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{name:randomName, bio:loremBio, profilePicture:randomImg}}
+    return {user_ID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{name:randomName, bio:loremBio, profilePicture:randomImg}}
 }
 
 /** Checks if the user is in the database

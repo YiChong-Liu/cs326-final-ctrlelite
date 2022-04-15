@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
 
-    <title>Profile</title>
+    <title>Personal Profile</title>
   </head>
   <body>
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -29,19 +29,17 @@
     </header>
 
     <div class="row d-flex justify-content-center">
-        <div class="col-sm m-auto text-center">
-            <button id="goLeft" class="btn btn-primary btn-block mb-3">&lt;</button>
-        </div>
         <!--Grid column-->
         <div class="col-md-6 bg-light rounded-4 p-20">
-            <h1 class="text-center">User Profile</h1>
+            <h1 class="text-center">My Profile</h1>
             <img src="https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png" class="rounded mx-auto d-block" width="75%" id="profile-picture">
+            <div class="col-sm text-center">
+                <button id="profile-picture-btn" class="btn btn-primary btn-block mb-3 m-3">Change My Profile Picture</button>
+            </div>
             <div class="text-left mt-5">
                 <h3 id="fullname">Firstname Lastname</h3><br>
                 <h5>Biography:</h5>
-                <p class="text-box">
-                    Lorem ipsum dolor sit amet, error fabellas interesset at pri, id nam detraxit constituam. In vim eius ridens consequuntur, eam ipsum epicurei eu. Facer veniam consul sea ea. At atomorum efficiendi signiferumque pri, ne dolorem erroribus salutatus quo, ad possit quodsi mea. Ea corrumpit intellegebat mei. Idque definiebas inciderint ad est, vix ut brute docendi.
-                </p>
+                <textarea rows=10 class="bio-box text-left"></textarea>
             </div>
             <p>Housing Preference: Apartment</p>
             <p>Budget: $900-$1300</p>
@@ -50,15 +48,12 @@
             <br>
             <div class="row">
                 <div class="col-sm text-center">
-                    <button id="reject" class="btn btn-primary btn-block mb-3">No thanks</button>
+                    <button id="edit-preferences" class="btn btn-primary btn-block mb-3">Edit My Preferences</button>
                 </div>
                 <div class="col-sm text-center">
-                    <button id="accept" class="btn btn-primary btn-block mb-3">I'm interested</button>
+                    <button id="save-profile" class="btn btn-primary btn-block mb-3">Save profile changes</button>
                 </div>
             </div>
-        </div>
-        <div class="col-sm m-auto text-center">
-            <button id="goRight" class="btn btn-primary btn-block mb-3">&gt;</button>
         </div>
     </div>
 
