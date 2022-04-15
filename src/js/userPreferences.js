@@ -2,15 +2,7 @@
 // Document Nodes //
 //----------------//
 
-function parseJwt (token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-};
+import { parseJwt } from "./main.js";
 
 // Gender
 let male_genderRadio = document.getElementById('gender_male');
@@ -53,15 +45,17 @@ let shareImportanceBar = document.getElementById('share_rangeBar');
 
 // Event Listener for the Submit Button
 document.getElementById('preferencesSubmit').addEventListener('click', async function(x) {
-
+    // Declare preference variables
     let g, a, h, s, c, sh;
 
+    // Gender Preferences
     if(male_genderRadio.checked) { g = 'male'; }
     if(female_genderRadio.checked) { g = 'female'; }
     if(nonbinary_genderRadio.checked) { g = 'non-binary'; }
     if(any_genderRadio.checked) { g = 'any-gender'; }
     let genderImportance = genderImportanceBar.value;
 
+    // Age Preferences
     if(teen_ageRadio.checked) { a = 'teenage'; }
     if(middle_ageRadio.checked) { a = 'middle-age'; }
     if(senior_ageRadio.checked) { a = 'senior'; }
@@ -69,26 +63,31 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
     if(any_ageRadio.checked) { a = 'any-age'; }
     let ageImportance = ageImportanceBar.value;
 
+    // Housing Preferences
     if(apartment_housingRadio.checked) { h = 'apartment'; }
     if(townhouse_housingRadio.checked) { h = 'townhouse'; }
     if(condo_housingRadio.checked) { h = 'condo'; }
     let housingImportance = housingImportanceBar.value;
 
+    // Sleeping noise Preferences
     if(noNoise_sleepRadio.checked) { s = 'no-noise'; }
     if(aLittleNoise_sleepRadio.checked) { s = 'a-little-noise'; }
     if(aLotOfNoise_sleepRadio.checked) { s = 'a-lot-of-noise'; }
     let sleepImportance = sleepImportanceBar.value;
 
+    // Cleanliness Preferences
     if(very_cleanRadio.checked) { c = 'no-noise'; }
     if(somewhat_cleanRadio.checked) { c = 'a-little-noise'; }
     if(not_cleanRadio.checked) { c = 'a-lot-of-noise'; }
     let cleanImportance = cleanImportanceBar.value;
 
+    // Sharing Preferences
     if(everything_shareRadio.checked) { sh = 'everything'; }
     if(some_shareRadio.checked) { sh = 'some'; }
     if(none_shareRadio.checked) { sh = 'nothing'; }
     let shareImportance = shareImportanceBar.value;
 
+    // Create the preferences object
     let userPreferences = {
         gender: g, gender_importance: genderImportance,
         age: a, age_importance: ageImportance,
@@ -104,6 +103,7 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
     if(response.ok){
         let matchJSON = await response.json();
         console.log(matchJSON);
+        alert('Preferences Saved!');
     } else {
         console.log('ERROR: failed to update preferences');
     }
