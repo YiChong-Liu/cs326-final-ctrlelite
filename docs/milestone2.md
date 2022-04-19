@@ -388,6 +388,6 @@ Liam: Database.js, faker integration, API documentation, userProfile.js
 
 Ben: API endpoints in backend.js, userPreferences.js, chat.js, main.js, index.js
 
-Conlan: API endpoints in backend.js, JWT authentication, Heroku Deployment
+Conlan: API endpoints in backend.js, index.js split, JWT authentication, Heroku Deployment
 
 Yichong:  footer, location, background image, icon, logo design, main.js, signup.js
