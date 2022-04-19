@@ -144,7 +144,7 @@ app.put('/update/userPassword', (req, res) => {
 
   // Get userID and new password from request
   const uID = authInfo.data.user;
-  const pass = req.query.password;
+  const pass = req.body.password;
 
   const result = db.updateUserPassword(uID, pass);
 
@@ -168,8 +168,8 @@ app.post('/msg/newChatMsg', (req, res) => {
 
   // Get from and to user and the msg
   const sender = authInfo.data.user;
-  const receiver = req.query.user2;
-  const msg = req.query.msg;
+  const receiver = req.body.user2;
+  const msg = req.body.msg;
 
   // TODO actual databasing
   const result = db.createMessage(sender, receiver, msg);
@@ -301,7 +301,7 @@ app.delete('/delete/match', (req, res) => {
 
   // Get Data from the Request
   const ufID = authInfo.data.user;
-  const mtID = req.query.matchToID;
+  const mtID = req.body.matchToID;
 
   // Attempt to Delete this match
   const result = db.deleteMatch(ufID, mtID);
