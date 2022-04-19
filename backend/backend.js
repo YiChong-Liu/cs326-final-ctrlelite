@@ -1,6 +1,6 @@
 import express from 'express';
 import jwtSigner from 'jsonwebtoken';
-const { sign } = jwtSigner;
+const { sign, verify } = jwtSigner;
 import jwt from 'express-jwt';
 import cookieParser from 'cookie-parser';
 import * as db from './database.js';
@@ -19,7 +19,7 @@ app.use(jwt({
   algorithms: ['HS256'],
   getToken: function fromHeaderOrCookie(req) {
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-        return req.headers.authorization.split(' ')[1];
+      return req.headers.authorization.split(' ')[1];
     } else if (req.cookies && req.cookies.auth) {
       return req.cookies.auth;
     }
@@ -40,6 +40,20 @@ app.post('/login/passwd', async (req, res) => {
   }
 });
 
+function validateUser(token) {
+  try {
+    const tokenDecodedData = verify(token, SUPER_SECRET);
+    return ({
+      error: false,
+      data: tokenDecodedData
+    });
+  } catch (error) {
+    return ({
+      error: true,
+      //data: error
+    });
+  }
+}
 
 // PUT
 
@@ -59,8 +73,6 @@ app.put('/matches/acceptedMatch', (req, res) => {
 });
 // Add a new User
 app.put('/users/newUser', (req, res) => {
-  // TODO authenticate & authorize via JWT
-
   // Get the user and their proposed partner
   const e = req.query.email;
   const pass = req.query.password;
@@ -73,9 +85,16 @@ app.put('/users/newUser', (req, res) => {
 });
 // Update a User's Preferences
 app.put('/update/userPreferences', (req, res) => {
+  const authInfo = validateUser(req.cookies["auth"]);
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  } else {
+    console.log(`Updating ${authInfo.data.user}'s preferences`);
+  }
+
   // Get userID and Preference Object from request
-  console.log(req.body);
-  const uID = req.body.userID;
+  const uID = authInfo.data.user;
   const pref = req.body.preferences;
 
   // Attempt to update this user's preferencess
@@ -172,7 +191,7 @@ app.get('/matches/potentialMatches', (req, res) => {
   for(let i = 0; i < 10; ++i){
     matches.push(db.getUserData(id));
   }
-  
+
   // Send Response
   res.status(200).send({worked: true, userID: id, potentialMatches: matches});
 });
