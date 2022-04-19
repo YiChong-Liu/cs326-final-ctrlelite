@@ -386,8 +386,8 @@ https://therentern.herokuapp.com/
 
 Liam: Database.js, faker integration, API documentation, userProfile.js
 
-Ben: API endpoints in backend.js, userPreferences.js, chat.js, signup.js, main.js, index.js
+Ben: API endpoints in backend.js, userPreferences.js, chat.js, main.js, index.js
 
-Conlan: API endpoints in backend.js, JWT authentication, Heoku Deployment
+Conlan: API endpoints in backend.js, JWT authentication, Heroku Deployment
 
-Yichong: 
+Yichong:  footer, location, background image, icon, logo design, main.js, signup.js
