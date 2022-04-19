@@ -58,15 +58,16 @@ function validateUser(token) {
 // PUT
 
 // Accept a new Match
-app.put('/matches/acceptedMatch', (req, res) => {
+app.put('/matches/acceptMatch', (req, res) => {
   // TODO authenticate & authorize via JWT
+
 
   // Get the user and their proposed partner
   const otherGuy = req.query.secondaryUserID;
   const myself = req.query.primaryUserID;
 
   // TODO database call to run them
-  const result = db.createMatch(otherGuy, myself);
+  const result = db.acceptMatch(otherGuy, myself);
 
   // TODO return HTTP header / JSON response with real data
   res.status(200).send({worked: result, otherUser: otherGuy, matchAccepted: true});
