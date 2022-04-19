@@ -18,6 +18,8 @@
 - [Delete Operations](#delete-operations)
   - [DELETE /api/delete/user](#delete-apideleteuser)
   - [DELETE /api/delete/match](#delete-apideletematch)
+- [Heroku Deployment](#heroku-link)
+- [Division of Labor](#division-of-labor)
 
 
 
@@ -384,26 +386,8 @@ https://therentern.herokuapp.com/
 
 Liam: Database.js, faker integration, API documentation, userProfile.js
 
-Ben: API endpoints, userPreferences.js, chat.js
+Ben: API endpoints in backend.js, userPreferences.js, chat.js, signup.js, main.js, index.js
 
-Conlan: JWT authentication, Heoku Deployment
+Conlan: API endpoints in backend.js, JWT authentication, Heoku Deployment
 
 Yichong: 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
