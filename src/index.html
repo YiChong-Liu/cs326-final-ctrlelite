@@ -9,7 +9,12 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/main.css" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <script src="js/footer.js"></script>
+
   <title>Rentern</title>
 
   <link rel = "icon" href =
@@ -45,7 +50,7 @@
           <h2 class="mt-5 mb-5">
             <br><br><br>
             Find brilliant roommates and housings on your laptop.
-            <br><br><br><br>
+            <br><br><br>
           </h2>
 
           <a href="login.html" type="submit" class="btn btn-success btn-block mb-3 btn-lg">Begin your journey here -></a>
@@ -54,10 +59,48 @@
 
     </div>
   </div>
+  <div class="main-wrap">
+    <div class="footer-wrap">
+        <div class="footer-wrap-1">
+            <div class="footer-section">
+                <h1>About</h1>
+                <div class="popup" onclick="footerFunction()">Pricing
+                  <span class="popuptext" id="myPopup">We are a non-profit organization</span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h1>Resources</h1>
+                <a href="https://github.com/YiChong-Liu/cs326-final-ctrlelite">Docs</a>
+                <a href="https://github.com/YiChong-Liu/cs326-final-ctrlelite">Videos</a>
+            </div>
+            <div class="footer-section">
+                <h1>Contact</h1>
+                <a href="#">Email</a>
+                <a href="staff.html">Staff</a>
+            </div>
+            <div class="footer-section">
+                <h1>Stay Connected</h1>
+                <p>Subscribe to our newsletter to receive latest news.</p>
+                <form action="">
+                    <input type="email" name="email" id="email" placeholder="Enter Email Address">
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="first-box">
+            <a href="terms.html" target="popup" onclick="window.open('terms.html','popup','width=600,height=600');">Terms & Conditions</a>
+        </div>
+        <div class="last-box">
+            <a href="#">&copy; Copyright 2022 Rentern. Inc</a>
+        </div>
+    </div>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+  crossorigin="anonymous"></script>
 </body>
 
 </html>
