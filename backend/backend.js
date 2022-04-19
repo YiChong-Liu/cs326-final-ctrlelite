@@ -59,30 +59,36 @@ function validateUser(token) {
 
 // Accept a new Match
 app.put('/matches/acceptMatch', (req, res) => {
-  // TODO authenticate & authorize via JWT
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
 
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
 
   // Get the user and their proposed partner
-  const otherGuy = req.query.secondaryUserID;
-  const myself = req.query.primaryUserID;
+  const otherGuy = req.body.secondaryUserID;
+  const myself = authInfo.data.user;
 
   // TODO database call to run them
   const result = db.acceptMatch(otherGuy, myself);
 
   // TODO return HTTP header / JSON response with real data
-  res.status(200).send({worked: result, otherUser: otherGuy, matchAccepted: true});
+  res.status(200).send({worked: result, user2: otherGuy});
 });
 // Add a new User
 app.put('/users/newUser', (req, res) => {
   // Get the user and their proposed partner
-  const e = req.query.email;
-  const pass = req.query.password;
+  const e = req.body.email;
+  const pass = req.body.password;
 
   // TODO database call to run them
   const result = db.createNewUser(e, pass);
 
   // TODO return HTTP header / JSON response with real data
-  res.status(200).send({accepted: result, email: e, password: pass});
+  res.status(200).send({worked: result, email: e, password: pass});
 });
 // Update a User's Preferences
 app.put('/update/userPreferences', (req, res) => {
@@ -106,9 +112,17 @@ app.put('/update/userPreferences', (req, res) => {
 });
 // Update a User's Preferences
 app.put('/update/userProfile', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get userID and Preference Object from request
-  console.log(req.body);
-  const uID = req.body.userID;
+  const uID = authInfo.data.user;
   const profile = req.body.profile;
 
   // Attempt to update this user's preferencess
@@ -119,8 +133,17 @@ app.put('/update/userProfile', (req, res) => {
 });
 // Update/Change a User's Password
 app.put('/update/userPassword', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get userID and new password from request
-  const uID = req.query.userID;
+  const uID = authInfo.data.user;
   const pass = req.query.password;
 
   const result = db.updateUserPassword(uID, pass);
@@ -134,9 +157,18 @@ app.put('/update/userPassword', (req, res) => {
 
 // Send a Message
 app.post('/msg/newChatMsg', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get from and to user and the msg
-  const sender = req.query.userFrom;
-  const receiver = req.query.userTo;
+  const sender = authInfo.data.user;
+  const receiver = req.query.user2;
   const msg = req.query.msg;
 
   // TODO actual databasing
@@ -150,8 +182,17 @@ app.post('/msg/newChatMsg', (req, res) => {
 
 // Grab a Conversation of Messages
 app.get('/msg/fetch', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get Data from the Request
-  const sender = req.query.userFrom;
+  const sender = authInfo.data.user;
   const receiver = req.query.userTo;
   const amt = req.query.msgAmt;
 
@@ -159,34 +200,61 @@ app.get('/msg/fetch', (req, res) => {
   const data = db.getMessages(sender, receiver, amt);
 
   // Send Response
-  res.status(200).send({worked: true, messageData: data});
+  res.status(200).send({worked: true, msg_object: data});
 });
 // Grab a User's Matches
 app.get('/matches', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get Data from the Request
-  const id = req.query.user;
+  const id = authInfo.data.user;
 
   // Gather user Matches
   const data = db.getMatches(id);
 
   // Send Response
-  res.status(200).send({worked: true, user_ID: id, user_matches: data});
+  res.status(200).send({worked: true, user: id, user_matches: data});
 });
 // Grab a User's Profile and Preferences
 app.get('/user/data', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get Data from the Request
-  const id = req.query.user;
+  const id = authInfo.data.user;
 
   // Gather user Data
   const data = db.getUserData(id);
 
   // Send Response
-  res.status(200).send({worked: true, user_ID: id, user_data: data});
+  res.status(200).send({worked: true, user: id, user_data: data});
 });
 // Grab a User's Matches
 app.get('/matches/potentialMatches', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get Data from the Request
-  const id = req.query.user;
+  const id = authInfo.data.user;
 
   let matches = [];
   for(let i = 0; i < 10; ++i){
@@ -194,7 +262,7 @@ app.get('/matches/potentialMatches', (req, res) => {
   }
 
   // Send Response
-  res.status(200).send({worked: true, userID: id, potentialMatches: matches});
+  res.status(200).send({worked: true, user: id, potential_matches: matches});
 });
 
 
@@ -202,26 +270,44 @@ app.get('/matches/potentialMatches', (req, res) => {
 
 // Delete a User
 app.delete('/delete/user', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get Data from the Request
-  const id = req.query.userID;
+  const id = authInfo.data.userID;
 
   // Attempt to delete this user
   const result = db.deleteUser(id);
 
   // Send Response
-  res.status(200).send({worked: result, userID: id});
+  res.status(200).send({worked: result, user: id});
 });
 // Delete a Match
 app.delete('/delete/match', (req, res) => {
+  // authenticate & authorize via JWT
+  const authInfo = validateUser(req.cookies["auth"]);
+
+  // If we are not validated, return a 401 error
+  if (authInfo.error) {
+    // unauthenticated
+    return res.status(401).send();
+  }
+
   // Get Data from the Request
-  const ufID = req.query.userFromID;
+  const ufID = authInfo.data.user;
   const mtID = req.query.matchToID;
 
   // Attempt to Delete this match
   const result = db.deleteMatch(ufID, mtID);
 
   // Send Response
-  res.status(200).send({worked: result, userFrom: ufID, userTo: mtID});
+  res.status(200).send({worked: result, user: ufID, user2: mtID});
 });
 
 export default app;
