@@ -84,7 +84,7 @@ function findAndDelete(database, whereQuery){
  */
 
 /** Creates a new user in the users table
- * 
+ *
  * @param {String} email User email
  * @param {String} password User password
  * @returns {Boolean} Returns if the insert was successfull
@@ -96,17 +96,17 @@ export function createNewUser(email, password){
 }
 
 /** Creates a new match between two users
- * 
+ *
  * @param {String} userID1 User1 ID
  * @param {String} userID2 User2 ID
  * @returns {Boolean} Returns if the insert was successfull
  */
-export function createMatch(userID1, userID2){
+export function acceptMatch(userID1, userID2){
     return insert('Matches', [{Column: 'userID1', Data: userID1}, {Column: 'userID2', Data:userID2}]);
 }
 
 /** Adds a new message between two users.
- * 
+ *
  * @param {String} userFromID The user sending the message
  * @param {String} userToID The user recieving the message
  * @param {String} Message The message sent
@@ -145,7 +145,7 @@ export function getUserData(userID){
 }
 
 /** Checks if the user is in the database
- * 
+ *
  * @param {String} userID UserID to check
  * @returns Boolean if the user exists in the database
  */
@@ -154,9 +154,9 @@ export function idExists(userID){
 }
 
 /**Checks if a match between users exists
- * 
- * @param {String} userID1 
- * @param {String} userID2 
+ *
+ * @param {String} userID1
+ * @param {String} userID2
  * @returns Boolean
  */
 export function matchExists(userID1, userID2){
@@ -206,8 +206,8 @@ export function getMatches(userID){
 }
 
 /**
- * 
- * @param {String} userID 
+ *
+ * @param {String} userID
  * @returns {String} Returns the hashed users password stored in the db
  */
 export function getPasswordHash(userID){
@@ -227,7 +227,7 @@ export function getPasswordHash(userID){
  */
 
 /**Updates the user preferences in the database
- * 
+ *
  * @param {String} userID UserID to update
  * @param {Object} userPreferences New Preferences
  */
@@ -240,7 +240,7 @@ export function updateUserPreferences(userID, userPreferences){
 }
 
 /**Updates the user profile in the database
- * 
+ *
  * @param {String} userID UserID to update
  * @param {Object} userProfile New Profile
  */
@@ -253,10 +253,10 @@ export function updateUserPreferences(userID, userPreferences){
 }
 
 /**Updates the given users password in the database
- * 
+ *
  * @param {String} userID UserID to update
  * @param {String} password New password
- * @returns 
+ * @returns
  */
 export function updateUserPassword(userID, password){
     return findAndUpdate("Users", `userID=${userID}`, [{Column:'password', Data:`'${password}'`}]);
@@ -270,8 +270,8 @@ export function updateUserPassword(userID, password){
  */
 
 /**Deletes a user from the user table
- * 
- * @param {String} userID 
+ *
+ * @param {String} userID
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 export function deleteUser(userID){
@@ -280,7 +280,7 @@ export function deleteUser(userID){
 
 
 /**Deletes matches from the Match table
- * 
+ *
  * @param {String} userID1 First user in the match
  * @param {String} userID2 Second user in the match
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise

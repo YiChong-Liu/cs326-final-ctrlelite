@@ -101,8 +101,8 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
 
     let response = await fetch('/api/update/userPreferences', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'userID': user, 'preferences': userPreferences})});
     if(response.ok){
-        let matchJSON = await response.json();
-        console.log(matchJSON);
+        let responseJSON = await response.json();
+        console.log(responseJSON);
         alert('Preferences Saved!');
     } else {
         console.log('ERROR: failed to update preferences');
