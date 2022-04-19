@@ -1,8 +1,29 @@
 
 # Milestone 2 Documentation
 
-## REST CRUD API:
+[REST CRUD API:](#rest-crud-api)
+- [Create Operations](#create-operations)
+  - [PUT /api/users/newUser:](#put-apiusersnewuser)
+  - [PUT /api/matches/acceptMatch](#put-apimatchesacceptmatch)
+  - [POST /api/msg/newChatMsg](#post-apimsgnewchatmsg)
+- [Read Operations](#read-operations)
+  - [GET /api/msg/fetch](#get-apimsgfetch)
+  - [GET /api/matches](#get-apimatches)
+  - [GET /api/user/data](#get-apiuserdata)
+  - [GET /api/matches/potentialMatches](#get-apimatchespotentialmatches)
+- [Update Operations](#update-operations)
+  - [PUT /api/update/userPreferences](#put-apiupdateuserpreferences)
+  - [PUT /api/update/userProfile](#put-apiupdateuserprofile)
+  - [PUT /api/update/userPassword](#put-apiupdateuserpassword)
+- [Delete Operations](#delete-operations)
+  - [DELETE /api/delete/user](#delete-apideleteuser)
+  - [DELETE /api/delete/match](#delete-apideletematch)
+- [Heroku Deployment](#heroku-link)
+- [Division of Labor](#division-of-labor)
 
+
+
+## REST CRUD API:
 
 <br>
 
@@ -337,18 +358,36 @@ Response:
 }
 ```
 
+<br>
 
+# CRUD Screenshots
 
+When the signup button is clicked, /api/users/newUser is called to createa new user in the user DB. Database is not implemented yet.
 
+![Create](./milestone2imgs/create.png)
 
+When the chat page is loaded, it recieves the 20 most recent messages from each user and loads it in using /api/msg/fetch.
 
+![Read](./milestone2imgs/read.png)
 
+When the user clicks save preferences, it updates the user's preferences in the database using /api/update/userPreferences.
 
+![Update](./milestone2imgs/update.png)
 
+When the user clicks unmatch it deletes the match in the matches database using /api/delete/match.
 
+![Delete](./milestone2imgs/delete.png)
 
+# Heroku Link
 
+https://therentern.herokuapp.com/
 
+# Division of Labor
 
+Liam: Database.js, faker integration, API documentation, userProfile.js
 
+Ben: API endpoints in backend.js, userPreferences.js, chat.js, signup.js, main.js, index.js
 
+Conlan: API endpoints in backend.js, JWT authentication, Heoku Deployment
+
+Yichong: 
