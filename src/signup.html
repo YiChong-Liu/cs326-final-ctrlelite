@@ -6,6 +6,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <script type="text/javascript">
+    window.history.forward();
+    function noBack() {
+        window.history.forward();
+    }
+  </script>
+
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -80,8 +89,8 @@
                 </div>
 
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-3" id="submit_button"><a
-                    class="text-white" href="userPreferences.html">Sign up</a></button>
+                <a href="userPreferences.html" type="submit" class="btn btn-primary btn-block mb-3">Sign up</a>
+                <br><br><br><br><br><br><br><br><br>
               </form>
 
               <!--</form>-->

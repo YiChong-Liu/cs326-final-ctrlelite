@@ -390,4 +390,4 @@ Ben: API endpoints in backend.js, userPreferences.js, chat.js, main.js, index.js
 
 Conlan: API endpoints in backend.js, JWT authentication, Heroku Deployment
 
-Yichong:  footer, location, background image, icon, logo design, main.js, signup.js
+Yichong:  Polish the front end (footer, login page, background, icon, logo), main.js, signup.js
