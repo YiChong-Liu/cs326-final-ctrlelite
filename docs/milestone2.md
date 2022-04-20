@@ -171,17 +171,21 @@ Response:
 
 ## GET /api/user/data
 
+Fetches the profile and preferences of the given user.
+
 Requires JWT authentication: TRUE
+
+Query Parameter: user
 
 Example Fetch:
 ```
-await fetch('/api/user/data');
+await fetch('/api/user/data?user=1234');
 ```
 Response:
 ```
 {
     "worked" : true,
-    "user" : "10290291", //This comes from the JWT in the cookie
+    "user" : "1234",
     "potential_matches" : ["1", "2", "3", ...]
 }
 ```
