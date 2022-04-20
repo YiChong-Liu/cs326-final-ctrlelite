@@ -58,7 +58,7 @@ if(params.has('userID2')) {
     let response = await fetch('/api/msg/fetch?userFrom=' + user1 + '&userTo=' + user2 + '&msgAmt=' + msgCount);
     if(response.ok){
         let msgJSON = await response.json();
-        msgData = msgJSON.messageData;
+        msgData = msgJSON.msg_object;
     } else {
         console.log('ERROR: failed to update preferences');
     }

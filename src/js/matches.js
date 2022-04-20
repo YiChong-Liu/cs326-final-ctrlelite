@@ -35,7 +35,7 @@ function newMatch(user_data){
     let chatButton = document.createElement('a');
     chatButton.classList.add("btn", "btn-primary", "btn-block", "mb-3");
     chatButton.innerHTML = "Chat";
-    chatButton.href = `chat.html?userID2=${user_data.user_ID}`;
+    chatButton.href = `chat.html?userID2=${user_data.profile.userName}`;
     buttonDIV.appendChild(chatButton);
     let removeButton = document.createElement('a');
     removeButton.classList.add("btn", "btn-primary", "btn-danger", "mb-3")
