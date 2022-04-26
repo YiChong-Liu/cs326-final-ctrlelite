@@ -1,5 +1,6 @@
 import * as fakerObj from '@faker-js/faker';
 import pg from 'pg';
+import fs from 'fs';
 const faker = fakerObj.default;
 
 const client = new pg.Client({
