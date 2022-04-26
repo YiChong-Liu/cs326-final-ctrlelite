@@ -10,7 +10,7 @@
   <script type="text/javascript">
     window.history.forward();
     function noBack() {
-        window.history.forward();
+      window.history.forward();
     }
   </script>
 
@@ -25,93 +25,85 @@
   <script type="module" src="js/signup.js"></script>
   <link rel="stylesheet" href="css/main.css" />
   <title>Sign Up | Rentern</title>
-  <link rel = "icon" href =
-  "img/icon.jpg"
-          type = "image/x-icon">
+  <link rel="icon" href="img/icon.jpg" type="image/x-icon">
 </head>
 
 <body>
-  <div class="bg-wrap">
-    <img class="bg-bg" src="img/background3.jpg" alt="">
-    <div class="bg-content">
-      <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom bg-white">
-        <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-          <svg class="bi me-2" width="40" height="32">
-            <use xlink:href="#bootstrap"></use>
-          </svg>
-          <img class="bg-logo" src="img/logo.jpg" alt="">
-        </a>
+  <div class="background3"></div>
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom bg-white">
+    <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+      <img class="bg-logo" src="img/logo.jpg" alt="">
+    </a>
 
-        <ul class="nav nav-pills">
-          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="login.html" class="nav-link active" aria-current="page">Login</a></li>
-        </ul>
-      </header>
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="login.html" class="nav-link active" aria-current="page">Login</a></li>
+    </ul>
+  </header>
 
-      <!--Grid row-->
-      <div class="row d-flex justify-content-center">
+  <!--Grid row-->
+  <div class="row d-flex justify-content-center">
 
-        <!--Grid column-->
-        <div class="col-md-6">
+    <!--Grid column-->
+    <div class="col-md-6">
 
-          <h1 class="text-center">Sign Up</h1>
-          <br>
-          <div>
-            <!--<form> comment until it does something so the userPreferences button moves you along-->
-            <div class="text-center mb-3">
-              <!-- Name input -->
-              <div class="form-outline mb-4">
-                <input type="text" id="registerName" class="form-control" />
-                <label class="form-label" for="registerName">Name</label>
-              </div>
+      <h1 class="text-center">Sign Up</h1>
+      <br>
+      <div>
+        <!--<form> comment until it does something so the userPreferences button moves you along-->
+        <div class="text-center mb-3">
+          <!-- Name input -->
+          <div class="form-outline mb-4">
+            <input type="text" id="registerName" class="form-control" />
+            <label class="form-label" for="registerName">Name</label>
+          </div>
 
-              <!-- Email input -->
-              <div class="form-outline mb-4">
-                <input type="email" id="registerEmail" class="form-control" />
-                <label class="form-label" for="registerEmail">Email</label>
-              </div>
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <input type="email" id="registerEmail" class="form-control" />
+            <label class="form-label" for="registerEmail">Email</label>
+          </div>
 
-              <!-- Password input -->
-              <div class="form-outline mb-4">
-                <input type="password" id="registerPassword" class="form-control" />
-                <label class="form-label" for="registerPassword">Password</label>
-              </div>
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+            <input type="password" id="registerPassword" class="form-control" />
+            <label class="form-label" for="registerPassword">Password</label>
+          </div>
 
-              <!-- Checkbox -->
-              <form method="post">
-                <div class="form-check d-flex justify-content-center mb-4">
-                  <input class="form-check-input me-2" type="checkbox" value="1" id="registerCheck"
-                    aria-describedby="registerCheckHelpText" />
-                  <label class="form-check-label" for="registerCheck">
-                    I have read and agree to the <a href="terms.html" target="popup"
-                      onclick="window.open('terms.html','popup','width=600,height=600');">terms</a>
-                  </label>
-                </div>
-
-                <!-- Submit button -->
-                <a href="userPreferences.html" type="submit" class="btn btn-primary btn-block mb-3">Sign up</a>
-                <br><br><br><br><br><br><br><br><br>
-              </form>
-
-              <!--</form>-->
+          <!-- Checkbox -->
+          <form method="post">
+            <div class="form-check d-flex justify-content-center mb-4">
+              <input class="form-check-input me-2" type="checkbox" value="1" id="registerCheck"
+                aria-describedby="registerCheckHelpText" />
+              <label class="form-check-label" for="registerCheck">
+                I have read and agree to the <a href="terms.html" target="popup"
+                  onclick="window.open('terms.html','popup','width=600,height=600');">terms</a>
+              </label>
             </div>
 
-          </div>
-          <!--Grid column-->
+            <!-- Submit button -->
+            <a href="userPreferences.html" type="submit" class="btn btn-primary btn-block mb-3">Sign up</a>
+            <br><br><br><br><br><br><br><br><br>
+          </form>
 
+          <!--</form>-->
         </div>
-        <!--Grid row-->
-      </div>
 
+      </div>
+      <!--Grid column-->
 
     </div>
+    <!--Grid row-->
   </div>
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

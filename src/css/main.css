@@ -1,3 +1,56 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  z-index: -10;
+  zoom: 1;
+  background-color: #fff;
+  background: url(../img/background2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-position: center 0;
+}
+
+.background2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  z-index: -10;
+  zoom: 1;
+  background-color: #fff;
+  background: url(../img/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-position: center 0;
+}
+
+.background3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  z-index: -10;
+  zoom: 1;
+  background-color: #fff;
+  background: url(../img/background3.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-position: center 0;
+}
 .bg-wrap {
     overflow: hidden;
     position: relative;
@@ -17,11 +70,6 @@
   width: 144px;
   height: 72px;
   background-repeat: no-repeat;
-}
-.bodybg {
-  background: url('');
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .bg-content {
@@ -61,8 +109,11 @@
 
 .text-center {
   margin-top: 20px;
+  color:white;
 }
-
+.text-center2 {
+  text-align: center;
+}
 .googleLoginHint {
 
   font-size: larger;
@@ -178,3 +229,19 @@
     font-size: 3.5em;
   }
 }
+
+.social-icon {
+  color:white;
+  transition: color 0.2s;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.social-icon:hover {
+  color:grey;
+}
+
+#social_media {
+  text-align: center;
+}
+

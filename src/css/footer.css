@@ -14,8 +14,7 @@
     position: relative;
 
     width: 100%;
-    padding: 32px;
-    background: rgb(46, 44, 44);
+    background: black;
 }
 
 .footer-wrap-1 {
@@ -23,9 +22,8 @@
 }
 
 .footer-section {
-    width: 22%;
     display: block;
-    padding: 10px 35px;
+    padding-left: 20%;
 }
 
 .footer-section:last-of-type {
@@ -86,7 +84,6 @@ form .btn {
     margin-top: 20px;
     width: 100%;
     height: 1px;
-    ;
     background: rgb(143, 142, 142);
 }
 
@@ -95,21 +92,6 @@ form .btn {
     text-align: center;
 }
 
-.social-link a {
-    text-decoration: none;
-    height: 26px;
-    display: inline-block;
-    width: 26px;
-    padding: 5px;
-    border-radius: 20px;
-    margin: 5px;
-    background: rgb(224, 222, 222);
-}
-
-.social-link a img {
-    width: 14px;
-    height: 14px;
-}
 
 .footer-bottom {
     background: rgb(12, 12, 12);
