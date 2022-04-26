@@ -1,6 +1,7 @@
 import * as fakerObj from '@faker-js/faker';
 import pg from 'pg';
-import fs from 'fs';
+import * as fs from 'fs';
+import { randomUUID } from 'crypto';
 const faker = fakerObj.default;
 
 const client = new pg.Client({
@@ -31,7 +32,7 @@ if (process.env.DATABASE_URL) {
  * @param {[{Column:String, Data:String}]} dataEntry Data to enter.
  * @return {Boolean} Returns true if it was successfully inserted, false otherwise
  */
-function insert(database, dataEntry){
+async function insert(database, dataEntry){
     let columns = '';
     let values = '';
     let i = 0;
@@ -41,7 +42,7 @@ function insert(database, dataEntry){
         i++;
     }
     let query = `INSERT INTO ${database} (${columns}) VALUES (${values});`;
-    console.log(query);
+    await client.query(query);
     return true; //TODO: Make this return success value of query
 }
 
@@ -52,10 +53,11 @@ function insert(database, dataEntry){
  * @param {String} orderBy Query to determnine the the way to order the results eg. "timestamp DESC"
  * @return {[]} Return the data found
  */
-function find(database, whereQuery, orderBy){
+async function find(database, whereQuery, orderBy){
     let query = (orderBy) ? `SELECT * FROM ${database} WHERE ${whereQuery} ORDER BY ${orderBy};` : `SELECT * FROM ${database} WHERE ${whereQuery};`;
     console.log(query);
-    return []; //TODO: Make this return data
+    let res = await client.query(query);
+    return res.rows; //TODO: Make this return data
 }
 
 
@@ -66,7 +68,7 @@ function find(database, whereQuery, orderBy){
  * @param {[{Column:String, Data:String}]} dataEntry Data to update
  * @returns {Boolean} Returns true if it was successfully updated, false otherwise
  */
-function findAndUpdate(database, whereQuery, dataEntry){
+async function findAndUpdate(database, whereQuery, dataEntry){
     let columns = '';
     let values = '';
     let i = 0;
@@ -86,7 +88,7 @@ function findAndUpdate(database, whereQuery, dataEntry){
  * @param {String} whereQuery Query to find the desired row(or rows) eg. "userFromID='1234' AND userToID='4321'"
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
-function findAndDelete(database, whereQuery){
+async function findAndDelete(database, whereQuery){
     let query = `DELETE * FROM ${database} WHERE ${whereQuery};`;
     console.log(query);
     return true; //TODO: Make this return success value of query
@@ -106,10 +108,9 @@ function findAndDelete(database, whereQuery){
  * @param {String} password User password
  * @returns {Boolean} Returns if the insert was successfull
  */
-export function createNewUser(email, password){
-    const newUUId = faker.datatype.uuid();
-
-    return insert('Users', [{Column: 'userID', Data: newUUId}, {Column: 'email', Data: email}, {Column: 'password', Data: password}]);
+export async function createNewUser(email, password){
+    const newUUId = randomUUID();
+    return await insert('users', [{Column: 'uID', Data: newUUId}, {Column: 'email', Data: email}, {Column: 'password', Data: password}]);
 }
 
 /** Creates a new match between two users
@@ -118,8 +119,10 @@ export function createNewUser(email, password){
  * @param {String} userID2 User2 ID
  * @returns {Boolean} Returns if the insert was successfull
  */
-export function acceptMatch(userID1, userID2){
-    return insert('Matches', [{Column: 'userID1', Data: userID1}, {Column: 'userID2', Data:userID2}]);
+export async function acceptMatch(userID1, userID2){
+    let res = await client.query(`select * FROM matches WHERE (uID1='${userID1}' AND uID2='${userID2}') OR (uID1='${userID2}' AND uID2='${userID1}')`);
+    console.log(res);
+    return insert('matches', [{Column: 'userID1', Data: userID1}, {Column: 'userID2', Data:userID2}]);
 }
 
 /** Adds a new message between two users.
@@ -227,11 +230,14 @@ export function getMatches(userID){
  * @param {String} userID
  * @returns {String} Returns the hashed users password stored in the db
  */
-export function getPasswordHash(userID){
+export async function getPasswordHash(userID){
     let password = faker.internet.password();
 
     //Test for sql result
-    const passwordResult = find("users", `userID='${userID}'`);
+    const passwordResult = await find("users", `userID='${userID}'`);
+    if(passwordResult.rows.length > 0){
+        console.log(passwordResult.rows[0]);
+    }
     return password;
 }
 
