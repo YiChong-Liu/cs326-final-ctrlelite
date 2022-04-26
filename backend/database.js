@@ -12,6 +12,9 @@ const client = new pg.Client({
 if (process.env.DATABASE_URL) {
     console.log("Connecting to DB...");
     client.connect();
+
+    var sql = fs.readFileSync('./backend/init_database.sql').toString();
+    client.query(sql);
 }
 
 /**-------------------------------------------------------------
