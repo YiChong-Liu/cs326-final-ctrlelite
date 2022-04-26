@@ -54,6 +54,7 @@
       <br>
       <div>
         <!--<form> comment until it does something so the userPreferences button moves you along-->
+          <form method="PUT" action="/api/users/newUser">
         <div class="text-center mb-3">
           <!-- Name input -->
           <div class="form-outline mb-4">
@@ -63,14 +64,14 @@
 
           <!-- Email input -->
           <div class="form-outline mb-4">
-            <input type="email" id="registerEmail" class="form-control" />
-            <label class="form-label" for="registerEmail">Email</label>
+            <input type="email" id="email" class="form-control" />
+            <label class="form-label" for="email">Email</label>
           </div>
 
           <!-- Password input -->
           <div class="form-outline mb-4">
-            <input type="password" id="registerPassword" class="form-control" />
-            <label class="form-label" for="registerPassword">Password</label>
+            <input type="password" id="password" class="form-control" />
+            <label class="form-label" for="password">Password</label>
           </div>
 
           <!-- Checkbox -->
