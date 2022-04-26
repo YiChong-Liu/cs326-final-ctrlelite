@@ -230,11 +230,11 @@ export function getMatches(userID){
  * @param {String} userID
  * @returns {String} Returns the hashed users password stored in the db
  */
-export async function getPasswordHash(userID){
+export async function getPasswordHash(email){
     let password = faker.internet.password();
 
     //Test for sql result
-    const passwordResult = await find("users", `userID='${userID}'`);
+    const passwordResult = await find("users", `email='${userID}'`);
     if(passwordResult.rows.length > 0){
         console.log(passwordResult.rows[0]);
     }
