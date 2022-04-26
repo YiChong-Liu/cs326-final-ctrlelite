@@ -1,5 +1,18 @@
-import * as fakerObj from '@faker-js/faker'
+import * as fakerObj from '@faker-js/faker';
+import pg from 'pg';
 const faker = fakerObj.default;
+
+const client = new pg.Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
+});
+
+if (process.env.DATABASE_URL) {
+    console.log("Connecting to DB...");
+    client.connect();
+}
 
 /**-------------------------------------------------------------
  *
