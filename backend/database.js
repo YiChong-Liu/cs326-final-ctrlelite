@@ -139,7 +139,7 @@ export async function createNewUser(email, password){
         await insert('userpreferences', [{Column: 'uID', Data: `'${newUUId}'`}]);
         await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}]);
         console.log("New User Created");
-        return true;
+        return newUUID;
     } 
     else{
         return false;

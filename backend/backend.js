@@ -89,7 +89,7 @@ app.put('/users/newUser', async (req, res) => {
   // TODO database call to run them
   const result = await db.createNewUser(e, pass);
   if(result){
-    const signedJWT = sign({user: options.email}, SUPER_SECRET, { expiresIn: '1 day' });
+    const signedJWT = sign({user: result}, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
     // TODO return HTTP header / JSON response with real data
     res.redirect(303, "/userPreferences.html");
