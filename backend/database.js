@@ -83,11 +83,10 @@ async function findAndUpdate(database, whereQuery, dataEntry){
     let values = '';
     let i = 0;
     for(const dataPoint of dataEntry){
-        columns += i !== dataEntry.length - 1 ? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
-        values += i !== dataEntry.length - 1? `${dataPoint.Data}, ` : `${dataPoint.Data}`;
+        columns += i !== dataEntry.length - 1 ? `${dataPoint.Column} = ${dataPoint.data}, ` : `${dataPoint.Column} = ${dataPoint.data}`;
         i++;
     }
-    let query = `UPDATE ${database} (${columns}) VALUES (${values}) WHERE ${whereQuery};`;
+    let query = `UPDATE ${database} SET ${columns} WHERE ${whereQuery};`;
     console.log(query);
     queryClient(query);
     return true; //TODO: Make this return success value of query
@@ -288,7 +287,7 @@ export function updateUserPreferences(userID, userPreferences){
     for(const key of Object.keys(userPreferences)){
         preferences.push({Column:key, Data:userPreferences[key]});
     }
-    return findAndUpdate("Preferences", `uID='${userID}'`, preferences);
+    return findAndUpdate("userPreferences", `uID='${userID}'`, preferences);
 }
 
 /**Updates the user profile in the database
@@ -301,7 +300,7 @@ export function updateUserPreferences(userID, userPreferences){
     for(const key of Object.keys(userProfile)){
         profile.push({Column:key, Data:`'${userProfile[key]}'`});
     }
-    return findAndUpdate("Profiles", `uID='${userID}'`, profile);
+    return findAndUpdate("userProfiles", `uID='${userID}'`, profile);
 }
 
 /**Updates the given users password in the database
