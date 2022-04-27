@@ -1,25 +1,25 @@
 
 $('#registerCheck').click(function() {
-	if ($('#submit_button').is(':disabled')) {
-    	$('#submit_button').removeAttr('disabled');
-    } else {
+	if (!$('#registerCheck').is(':checked')) {
     	$('#submit_button').attr('disabled', 'disabled');
+    } else {
+    	$('#submit_button').removeAttr('disabled');
     }
 });
 
 
-function signupUser(e, p) {
-	let response = await fetch('/users/newUser', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'email': e, 'password': p})});
+
+async function signupUser(e, p) {
+	let response = await fetch('/api/users/newUser', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'email': e, 'password': p})});
     if(response.ok){
-        let responseJSON = await response.json();
-        console.log(responseJSON);
+        window.location = response.url; 
     } else {
         console.log('ERROR: failed to update preferences');
     }
 }
 
 document.getElementById('submit_button').addEventListener('click', function(x) {
-	let e = document.getElementById('registerEmail').value;
-	let p = document.getElementById('registerPassword').value;
+	let e = document.getElementById('email').value;
+	let p = document.getElementById('password').value;
 	signupUser(e, p);
 });

@@ -54,28 +54,29 @@
       <br>
       <div>
         <!--<form> comment until it does something so the userPreferences button moves you along-->
-          <form method="PUT" action="/api/users/newUser">
         <div class="text-center mb-3">
           <!-- Name input -->
           <div class="form-outline mb-4">
-            <input type="text" id="registerName" class="form-control" />
-            <label class="form-label" for="registerName">Name</label>
+            <input name="username" class="form-control" id="username" placeholder="Name"
+            aria-label="Name" required>
+            <label class="form-label" for="username">Name</label>
           </div>
 
           <!-- Email input -->
           <div class="form-outline mb-4">
-            <input type="email" id="email" class="form-control" />
+            <input name="email" type="email" class="form-control" id="email" placeholder="Email Address"
+            aria-label="Email" required>
             <label class="form-label" for="email">Email</label>
           </div>
 
           <!-- Password input -->
           <div class="form-outline mb-4">
-            <input type="password" id="password" class="form-control" />
+            <input name="password" type="password" class="form-control" id="password" placeholder="Password"
+            aria-label="Password" minlength="8" required>
             <label class="form-label" for="password">Password</label>
           </div>
 
           <!-- Checkbox -->
-          <form method="post">
             <div class="form-check d-flex justify-content-center mb-4">
               <input class="form-check-input me-2" type="checkbox" value="1" id="registerCheck"
                 aria-describedby="registerCheckHelpText" />
@@ -86,9 +87,7 @@
             </div>
 
             <!-- Submit button -->
-            <a href="userPreferences.html" type="submit" class="btn btn-primary btn-block mb-3">Sign up</a>
-            <br><br><br><br><br><br><br><br><br>
-          </form>
+            <a><button id="submit_button"class="btn btn-primary mb-6 mt-3" disabled>Sign Up</button></a>
 
           <!--</form>-->
         </div>

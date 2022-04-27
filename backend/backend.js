@@ -79,16 +79,18 @@ app.put('/matches/acceptMatch', (req, res) => {
   res.status(200).send({worked: result, user2: otherGuy});
 });
 // Add a new User
-app.put('/users/newUser', (req, res) => {
+app.put('/users/newUser', async (req, res) => {
   // Get the user and their proposed partner
-  const e = req.body.email;
-  const pass = req.body.password;
+  let options = req.body;
+  const e = options.email;
+  const pass = options.password;
 
   // TODO database call to run them
-  const result = db.createNewUser(e, pass);
-
+  const result = await db.createNewUser(e, pass);
+  const signedJWT = sign({user: options.email}, SUPER_SECRET, { expiresIn: '1 day' });
+  res.cookie('auth', signedJWT, { maxAge: 43200000 });
   // TODO return HTTP header / JSON response with real data
-  res.status(200).send({worked: result, email: e, password: pass});
+  res.redirect(303, "/userPreferences.html");
 });
 // Update a User's Preferences
 app.put('/update/userPreferences', (req, res) => {

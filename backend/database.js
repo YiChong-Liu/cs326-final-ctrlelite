@@ -11,12 +11,15 @@ const client = new pg.Client({
     }
 });
 
+let connected = false;
+
 if (process.env.DATABASE_URL) {
     console.log("Connecting to DB...");
     client.connect();
 
     var sql = fs.readFileSync('./backend/init_db.sql').toString();
     client.query(sql);
+    connected = true; 
 }
 
 /**-------------------------------------------------------------
@@ -42,8 +45,12 @@ async function insert(database, dataEntry){
         i++;
     }
     let query = `INSERT INTO ${database} (${columns}) VALUES (${values});`;
-    await client.query(query);
-    return true; //TODO: Make this return success value of query
+    console.log(query);
+    let res = await queryClient(query);
+    if(res.success){
+        return true;
+    }
+    return false; //TODO: Make this return success value of query
 }
 
 /**
@@ -56,8 +63,11 @@ async function insert(database, dataEntry){
 async function find(database, whereQuery, orderBy){
     let query = (orderBy) ? `SELECT * FROM ${database} WHERE ${whereQuery} ORDER BY ${orderBy};` : `SELECT * FROM ${database} WHERE ${whereQuery};`;
     console.log(query);
-    let res = await client.query(query);
-    return res.rows; //TODO: Make this return data
+    let res = await queryClient(query);
+    if(res.success){
+        return res.rows;
+    }
+    return []; //TODO: Make this return data
 }
 
 
@@ -94,6 +104,19 @@ async function findAndDelete(database, whereQuery){
     return true; //TODO: Make this return success value of query
 }
 
+/**
+ * 
+ * @param {String} query SQL query to run on the postgres database
+ * @returns Returns the rows of the query
+ */
+async function queryClient(query){
+    if(connected){
+        let rows = await client.query(query).rows;
+        return {success: true, rows: rows};
+    }
+    return {success: false};
+}
+
 
 /**-------------------------------------------------------------
  *
@@ -110,7 +133,11 @@ async function findAndDelete(database, whereQuery){
  */
 export async function createNewUser(email, password){
     const newUUId = randomUUID();
-    return await insert('users', [{Column: 'uID', Data: newUUId}, {Column: 'email', Data: email}, {Column: 'password', Data: password}]);
+    await insert('users', [{Column: 'uID', Data: newUUId}, {Column: 'email', Data: email}, {Column: 'password', Data: password}]);
+    await insert('userpreferences', [{Column: 'uID', Data: newUUId}]);
+    await insert('userprofiles', [{Column: 'uID', Data: newUUId}]);
+    console.log("New User Created");
+    return true;
 }
 
 /** Creates a new match between two users
@@ -158,8 +185,8 @@ export function getUserData(userID){
     const importance = () => Math.random()*10;
 
     //Test the query ouput for eventual SQL
-    const preferences = find("Preferences", `userID='${userID}'`);
-    const profile = find("Profile", `userID='${userID}'`)
+    const preferences = find("userPreferences", `uID='${userID}'`);
+    const profile = find("userProfiles", `uID='${userID}'`)
 
     return {user_ID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{userName:randomName, bio:loremBio, profilePicture:randomImg}}
 }
