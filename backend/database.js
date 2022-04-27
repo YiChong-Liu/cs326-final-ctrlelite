@@ -265,7 +265,7 @@ export async function getPasswordHash(email){
     if(passwordResult.length > 0){
         console.log(passwordResult[0]);
     }
-    return password;
+    return passwordResult;
 }
 
 
