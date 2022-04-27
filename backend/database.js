@@ -137,7 +137,7 @@ export async function createNewUser(email, password, name){
     if(! (userExists.length > 0) && email.length > 0 && password.length > 7){
         await insert('users', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'email', Data: `'${email}'`}, {Column: 'password', Data: `'${password}'`}]);
         await insert('userpreferences', [{Column: 'uID', Data: `'${newUUId}'`}]);
-        await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'profilejson', Data: `'${JSON.stringify({userName: name, profilePicture :"https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png"})}'`}]);
+        await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'profilejson', Data: `'${JSON.stringify({userName: name, profilePicture :"https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png", bio: ""})}'`}]);
         console.log("New User Created");
         return newUUId;
     } 
@@ -155,7 +155,7 @@ export async function createNewUser(email, password, name){
 export async function acceptMatch(userID1, userID2){
     let res = await client.query(`select * FROM matches WHERE (uID1='${userID1}' AND uID2='${userID2}') OR (uID1='${userID2}' AND uID2='${userID1}')`);
     console.log(res);
-    return insert('matches', [{Column: 'userID1', Data: userID1}, {Column: 'userID2', Data:userID2}]);
+    return await insert('matches', [{Column: 'userID1', Data: `'${userID1}'`}, {Column: 'userID2', Data:`'${userID2}'`}]);
 }
 
 /** Adds a new message between two users.
@@ -165,8 +165,8 @@ export async function acceptMatch(userID1, userID2){
  * @param {String} Message The message sent
  * @returns {Boolean} Returns if the insert was successfull
  */
-export function createMessage(userFromID, userToID, Message){
-    return insert('chat', [{Column: 'userFromID', Data: userFromID}, {Column: 'userToID', Data:userToID}, {Column: 'message', Data: Message}]);
+export async function createMessage(userFromID, userToID, Message){
+    return await insert('chat', [{Column: 'uID1', Data: `'${userFromID}'`}, {Column: 'uID2', Data:`'${userToID}'`}, {Column: 'msg', Data: `'${Message}'`}]);
 }
 
 
@@ -213,7 +213,7 @@ export function idExists(userID){
  * @returns Boolean
  */
 export function matchExists(userID1, userID2){
-    return (find("matches", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`).length == 0);
+    return (find("matches", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`).length != 0);
 }
 
 /**Gets the messages between the two users.
@@ -256,6 +256,18 @@ export function getMatches(userID){
     const userMatchesResults = find("matches", `userID1='${userID}' OR userID2='${userID}'`);
 
     return userMatches;
+}
+
+/**
+ *
+ * @param {String} userID user to find matches from
+ * @returns {[]Matches} Returns all user matches
+ */
+ export function getPotentialMatches(userID){
+    //Test the query ouput for eventual SQL
+    const userMatchesResults = find("users", `uID!='${userID}'`);
+
+    return userMatchesResults;
 }
 
 /**

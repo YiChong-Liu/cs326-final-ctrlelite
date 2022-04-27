@@ -261,7 +261,7 @@ app.get('/user/data', async (req, res) => {
   res.status(200).send({ worked: true, user: id, user_data: data });
 });
 // Grab a User's Matches
-app.get('/matches/potentialMatches', (req, res) => {
+app.get('/matches/potentialMatches', async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -274,10 +274,8 @@ app.get('/matches/potentialMatches', (req, res) => {
   // Get Data from the Request
   const id = authInfo.data.user;
 
-  let matches = [];
-  for (let i = 0; i < 10; ++i) {
-    matches.push(db.getUserData(id));
-  }
+  let res = await db.getPotentialMatches(id);
+  console.log(res);
 
   // Send Response
   res.status(200).send({ worked: true, user: id, potential_matches: matches });

@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS userProfiles(
 CREATE TABLE IF NOT EXISTS chat(
     uID1 UUID NOT NULL,
     uID2 UUID NOT NULL,
-    msg varchar(200),
+    msg text,
     PRIMARY KEY(uID1, uID2)
 );
 
