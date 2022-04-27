@@ -29,8 +29,9 @@ app.use(jwt({
 
 app.post('/login/passwd', async (req, res) => {
   const options = req.body;
-  console.log(options);
-  const passwordValidated = (await db.getPasswordHash(options.email)) === options.password;
+  let dbPass = await db.getPasswordHash(options.email);
+  console.log(dbPass, options.password);
+  const passwordValidated = (dbPass == options.password);
   if (passwordValidated) {
     const signedJWT = sign({user: options.email}, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
