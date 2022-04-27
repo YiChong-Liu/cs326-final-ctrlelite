@@ -252,7 +252,7 @@ app.get('/user/data', async (req, res) => {
   }
 
   // Get Data from the Request
-  const id = authInfo.data.user;
+  const id = req.query.user;
 
   // Gather user Data
   const data = await db.getUserData(id);

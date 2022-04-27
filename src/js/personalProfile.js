@@ -31,7 +31,7 @@ saveProfile.addEventListener("click", async(e) => {
 
 window.onload = async () =>{
     let userID = parseJwt(document.cookie).user;
-    let response = await fetch(`/api/user/data`);
+    let response = await fetch(`/api/user/data?user=${userID}`);
     if(response.ok){
         let responseJSON = await response.json();
         if(responseJSON.worked){
