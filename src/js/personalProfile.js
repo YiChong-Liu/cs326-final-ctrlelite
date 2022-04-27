@@ -37,7 +37,7 @@ window.onload = async () =>{
             let data = responseJSON.user_data;
             bio.innerText = data.profile.bio;
             profilePicture.src = data.profile.profilePicture;
-            nameField.innerText = data.nameField.value;
+            nameField.innerText = data.profile.userName;
         }
     }
 }
