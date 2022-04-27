@@ -37,7 +37,7 @@ app.post('/login/passwd', async (req, res) => {
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
     res.redirect("/personalProfile.html");
   } else {
-    res.status(401).send("BOO");
+    res.status(401).send('Password not validated');
   }
 });
 
