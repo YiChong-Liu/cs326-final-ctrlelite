@@ -114,7 +114,7 @@ app.put('/update/userPreferences', (req, res) => {
   res.status(200).send({worked: result, user: uID, preferences: pref});
 });
 // Update a User's Preferences
-app.put('/update/userProfile', (req, res) => {
+app.put('/update/userProfile', async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -129,7 +129,7 @@ app.put('/update/userProfile', (req, res) => {
   const profile = req.body.profile;
 
   // Attempt to update this user's preferencess
-  const result = db.updateUserProfile(uID, profile);
+  const result = await db.updateUserProfile(uID, profile);
 
   // Response
   res.status(200).send({worked: result, user: uID, profile: profile});

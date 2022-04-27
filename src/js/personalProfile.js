@@ -19,7 +19,7 @@ uploadImg.addEventListener("change", (e) => {
 
 saveProfile.addEventListener("click", async(e) => {
     let userID = parseJwt(document.cookie).user;
-    let response = await fetch('/api/update/userProfile', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'userID': userID, 'profile': {userName: nameField.value, bio: bio.value, profilePicture: profilePicture.src}})});
+    let response = await fetch('/api/update/userProfile', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'uID': userID, 'profile': {userName: nameField.value, bio: bio.value, profilePicture: profilePicture.src}})});
     if(response.ok){
         let responseJSON = await response.json();
         if(responseJSON.worked){
