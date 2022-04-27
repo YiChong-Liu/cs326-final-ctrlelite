@@ -34,7 +34,7 @@ window.onload = async () =>{
     if(response.ok){
         let responseJSON = await response.json();
         if(responseJSON.worked){
-            let data = responseJSON.user_data.profile;
+            let data = responseJSON.user_data;
             bio.innerText = data.profile.bio;
             profilePicture.src = data.profile.profilePicture;
             nameField.innerText = data.profile.userName;
