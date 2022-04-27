@@ -302,7 +302,7 @@ export function updateUserPreferences(userID, userPreferences){
  * @param {Object} userProfile New Profile
  */
  export function updateUserProfile(userID, userProfile){
-    return findAndUpdate("userProfiles", `uID='${userID}'`, {Column: profileJSON, Data: `'${JSON.stringify(userProfile)}'`});
+    return findAndUpdate("userProfiles", `uID='${userID}'`, {Column: 'profileJSON', Data: `'${JSON.stringify(userProfile)}'`});
 }
 
 /**Updates the given users password in the database
