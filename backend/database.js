@@ -65,7 +65,7 @@ async function find(database, whereQuery, orderBy){
     console.log(query);
     let res = await queryClient(query);
     if(res.success){
-        return res.rows;
+        return res.data.rows;
     }
     return []; //TODO: Make this return data
 }
@@ -111,8 +111,8 @@ async function findAndDelete(database, whereQuery){
  */
 async function queryClient(query){
     if(connected){
-        let rows = await client.query(query).rows;
-        return {success: true, rows: rows};
+        let rows = await client.query(query);
+        return {success: true, data: res};
     }
     return {success: false};
 }
@@ -261,8 +261,8 @@ export async function getPasswordHash(email){
     let password = faker.internet.password();
 
     //Test for sql result
-    const passwordResult = await find("users", `email='${userID}'`);
-    if(passwordResult.rows.length > 0){
+    const passwordResult = await find("users", `email='${email}'`);
+    if(passwordResult.length > 0){
         console.log(passwordResult.rows[0]);
     }
     return password;
