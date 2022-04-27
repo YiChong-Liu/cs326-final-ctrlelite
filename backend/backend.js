@@ -31,9 +31,9 @@ app.post('/login/passwd', async (req, res) => {
   const options = req.body;
   let user = await db.getUserFromEmail(options.email);
   console.log(user.password, options.password);
-  const passwordValidated = (dbPass.password == options.password);
+  const passwordValidated = (user.password == options.password);
   if (passwordValidated) {
-    const signedJWT = sign({user: dbPass.uID}, SUPER_SECRET, { expiresIn: '1 day' });
+    const signedJWT = sign({user: user.uID}, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
     res.redirect("/personalProfile.html");
   } else {
