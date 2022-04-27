@@ -137,7 +137,7 @@ export async function createNewUser(email, password, name){
     if(! (userExists.length > 0) && email.length > 0 && password.length > 7){
         await insert('users', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'email', Data: `'${email}'`}, {Column: 'password', Data: `'${password}'`}]);
         await insert('userpreferences', [{Column: 'uID', Data: `'${newUUId}'`}]);
-        await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'profilejson', Data: `'${JSON.stringify({userName: name})}'`}]);
+        await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'profilejson', Data: `'${JSON.stringify({userName: name, profilePicture :"https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png"})}'`}]);
         console.log("New User Created");
         return newUUId;
     } 
