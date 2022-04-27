@@ -31,9 +31,9 @@ app.post('/login/passwd', async (req, res) => {
   const options = req.body;
   let dbPass = await db.getPasswordHash(options.email);
   console.log(dbPass, options.password);
-  const passwordValidated = (dbPass == options.password);
+  const passwordValidated = (dbPass.password == options.password);
   if (passwordValidated) {
-    const signedJWT = sign({user: options.email}, SUPER_SECRET, { expiresIn: '1 day' });
+    const signedJWT = sign({user: dbPass.uID}, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
     res.redirect("/personalProfile.html");
   } else {
@@ -88,10 +88,15 @@ app.put('/users/newUser', async (req, res) => {
 
   // TODO database call to run them
   const result = await db.createNewUser(e, pass);
-  const signedJWT = sign({user: options.email}, SUPER_SECRET, { expiresIn: '1 day' });
-  res.cookie('auth', signedJWT, { maxAge: 43200000 });
-  // TODO return HTTP header / JSON response with real data
-  res.redirect(303, "/userPreferences.html");
+  if(result){
+    const signedJWT = sign({user: options.email}, SUPER_SECRET, { expiresIn: '1 day' });
+    res.cookie('auth', signedJWT, { maxAge: 43200000 });
+    // TODO return HTTP header / JSON response with real data
+    res.redirect(303, "/userPreferences.html");
+  }
+  else{
+    return res.status(401).send();
+  }
 });
 // Update a User's Preferences
 app.put('/update/userPreferences', (req, res) => {

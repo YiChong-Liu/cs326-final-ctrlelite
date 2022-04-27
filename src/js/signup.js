@@ -14,7 +14,7 @@ async function signupUser(e, p) {
     if(response.ok){
         window.location = response.url; 
     } else {
-        console.log('ERROR: failed to update preferences');
+        alert('User with that email exists');
     }
 }
 

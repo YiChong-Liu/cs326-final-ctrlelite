@@ -133,11 +133,17 @@ async function queryClient(query){
  */
 export async function createNewUser(email, password){
     const newUUId = randomUUID();
-    await insert('users', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'email', Data: `'${email}'`}, {Column: 'password', Data: `'${password}'`}]);
-    await insert('userpreferences', [{Column: 'uID', Data: `'${newUUId}'`}]);
-    await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}]);
-    console.log("New User Created");
-    return true;
+    let userExists = await find('users', `email='${email}'`);
+    if(! (userExists.length > 0) && email.length > 0 && password.length > 7){
+        await insert('users', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'email', Data: `'${email}'`}, {Column: 'password', Data: `'${password}'`}]);
+        await insert('userpreferences', [{Column: 'uID', Data: `'${newUUId}'`}]);
+        await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}]);
+        console.log("New User Created");
+        return true;
+    } 
+    else{
+        return false;
+    }   
 }
 
 /** Creates a new match between two users
@@ -257,14 +263,14 @@ export function getMatches(userID){
  * @param {String} userID
  * @returns {String} Returns the hashed users password stored in the db
  */
-export async function getPasswordHash(email){
+export async function getUserFromEmail(email){
     let password = faker.internet.password();
 
     //Test for sql result
     const passwordResult = await find("users", `email='${email}'`);
     if(passwordResult.length > 0){
         console.log(passwordResult[0]);
-        return passwordResult[0].password;
+        return passwordResult[0];
     }
     return undefined;
 }
