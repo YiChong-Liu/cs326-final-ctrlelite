@@ -27,3 +27,16 @@ saveProfile.addEventListener("click", async(e) => {
         }
     }
 });
+
+window.onload = async () =>{
+    let userID = parseJwt(document.cookie).user;
+    let response = await fetch(`/api/user/data`);
+    if(response.ok){
+        let responseJSON = await response.json();
+        if(responseJSON.worked){
+            bio.innerText = responseJSON.profile.bio;
+            profilePicture.src = responseJSON.profile.profilePicture;
+            nameField.innerText = responseJSON.nameField.value;
+        }
+    }
+}
