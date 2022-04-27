@@ -34,9 +34,10 @@ window.onload = async () =>{
     if(response.ok){
         let responseJSON = await response.json();
         if(responseJSON.worked){
-            bio.innerText = responseJSON.profile.bio;
-            profilePicture.src = responseJSON.profile.profilePicture;
-            nameField.innerText = responseJSON.nameField.value;
+            let data = responseJSON.user_data;
+            bio.innerText = data.profile.bio;
+            profilePicture.src = data.profile.profilePicture;
+            nameField.innerText = data.nameField.value;
         }
     }
 }
