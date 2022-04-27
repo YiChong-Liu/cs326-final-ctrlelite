@@ -45,6 +45,11 @@ app.post('/login/passwd', async (req, res) => {
 function validateUser(token) {
   try {
     const tokenDecodedData = verify(token, SUPER_SECRET);
+    if(tokenDecodedData === undefined){
+      return ({
+        error: true,
+      });
+    }
     return ({
       error: false,
       data: tokenDecodedData
