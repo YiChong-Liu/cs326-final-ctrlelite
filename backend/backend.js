@@ -29,7 +29,7 @@ app.use(jwt({
 
 app.post('/login/passwd', async (req, res) => {
   const options = req.body;
-  let dbPass = await db.getPasswordHash(options.email);
+  let dbPass = await db.getUserFromEmail(options.email);
   console.log(dbPass, options.password);
   const passwordValidated = (dbPass.password == options.password);
   if (passwordValidated) {
