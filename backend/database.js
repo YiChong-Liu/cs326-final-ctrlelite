@@ -263,7 +263,7 @@ export async function getPasswordHash(email){
     //Test for sql result
     const passwordResult = await find("users", `email='${email}'`);
     if(passwordResult.length > 0){
-        console.log(passwordResult.rows[0]);
+        console.log(passwordResult[0]);
     }
     return password;
 }
