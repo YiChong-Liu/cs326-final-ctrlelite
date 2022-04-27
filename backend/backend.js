@@ -7,8 +7,8 @@ import * as db from './database.js';
 
 const app = express.Router();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 app.use(cookieParser());
 
 const SUPER_SECRET = process.env.JWT_SECRET || '8253c11f1244dd66854a026f537d68c350527cebb5678da5c05410e51ddbe32587a3464be4867aa5367f7b4bd4f23fd795ab61b0eed63a30e5f47c73384f222e';
@@ -25,19 +25,18 @@ app.use(jwt({
     }
     return null;
   }
-}).unless({path: ['/api/login/passwd', '/api/users/newUser']}));
+}).unless({ path: ['/api/login/passwd', '/api/users/newUser'] }));
 
 app.post('/login/passwd', async (req, res) => {
   const options = req.body;
   let user = await db.getUserFromEmail(options.email);
-  console.log(user.password, options.password);
-  const passwordValidated = (user.password == options.password);
-  if (passwordValidated) {
+  if (user != undefined && user.password == options.password) {
     console.log(user.uid);
-    const signedJWT = sign({user: user.uid}, SUPER_SECRET, { expiresIn: '1 day' });
+    const signedJWT = sign({ user: user.uid }, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
     res.redirect("/personalProfile.html");
-  } else {
+  } 
+  else {
     res.status(401).send('Password not validated');
   }
 });
@@ -45,7 +44,7 @@ app.post('/login/passwd', async (req, res) => {
 function validateUser(token) {
   try {
     const tokenDecodedData = verify(token, SUPER_SECRET);
-    if(tokenDecodedData === undefined){
+    if (tokenDecodedData === undefined) {
       return ({
         error: true,
       });
@@ -83,7 +82,7 @@ app.put('/matches/acceptMatch', (req, res) => {
   const result = db.acceptMatch(otherGuy, myself);
 
   // TODO return HTTP header / JSON response with real data
-  res.status(200).send({worked: result, user2: otherGuy});
+  res.status(200).send({ worked: result, user2: otherGuy });
 });
 // Add a new User
 app.put('/users/newUser', async (req, res) => {
@@ -94,13 +93,13 @@ app.put('/users/newUser', async (req, res) => {
 
   // TODO database call to run them
   const result = await db.createNewUser(e, pass);
-  if(result){
-    const signedJWT = sign({user: result}, SUPER_SECRET, { expiresIn: '1 day' });
+  if (result) {
+    const signedJWT = sign({ user: result }, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
     // TODO return HTTP header / JSON response with real data
     res.redirect(303, "/userPreferences.html");
   }
-  else{
+  else {
     return res.status(401).send();
   }
 });
@@ -122,7 +121,7 @@ app.put('/update/userPreferences', (req, res) => {
   const result = db.updateUserPreferences(uID, pref);
 
   // Response
-  res.status(200).send({worked: result, user: uID, preferences: pref});
+  res.status(200).send({ worked: result, user: uID, preferences: pref });
 });
 // Update a User's Preferences
 app.put('/update/userProfile', async (req, res) => {
@@ -133,12 +132,13 @@ app.put('/update/userProfile', async (req, res) => {
   if (authInfo.error) {
     // unauthenticated
     return res.status(401).send();
-  }else {
+  } else {
     console.log(`Updating ${authInfo.data.user}'s profile`);
   }
   console.log(authInfo);
 
   // Get userID and Preference Object from request
+  console.log(req);
   const uID = authInfo.data.user;
   const profile = req.body.profile;
 
@@ -146,7 +146,7 @@ app.put('/update/userProfile', async (req, res) => {
   const result = await db.updateUserProfile(uID, profile);
 
   // Response
-  res.status(200).send({worked: result, user: uID, profile: profile});
+  res.status(200).send({ worked: result, user: uID, profile: profile });
 });
 // Update/Change a User's Password
 app.put('/update/userPassword', (req, res) => {
@@ -166,7 +166,7 @@ app.put('/update/userPassword', (req, res) => {
   const result = db.updateUserPassword(uID, pass);
 
   // Response
-  res.status(200).send({worked: result, user: uID, password: pass});
+  res.status(200).send({ worked: result, user: uID, password: pass });
 });
 
 
@@ -192,7 +192,7 @@ app.post('/msg/newChatMsg', (req, res) => {
   const result = db.createMessage(sender, receiver, msg);
 
   // TODO return HTTP header / JSON response with real data
-  res.status(200).send({worked: result, msg_content: msg});
+  res.status(200).send({ worked: result, msg_content: msg });
 });
 
 // GET
@@ -217,7 +217,7 @@ app.get('/msg/fetch', (req, res) => {
   const data = db.getMessages(sender, receiver, amt);
 
   // Send Response
-  res.status(200).send({worked: true, msg_object: data});
+  res.status(200).send({ worked: true, msg_object: data });
 });
 // Grab a User's Matches
 app.get('/matches', (req, res) => {
@@ -237,7 +237,7 @@ app.get('/matches', (req, res) => {
   const data = db.getMatches(id);
 
   // Send Response
-  res.status(200).send({worked: true, user: id, user_matches: data});
+  res.status(200).send({ worked: true, user: id, user_matches: data });
 });
 // Grab a User's Profile and Preferences
 app.get('/user/data', async (req, res) => {
@@ -257,7 +257,7 @@ app.get('/user/data', async (req, res) => {
   const data = await db.getUserData(id);
 
   // Send Response
-  res.status(200).send({worked: true, user: id, user_data: data});
+  res.status(200).send({ worked: true, user: id, user_data: data });
 });
 // Grab a User's Matches
 app.get('/matches/potentialMatches', (req, res) => {
@@ -274,12 +274,12 @@ app.get('/matches/potentialMatches', (req, res) => {
   const id = authInfo.data.user;
 
   let matches = [];
-  for(let i = 0; i < 10; ++i){
+  for (let i = 0; i < 10; ++i) {
     matches.push(db.getUserData(id));
   }
 
   // Send Response
-  res.status(200).send({worked: true, user: id, potential_matches: matches});
+  res.status(200).send({ worked: true, user: id, potential_matches: matches });
 });
 
 
@@ -303,7 +303,7 @@ app.delete('/delete/user', (req, res) => {
   const result = db.deleteUser(id);
 
   // Send Response
-  res.status(200).send({worked: result, user: id});
+  res.status(200).send({ worked: result, user: id });
 });
 // Delete a Match
 app.delete('/delete/match', (req, res) => {
@@ -324,7 +324,7 @@ app.delete('/delete/match', (req, res) => {
   const result = db.deleteMatch(ufID, mtID);
 
   // Send Response
-  res.status(200).send({worked: result, user: ufID, user2: mtID});
+  res.status(200).send({ worked: result, user: ufID, user2: mtID });
 });
 
 export default app;

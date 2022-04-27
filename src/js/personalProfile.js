@@ -6,7 +6,7 @@ const saveProfile = document.getElementById('save-profile');
 const bio = document.getElementById('bio');
 const nameField = document.getElementById('fullname');
 
-
+let img;
 uploadImg.addEventListener("change", (e) => {
     console.log("changed");
     let reader = new FileReader();
@@ -15,6 +15,7 @@ uploadImg.addEventListener("change", (e) => {
         output.src = reader.result;
     }
     reader.readAsDataURL(e.target.files[0]);
+    img = e.target.files[0];
 });
 
 saveProfile.addEventListener("click", async(e) => {
