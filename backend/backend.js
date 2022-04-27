@@ -275,7 +275,7 @@ app.get('/matches/potentialMatches', async (req, res) => {
   const id = authInfo.data.user;
 
   let matches = await db.getPotentialMatches(id);
-  console.log(res);
+  console.log(matches);
 
   // Send Response
   res.status(200).send({ worked: true, user: id, potential_matches: matches });
