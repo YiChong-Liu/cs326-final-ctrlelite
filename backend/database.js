@@ -182,7 +182,7 @@ export function createMessage(userFromID, userToID, Message){
  * @param {String} userID User id to get data of
  * @returns {Object: {uId: String, preferences: Object, profile: Object}} Profile and Preferences to return
  */
-export function getUserData(userID){
+export async function getUserData(userID){
     const randomName = faker.name.findName();
     const randomImg = faker.image.avatar();
     const loremBio = faker.lorem.paragraph();
@@ -191,10 +191,10 @@ export function getUserData(userID){
     const importance = () => Math.random()*10;
 
     //Test the query ouput for eventual SQL
-    const preferences = find("userPreferences", `uID='${userID}'`);
-    const profile = find("userProfiles", `uID='${userID}'`)
+    const preferences = await find("userPreferences", `uID='${userID}'`);
+    const profile = await find("userProfiles", `uID='${userID}'`);
 
-    return {user_ID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{userName:randomName, bio:loremBio, profilePicture:randomImg}}
+    return {user_ID: userID, preferences:preferences, profile:profile};
 }
 
 /** Checks if the user is in the database
