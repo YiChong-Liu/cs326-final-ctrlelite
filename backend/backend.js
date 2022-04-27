@@ -127,7 +127,10 @@ app.put('/update/userProfile', async (req, res) => {
   if (authInfo.error) {
     // unauthenticated
     return res.status(401).send();
+  }else {
+    console.log(`Updating ${authInfo.data.user}'s profile`);
   }
+  console.log(authInfo);
 
   // Get userID and Preference Object from request
   const uID = authInfo.data.user;
