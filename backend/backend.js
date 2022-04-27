@@ -29,8 +29,8 @@ app.use(jwt({
 
 app.post('/login/passwd', async (req, res) => {
   const options = req.body;
-  let dbPass = await db.getUserFromEmail(options.email);
-  console.log(dbPass, options.password);
+  let user = await db.getUserFromEmail(options.email);
+  console.log(user.password, options.password);
   const passwordValidated = (dbPass.password == options.password);
   if (passwordValidated) {
     const signedJWT = sign({user: dbPass.uID}, SUPER_SECRET, { expiresIn: '1 day' });

@@ -83,7 +83,7 @@ async function findAndUpdate(database, whereQuery, dataEntry){
     let values = '';
     let i = 0;
     for(const dataPoint of dataEntry){
-        columns += i !== dataEntry.length - 1 ? `${dataPoint.Column} = ${dataPoint.data}, ` : `${dataPoint.Column} = ${dataPoint.data}`;
+        columns += i !== dataEntry.length - 1 ? `${dataPoint.Column} = ${dataPoint.Data}, ` : `${dataPoint.Column} = ${dataPoint.Data}`;
         i++;
     }
     let query = `UPDATE ${database} SET ${columns} WHERE ${whereQuery};`;
