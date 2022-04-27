@@ -194,7 +194,7 @@ export async function getUserData(userID){
     const preferences = await find("userPreferences", `uID='${userID}'`);
     const profile = await find("userProfiles", `uID='${userID}'`);
 
-    return {user_ID: userID, preferences:preferences, profile:profile};
+    return {user_ID: userID, preferences:preferences[0], profile:profile[0]};
 }
 
 /** Checks if the user is in the database
