@@ -111,7 +111,7 @@ async function findAndDelete(database, whereQuery){
  */
 async function queryClient(query){
     if(connected){
-        let rows = await client.query(query);
+        let res = await client.query(query);
         return {success: true, data: res};
     }
     return {success: false};
