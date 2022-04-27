@@ -251,7 +251,7 @@ app.get('/user/data', (req, res) => {
   }
 
   // Get Data from the Request
-  const id = req.query.user;
+  const id = authInfo.data.user;
 
   // Gather user Data
   const data = db.getUserData(id);
