@@ -133,9 +133,9 @@ async function queryClient(query){
  */
 export async function createNewUser(email, password){
     const newUUId = randomUUID();
-    await insert('users', [{Column: 'uID', Data: newUUId}, {Column: 'email', Data: email}, {Column: 'password', Data: password}]);
-    await insert('userpreferences', [{Column: 'uID', Data: newUUId}]);
-    await insert('userprofiles', [{Column: 'uID', Data: newUUId}]);
+    await insert('users', [{Column: 'uID', Data: `${newUUId}`}, {Column: 'email', Data: `${email}`}, {Column: 'password', Data: `${password}`}]);
+    await insert('userpreferences', [{Column: 'uID', Data: `${newUUId}`}]);
+    await insert('userprofiles', [{Column: 'uID', Data: `${newUUId}`}]);
     console.log("New User Created");
     return true;
 }
