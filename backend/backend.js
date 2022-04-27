@@ -90,9 +90,10 @@ app.put('/users/newUser', async (req, res) => {
   let options = req.body;
   const e = options.email;
   const pass = options.password;
+  const userName = options.username;
 
   // TODO database call to run them
-  const result = await db.createNewUser(e, pass);
+  const result = await db.createNewUser(e, pass, userName);
   if (result) {
     const signedJWT = sign({ user: result }, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });

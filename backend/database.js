@@ -131,13 +131,13 @@ async function queryClient(query){
  * @param {String} password User password
  * @returns {Boolean} Returns if the insert was successfull
  */
-export async function createNewUser(email, password){
+export async function createNewUser(email, password, name){
     const newUUId = randomUUID();
     let userExists = await find('users', `email='${email}'`);
     if(! (userExists.length > 0) && email.length > 0 && password.length > 7){
         await insert('users', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'email', Data: `'${email}'`}, {Column: 'password', Data: `'${password}'`}]);
         await insert('userpreferences', [{Column: 'uID', Data: `'${newUUId}'`}]);
-        await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}]);
+        await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'profilejson', Data: `'${JSON.stringify({userName: name})}'`}]);
         console.log("New User Created");
         return newUUId;
     } 
