@@ -33,7 +33,8 @@ app.post('/login/passwd', async (req, res) => {
   console.log(user.password, options.password);
   const passwordValidated = (user.password == options.password);
   if (passwordValidated) {
-    const signedJWT = sign({user: user.uID}, SUPER_SECRET, { expiresIn: '1 day' });
+    console.log(user.uid);
+    const signedJWT = sign({user: user.uid}, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
     res.redirect("/personalProfile.html");
   } else {

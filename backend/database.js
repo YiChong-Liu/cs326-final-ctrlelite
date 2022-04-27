@@ -302,11 +302,7 @@ export function updateUserPreferences(userID, userPreferences){
  * @param {Object} userProfile New Profile
  */
  export function updateUserProfile(userID, userProfile){
-    let profile = [];
-    for(const key of Object.keys(userProfile)){
-        profile.push({Column:key, Data:`'${userProfile[key]}'`});
-    }
-    return findAndUpdate("userProfiles", `uID='${userID}'`, profile);
+    return findAndUpdate("userProfiles", `uID='${userID}'`, {Column: profileJSON, Data: `'${JSON.stringify(userProfile)}'`});
 }
 
 /**Updates the given users password in the database
