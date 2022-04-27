@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS userPreferences(
 
 CREATE TABLE IF NOT EXISTS userProfiles(
     uID UUID NOT NULL,
-    profileJSON varchar(2048),
+    profileJSON text,
     PRIMARY KEY(uID)
 );
 
