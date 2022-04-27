@@ -274,7 +274,7 @@ app.get('/matches/potentialMatches', async (req, res) => {
   // Get Data from the Request
   const id = authInfo.data.user;
 
-  let res = await db.getPotentialMatches(id);
+  let matches = await db.getPotentialMatches(id);
   console.log(res);
 
   // Send Response
