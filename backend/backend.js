@@ -240,7 +240,7 @@ app.get('/matches', (req, res) => {
   res.status(200).send({worked: true, user: id, user_matches: data});
 });
 // Grab a User's Profile and Preferences
-app.get('/user/data', (req, res) => {
+app.get('/user/data', async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -254,7 +254,7 @@ app.get('/user/data', (req, res) => {
   const id = authInfo.data.user;
 
   // Gather user Data
-  const data = db.getUserData(id);
+  const data = await db.getUserData(id);
 
   // Send Response
   res.status(200).send({worked: true, user: id, user_data: data});
