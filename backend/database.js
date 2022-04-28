@@ -153,9 +153,15 @@ export async function createNewUser(email, password, name){
  * @returns {Boolean} Returns if the insert was successfull
  */
 export async function acceptMatch(userID1, userID2){
-    let res = await client.query(`select * FROM matches WHERE (uID1='${userID1}' AND uID2='${userID2}') OR (uID1='${userID2}' AND uID2='${userID1}')`);
-    console.log(res);
-    return await insert('matches', [{Column: 'userID1', Data: `'${userID1}'`}, {Column: 'userID2', Data:`'${userID2}'`}]);
+    if(matchExists(userID1, userID2)){
+        await findAndUpdate('matches', `(uID1='${userID1}' AND uID2='${userID2})'`[{Column: 'u1Accept', Data: `'1'`}]);
+        await findAndUpdate('matches', `(uID1='${userID2}' AND uID2='${userID1})'`[{Column: 'u2Accept', Data:`'1'`}]);
+    }
+    else{
+        console.log("Creating new match: ");
+        return await insert('matches', [{Column: 'uID1', Data: `'${userID1}'`}, {Column: 'uID2', Data:`'${userID2}'`}]);
+    }
+    return true;
 }
 
 /** Adds a new message between two users.
@@ -194,7 +200,7 @@ export async function getUserData(userID){
     const preferences = await find("userPreferences", `uID='${userID}'`);
     const profile = await find("userProfiles", `uID='${userID}'`);
 
-    return {user_ID: userID, preferences:preferences[0], profile:profile[0]};
+    return {user: userID, preferences:preferences[0], profile:profile[0]};
 }
 
 /** Checks if the user is in the database
@@ -212,8 +218,8 @@ export function idExists(userID){
  * @param {String} userID2
  * @returns Boolean
  */
-export function matchExists(userID1, userID2){
-    return (find("matches", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`).length != 0);
+export async function matchExists(userID1, userID2){
+    return (await find("matches", `(uID1='${userID1}' AND uID2='${userID2}) OR (uID1='${userID2}' AND uID2='${userID1})'`).length != 0);
 }
 
 /**Gets the messages between the two users.
@@ -253,9 +259,9 @@ export function getMatches(userID){
     }
 
     //Test the query ouput for eventual SQL
-    const userMatchesResults = find("matches", `userID1='${userID}' OR userID2='${userID}'`);
-
-    return userMatches;
+    const userMatchesResults = await find("matches", `uID1='${userID}' OR uID2='${userID} AND u1Accept='1' AND u2Accept='1'`);
+    console.log(userMatchesResults);
+    return userMatchesResults;
 }
 
 /**

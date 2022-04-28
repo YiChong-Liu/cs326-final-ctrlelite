@@ -75,11 +75,11 @@ app.put('/matches/acceptMatch', (req, res) => {
   }
 
   // Get the user and their proposed partner
-  const otherGuy = req.body.secondaryUserID;
+  const otherGuy = req.body.user2;
   const myself = authInfo.data.user;
 
   // TODO database call to run them
-  const result = db.acceptMatch(otherGuy, myself);
+  const result = db.acceptMatch(myself, otherGuy);
 
   // TODO return HTTP header / JSON response with real data
   res.status(200).send({ worked: result, user2: otherGuy });
@@ -275,7 +275,6 @@ app.get('/matches/potentialMatches', async (req, res) => {
   const id = authInfo.data.user;
 
   let matches = await db.getPotentialMatches(id);
-  console.log(matches);
 
   // Send Response
   res.status(200).send({ worked: true, user: id, potential_matches: matches.map((m) => {return {uid: m.uid}})});
