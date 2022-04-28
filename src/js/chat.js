@@ -91,7 +91,7 @@ if(params.has('user') && params.has('userName')) {
         else{
             let time1 = new Date(msgData.fromMsgs[index1].time.replace(' ', 'T'));
             let time2 = new Date(msgData.toMsgs[index2].time.replace(' ', 'T'));
-            if(time1 <= time2){
+            if(time1 >= time2){
                 chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, time1.toLocaleString(), false));
                 index1++;
             }
