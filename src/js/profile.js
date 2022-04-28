@@ -81,7 +81,7 @@ interested.addEventListener('click', async function (e) {
             fillValues(users[(currProfile)]);
         }
         else {
-            users.splice(temp, 1);
+            users.splice(currProfile, 1);
             outOfProfiles();
             currProfile = (currProfile) % users.length;
         }
@@ -107,7 +107,7 @@ reject.addEventListener('click', async function (e) {
         fillValues(users[(currProfile)]);
     }
     else {
-        users.splice(temp, 1);
+        users.splice(currProfile, 1);
         outOfProfiles();
         currProfile = (currProfile) % users.length;
     }
