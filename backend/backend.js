@@ -174,7 +174,7 @@ app.put('/update/userPassword', (req, res) => {
 // POST
 
 // Send a Message
-app.post('/msg/newChatMsg', (req, res) => {
+app.post('/msg/newChatMsg', async(req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 

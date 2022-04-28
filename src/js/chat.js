@@ -92,7 +92,7 @@ if(params.has('user')) {
 
     send.addEventListener('click', async function(e){
         let time = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        let response = await fetch("/api/matches/acceptMatch", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user2:user2, msg: chat.value, timestamp: time}) });
+        let response = await fetch("/api/msg/newChatMsg", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user2:user2, msg: chat.value, timestamp: time}) });
         if(socket != null){
             socket.send(JSON.stringify({ type: 'update', message: chat.value}));
         }
