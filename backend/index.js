@@ -26,7 +26,7 @@ wsServer.on("request", function(req){
     //Group closure to keep track of the group the socket is in for easy alerting
     let group = [];
     connection.on('open', () => console.log("Connection opened"));
-    connection.on('close', () => console.log("Connection closed"));
+    connection.on('close', () => {console.log("Connection closed"); group.sockets.splice(group.sockets.indexOf(connection), 1)});
     connection.on('message', e => {
         //Parse the incoming message
         let parsedJSON = JSON.parse(e.utf8Data);

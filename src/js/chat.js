@@ -83,6 +83,7 @@ if(params.has('user')) {
         socket.send(JSON.stringify({ type: 'connect', user1: user1, user2: user2 }));
     });
     socket.addEventListener('message', function (e) {
+        console.log(e);
         chatBody.appendChild(makeNewMessage(e.data, '10:42pm', false));
     });
     socket.addEventListener('close', e => {
