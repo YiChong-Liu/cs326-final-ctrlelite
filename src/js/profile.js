@@ -79,7 +79,7 @@ interested.addEventListener('click', async function (e) {
             fillValues(users[(currProfile + 1) % users.length]);
             users.splice(currProfile, 1);
         }
-        else{
+        else {
             outOfProfiles();
             users.splice(currProfile, 1);
         }
@@ -103,7 +103,7 @@ reject.addEventListener('click', async function (e) {
         fillValues(users[(currProfile + 1) % users.length]);
         users.splice(currProfile, 1);
     }
-    else{
+    else {
         outOfProfiles();
         users.splice(currProfile, 1);
     }
@@ -124,14 +124,15 @@ reject.addEventListener('click', async function (e) {
 function fillValues(user) {
     if (user.profile != undefined && user.profile.profilejson != undefined) {
         let data = JSON.parse(user.profile.profilejson);
-        bio.innerText = "Lorem ipsum dolor sit amet, error fabellas interesset at pri, id nam detraxit constituam. In vim eius ridens consequuntur, eam ipsum epicurei eu. Facer veniam consul sea ea. At atomorum efficiendi signiferumque pri, ne dolorem erroribus salutatus quo, ad possit quodsi mea. Ea corrumpit intellegebat mei. Idque definiebas inciderint ad est, vix ut brute docendi.";
-        profilePicture.src = "https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png";
-        fullname.innerText = "No More Potential Matches At This Time";
+        bio.innerText = data.bio;
+        profilePicture.src = data.profilePicture;
+        fullname.innerText = data.userName;
     }
 }
 
-function outOfProfiles(){
-    bio.innerText = "data.bio";
-    profilePicture.src = data.profilePicture;
-    fullname.innerText = data.userName;
+function outOfProfiles() {
+    bio.innerText = "Lorem ipsum dolor sit amet, error fabellas interesset at pri, id nam detraxit constituam. In vim eius ridens consequuntur, eam ipsum epicurei eu. Facer veniam consul sea ea. At atomorum efficiendi signiferumque pri, ne dolorem erroribus salutatus quo, ad possit quodsi mea. Ea corrumpit intellegebat mei. Idque definiebas inciderint ad est, vix ut brute docendi.";
+    profilePicture.src = "https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png";
+    fullname.innerText = "No More Potential Matches At This Time";
+
 }
