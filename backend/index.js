@@ -52,7 +52,7 @@ wsServer.on("request", function(req){
                 break;
             //If it is sending text, send the update to the whole group (except sending connection)
             case('update'):
-                group.sockets.forEach((s) => {if(s != connection){s.send(parsedJSON.message)}});
+                group.sockets.forEach((s) => {s.send(parsedJSON.message)});
                 break;
         }
     });
