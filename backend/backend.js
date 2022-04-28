@@ -278,7 +278,7 @@ app.get('/matches/potentialMatches', async (req, res) => {
   console.log(matches);
 
   // Send Response
-  res.status(200).send({ worked: true, user: id, potential_matches: matches.map((m) => {uid: m.uid}) });
+  res.status(200).send({ worked: true, user: id, potential_matches: matches.map((m) => {return {uid: m.uid}})});
 });
 
 
