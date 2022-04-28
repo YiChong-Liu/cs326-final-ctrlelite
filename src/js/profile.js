@@ -10,7 +10,6 @@ let response = await fetch("/api/matches/potentialMatches");
 if (response.ok) {
     let responseJSON = await response.json();
     for (const match of responseJSON.potential_matches) {
-        console.log(match);
         let matchResponse = await fetch(`api/user/data?user=${match.uid}`);
         if (matchResponse.ok) {
             let matchJSON = await matchResponse.json();
