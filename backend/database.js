@@ -243,8 +243,8 @@ export async function getMessages(userIDFrom, userIDTo, numMessages=20){
 
     //Test the query ouput for eventual SQL
     try{
-    userToMsgs = await find("chat", `uid1='${userIDFrom}' AND uid2='${userIDTo}'`, "time ASC").slice(0, 9);
-    userFromMsgs = await find("chat", `uid1='${userIDTo}' AND uid2='${userIDFrom}'`, "time ASC").slice(0, 9);
+    userToMsgs = await find("chat", `uid1='${userIDFrom}' AND uid2='${userIDTo}'`, "time ASC");
+    userFromMsgs = await find("chat", `uid1='${userIDTo}' AND uid2='${userIDFrom}'`, "time ASC");
     }
     catch(e){
         console.log(e);
