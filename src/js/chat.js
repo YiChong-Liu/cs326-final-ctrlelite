@@ -48,6 +48,7 @@ const params = new URLSearchParams(window.location.search);
 
 const send = document.getElementById('button-addon2');
 const chat = document.getElementById('chat-message');
+const chatBody = document.getElementById('chat_body');
 
 let socket;
 
@@ -58,7 +59,6 @@ if(params.has('user') && params.has('userName')) {
     const user2Name = params.get('userName');
     const msgCount = 10;
     let msgData;
-    let chatBody = document.getElementById('chat_body');
 
     // Gather messages
     let response = await fetch('/api/msg/fetch?userFrom=' + user1 + '&userTo=' + user2 + '&msgAmt=' + msgCount);
@@ -91,8 +91,8 @@ if(params.has('user') && params.has('userName')) {
         else{
             let time1 = new Date(msgData.fromMsgs[index1].time.replace(' ', 'T'));
             let time2 = new Date(msgData.toMsgs[index2].time.replace(' ', 'T'));
-            console.log(time1, time2, time1 >= time2);
-            if(time1 >= time2){
+            console.log(time1, time2, time1 <= time2);
+            if(time1 <= time2){
                 chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, time1.toLocaleString(), false));
                 index1++;
             }
