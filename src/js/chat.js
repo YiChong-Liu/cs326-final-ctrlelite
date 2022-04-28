@@ -46,10 +46,15 @@ function makeNewMessage(msg, time, isTo) {
 
 const params = new URLSearchParams(window.location.search);
 
-if(params.has('userID2')) {
+const send = document.getElementById('button-addon2');
+const chat = document.getElementById('chat-message');
+
+let socket;
+
+if(params.has('user')) {
     // Gather user names and other important data
     const user1 = parseJwt(document.cookie).user;
-    const user2 = params.get('userID2');
+    const user2 = params.get('user');
     const msgCount = 10;
     let msgData;
     let chatBody = document.getElementById('chat_body');
@@ -71,4 +76,29 @@ if(params.has('userID2')) {
         chatBody.appendChild(makeNewMessage(msgData.fromMsgs[i], '10:42pm', false));
         chatBody.appendChild(makeNewMessage(msgData.toMsgs[i], '10:42pm', true));
     }
+    let HOST = location.origin.replace(/^http/, 'ws')
+    socket = new WebSocket(HOST);
+    socket.addEventListener('open', e => {
+        //When the socket is established, we are going to send an initial connect message
+        socket.send(JSON.stringify({ type: 'connect', user1: user1, user2: user2 }));
+    });
+    socket.addEventListener('message', function (e) {
+        chatBody.appendChild(makeNewMessage(e.data, '10:42pm', false));
+    });
+    socket.addEventListener('close', e => {
+        //When the socket is established, we are going to send an initial connect message
+        socket.send(JSON.stringify({ type: 'disconnect', user1: user1, user2: user2 }));
+    });
+
+    send.addEventListener('click', async function(e){
+        let time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        let response = await fetch("/api/matches/acceptMatch", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user2:user2, msg: chat.value, timestamp: time}) });
+        if(socket != null){
+            socket.send(JSON.stringify({ type: 'update', message: chat.value}));
+        }
+    });
 }
+
+
+
+

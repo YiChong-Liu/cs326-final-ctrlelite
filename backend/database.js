@@ -172,8 +172,8 @@ export async function acceptMatch(userID1, userID2){
  * @param {String} Message The message sent
  * @returns {Boolean} Returns if the insert was successfull
  */
-export async function createMessage(userFromID, userToID, Message){
-    return await insert('chat', [{Column: 'uID1', Data: `'${userFromID}'`}, {Column: 'uID2', Data:`'${userToID}'`}, {Column: 'msg', Data: `'${Message}'`}]);
+export async function createMessage(userFromID, userToID, message, timestamp){
+    return await insert('chat', [{Column: 'uID1', Data: `'${userFromID}'`}, {Column: 'uID2', Data:`'${userToID}'`}, {Column: 'msg', Data: `'${message}'`}, {Column: 'time', Data: `'${timestamp}'`}]);
 }
 
 

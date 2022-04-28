@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS chat(
     uID1 UUID NOT NULL,
     uID2 UUID NOT NULL,
     msg text,
-    PRIMARY KEY(uID1, uID2)
+    PRIMARY KEY(uID1, uID2),
+    time TIMESTAMP 
 );
 

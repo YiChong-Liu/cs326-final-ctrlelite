@@ -188,9 +188,10 @@ app.post('/msg/newChatMsg', (req, res) => {
   const sender = authInfo.data.user;
   const receiver = req.body.user2;
   const msg = req.body.msg;
+  const timestamp = req.body.timestamp;
 
   // TODO actual databasing
-  const result = db.createMessage(sender, receiver, msg);
+  const result = await db.createMessage(sender, receiver, msg, timestamp);
 
   // TODO return HTTP header / JSON response with real data
   res.status(200).send({ worked: result, msg_content: msg });
