@@ -42,6 +42,7 @@ function newMatch(user_data){
     let removeButton = document.createElement('a');
     removeButton.classList.add("btn", "btn-primary", "btn-danger", "mb-3")
     removeButton.innerHTML = "Unmatch";
+    removeButton.addEventListener('click', unmatch(user_data.user));
     buttonDIV.appendChild(removeButton);
 
     matchDIV.appendChild(wrapper);
@@ -59,4 +60,11 @@ if(response.ok){
         }
     } 
     console.log(responseJSON);
+}
+
+async function unmatch(uID, element){
+    let response = await fetch("/api/matches/deleteMatch", {method: 'DELETE', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({user2: uID})});
+    if(response.ok){
+        document.removeChild(element);
+    }
 }

@@ -316,7 +316,7 @@ app.delete('/delete/match', (req, res) => {
 
   // Get Data from the Request
   const ufID = authInfo.data.user;
-  const mtID = req.body.matchToID;
+  const mtID = req.body.user2;
 
   // Attempt to Delete this match
   const result = db.deleteMatch(ufID, mtID);
