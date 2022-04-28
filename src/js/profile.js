@@ -131,10 +131,10 @@ function fillValues(user) {
         bio.innerText = data.bio;
         profilePicture.src = data.profilePicture;
         fullname.innerText = data.userName;
-    }
-    if(userQuery === null){
-        leftBtn.hidden = false;
-        rightBtn.hidden = false;
+        if(userQuery === null){
+            reject.hidden = false;
+            interested.hidden = false;
+        }
     }
 }
 
