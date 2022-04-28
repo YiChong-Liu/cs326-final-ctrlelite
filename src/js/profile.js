@@ -10,7 +10,7 @@ let users = [];
 const params = new URLSearchParams(window.location.search);
 const user = params.get('user');
 
-if(user === undefined){
+if(user === null){
     let response = await fetch("/api/matches/potentialMatches");
     if (response.ok) {
         let responseJSON = await response.json();
@@ -42,7 +42,7 @@ function initProfile() {
         fillValues(users[0]);
     }
     leftBtn.hidden = true;
-    rightBtn.hidden = users.length > 1;
+    rightBtn.hidden = user === null && users.length > 1;
 }
 
 leftBtn.addEventListener('click', function (e) {
