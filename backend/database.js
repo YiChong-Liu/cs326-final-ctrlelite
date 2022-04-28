@@ -363,5 +363,5 @@ export function deleteUser(userID){
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 export function deleteMatch(userID1, userID2){
-    return findAndDelete("Users", `(uid1='${userID1}' AND uid2='${userID2}') OR (uid1='${userID2}' AND uid2='${userID1}')`);
+    return findAndDelete("matches", `(uid1='${userID1}' AND uid2='${userID2}') OR (uid1='${userID2}' AND uid2='${userID1}')`);
 }
