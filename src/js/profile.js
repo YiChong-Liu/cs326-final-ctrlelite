@@ -25,7 +25,7 @@ if(user === undefined){
     }
 }
 else{
-    let matchResponse = await fetch(`api/user/data?user=${user2}`);
+    let matchResponse = await fetch(`api/user/data?user=${user}`);
     if (matchResponse.ok) {
         let matchJSON = await matchResponse.json();
         users.push(matchJSON.user_data);
