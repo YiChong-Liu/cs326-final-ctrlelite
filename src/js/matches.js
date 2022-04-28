@@ -63,7 +63,7 @@ if(response.ok){
 }
 
 async function unmatch(uID, element){
-    let response = await fetch("/api/matches/deleteMatch", {method: 'DELETE', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({user2: uID})});
+    let response = await fetch("/api/delete/match", {method: 'DELETE', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({user2: uID})});
     if(response.ok){
         document.removeChild(element);
     }
