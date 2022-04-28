@@ -46,5 +46,5 @@ function fillValues(user) {
     let data = JSON.parse(user.profile.profilejson);
     bio.innerText = data.bio;
     profilePicture.src = data.profilePicture;
-    nameField.innerText = data.userName;
+    fullname.innerText = data.userName;
 }
