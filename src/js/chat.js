@@ -91,7 +91,6 @@ if(params.has('user') && params.has('userName')) {
         else{
             let time1 = new Date(msgData.fromMsgs[index1].time.replace(' ', 'T'));
             let time2 = new Date(msgData.toMsgs[index2].time.replace(' ', 'T'));
-            console.log(time1, time2, time1 <= time2);
             if(time1 <= time2){
                 chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, time1.toLocaleString(), false));
                 index1++;
@@ -110,7 +109,6 @@ if(params.has('user') && params.has('userName')) {
         socket.send(JSON.stringify({ type: 'connect', user1: user1, user2: user2 }));
     });
     socket.addEventListener('message', function (e) {
-        console.log(e);
         chatBody.appendChild(makeNewMessage(e.data, new Date().toLocaleString(), false));
         updateScroll();
     });
@@ -138,7 +136,7 @@ async function sendMessage(user2){
         chatBody.appendChild(makeNewMessage(chat.value, time.toLocaleString(), true));
         updateScroll();
     }
-    chat.innerText = "";
+    chat.innerHTML = "";
 }
 
 function updateScroll(){
