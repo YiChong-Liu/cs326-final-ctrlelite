@@ -219,7 +219,7 @@ export function idExists(userID){
  * @returns Boolean
  */
 export async function matchExists(userID1, userID2){
-    return (await find("matches", `(uID1='${userID1}' AND uID2='${userID2}) OR (uID1='${userID2}' AND uID2='${userID1})'`).length != 0);
+    return (await find("matches", `(uID1='${userID1}' AND uID2='${userID2}) OR (uID1='${userID2}' AND uID2='${userID1}')`).length != 0);
 }
 
 /**Gets the messages between the two users.
