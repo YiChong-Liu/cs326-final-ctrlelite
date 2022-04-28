@@ -26,7 +26,7 @@ if (userQuery === null) {
     }
 }
 else {
-    let matchResponse = await fetch(`api/user/data?user=${user}`);
+    let matchResponse = await fetch(`api/user/data?user=${userQuery}`);
     if (matchResponse.ok) {
         let matchJSON = await matchResponse.json();
         users.push(matchJSON.user_data);
