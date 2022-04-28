@@ -136,7 +136,7 @@ async function sendMessage(user2){
         chatBody.appendChild(makeNewMessage(chat.value, time.toLocaleString(), true));
         updateScroll();
     }
-    chat.innerHTML = "";
+    chat.value = "";
 }
 
 function updateScroll(){
