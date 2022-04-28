@@ -23,7 +23,7 @@ function newMatch(user_data){
     let profileLink = document.createElement('a');
     profileLink.classList.add('link-primary');
     profileLink.innerHTML = `<h2>${profileData.userName}</h2>`;
-    profileLink.href = "profile.html?userID=" + user_data.user;
+    profileLink.href = "profile.html?user=" + user_data.user;
     profileLinkDiv.appendChild(profileLink);
 
     let spacingDIV = document.createElement('div');
@@ -37,7 +37,7 @@ function newMatch(user_data){
     let chatButton = document.createElement('a');
     chatButton.classList.add("btn", "btn-primary", "btn-block", "mb-3");
     chatButton.innerHTML = "Chat";
-    chatButton.href = `chat.html?userID2=${profileData.userName}`;
+    chatButton.href = `chat.html?user=${profileData.userName}`;
     buttonDIV.appendChild(chatButton);
     let removeButton = document.createElement('a');
     removeButton.classList.add("btn", "btn-primary", "btn-danger", "mb-3")

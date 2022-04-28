@@ -7,18 +7,32 @@ const interested = document.getElementById('accept');
 
 let users = [];
 
-let response = await fetch("/api/matches/potentialMatches");
-if (response.ok) {
-    let responseJSON = await response.json();
-    for (const match of responseJSON.potential_matches) {
-        let matchResponse = await fetch(`api/user/data?user=${match.uid}`);
-        if (matchResponse.ok) {
-            let matchJSON = await matchResponse.json();
-            users.push(matchJSON.user_data);
+const user = params.get('user');
+
+if(user === undefined){
+    let response = await fetch("/api/matches/potentialMatches");
+    if (response.ok) {
+        let responseJSON = await response.json();
+        for (const match of responseJSON.potential_matches) {
+            let matchResponse = await fetch(`api/user/data?user=${match.uid}`);
+            if (matchResponse.ok) {
+                let matchJSON = await matchResponse.json();
+                users.push(matchJSON.user_data);
+            }
         }
+        initProfile();
+    }
+}
+else{
+    let matchResponse = await fetch(`api/user/data?user=${user2}`);
+    if (matchResponse.ok) {
+        let matchJSON = await matchResponse.json();
+        users.push(matchJSON.user_data);
     }
     initProfile();
 }
+
+
 
 let currProfile = 0;
 
@@ -26,6 +40,8 @@ function initProfile() {
     if (users.length > 0) {
         fillValues(users[0]);
     }
+    leftBtn.hidden = true;
+    rightBtn.hidden = users.length > 1;
 }
 
 leftBtn.addEventListener('click', function (e) {
@@ -33,12 +49,24 @@ leftBtn.addEventListener('click', function (e) {
         currProfile--;
         fillValues(users[currProfile]);
     }
+    if(currProfile === 0){
+        leftBtn.hidden = true;
+    }
+    if(currProfile < users.length - 1){
+        rightBtn.hidden = false;
+    }
 });
 
 rightBtn.addEventListener('click', function (e) {
     if (currProfile < users.length - 1) {
         currProfile++;
         fillValues(users[currProfile]);
+    }
+    if(currProfile === users.length - 1){
+        rightBtn.hidden = true;
+    }
+    if(currProfile > 0){
+        leftBtn.hidden = false;
     }
 });
 
@@ -49,6 +77,18 @@ interested.addEventListener('click', async function (e) {
             fillValues(users[(currProfile + 1) % users.length]);
             users.splice(currProfile, 1);
         }
+    }
+    if(currProfile === 0){
+        leftBtn.hidden = true;
+    }
+    if(currProfile < users.length - 1){
+        rightBtn.hidden = false;
+    }
+    if(currProfile === users.length - 1){
+        rightBtn.hidden = true;
+    }
+    if(currProfile > 0){
+        leftBtn.hidden = false;
     }
 });
 
