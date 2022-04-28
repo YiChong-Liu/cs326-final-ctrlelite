@@ -99,7 +99,7 @@ async function findAndUpdate(database, whereQuery, dataEntry){
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 async function findAndDelete(database, whereQuery){
-    let query = `DELETE * FROM ${database} WHERE ${whereQuery};`;
+    let query = `DELETE FROM ${database} WHERE ${whereQuery};`;
     console.log(query);
     await queryClient(query);
     return true; //TODO: Make this return success value of query

@@ -42,7 +42,7 @@ function newMatch(user_data){
     let removeButton = document.createElement('a');
     removeButton.classList.add("btn", "btn-primary", "btn-danger", "mb-3")
     removeButton.innerHTML = "Unmatch";
-    removeButton.addEventListener('click', unmatch(user_data.user));
+    removeButton.addEventListener('click', unmatch(user_data.user, wrapper));
     buttonDIV.appendChild(removeButton);
 
     matchDIV.appendChild(wrapper);
