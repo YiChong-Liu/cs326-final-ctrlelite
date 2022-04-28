@@ -9,9 +9,9 @@ const reject = document.getElementById('reject');
 let users = [];
 
 const params = new URLSearchParams(window.location.search);
-const user = params.get('user');
+const userQuery = params.get('user');
 
-if (user === null) {
+if (userQuery === null) {
     let response = await fetch("/api/matches/potentialMatches");
     if (response.ok) {
         let responseJSON = await response.json();
@@ -43,7 +43,7 @@ function initProfile() {
         fillValues(users[0]);
     }
     leftBtn.hidden = true;
-    rightBtn.hidden = user !== null && users.length > 1;
+    rightBtn.hidden = userQuery !== null || users.length < 1;
 }
 
 leftBtn.addEventListener('click', function (e) {
@@ -131,6 +131,10 @@ function fillValues(user) {
         bio.innerText = data.bio;
         profilePicture.src = data.profilePicture;
         fullname.innerText = data.userName;
+    }
+    if(userQuery === null){
+        leftBtn.hidden = false;
+        rightBtn.hidden = false;
     }
 }
 
