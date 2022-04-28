@@ -1,5 +1,3 @@
-import { user } from "pg/lib/defaults";
-
 const leftBtn = document.getElementById('goLeft');
 const rightBtn = document.getElementById('goRight');
 const profilePicture = document.getElementById('profile-picture');
