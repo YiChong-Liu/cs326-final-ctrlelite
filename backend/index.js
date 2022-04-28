@@ -50,7 +50,7 @@ wsServer.on("request", function (req) {
                     rooms[`${parsedJSON.user2}${parsedJSON.user1}`].sockets.push(connection);
                     roomID = `${parsedJSON.user2}${parsedJSON.user1}`;
                     console.log(roomID);
-                    group = rooms[`${parsedJSON.user2}${parsedJSON.user2}`];
+                    group = rooms[`${parsedJSON.user2}${parsedJSON.user1}`];
                 }
                 else {
                     rooms[`${parsedJSON.user1}${parsedJSON.user2}`] = { sockets: [connection] };

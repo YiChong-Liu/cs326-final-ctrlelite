@@ -63,6 +63,7 @@ if(params.has('user')) {
     let response = await fetch('/api/msg/fetch?userFrom=' + user1 + '&userTo=' + user2 + '&msgAmt=' + msgCount);
     if(response.ok){
         let msgJSON = await response.json();
+        console.log(msgJSON);
         msgData = msgJSON.msg_object;
     } else {
         console.log('ERROR: failed to update preferences');
@@ -96,6 +97,7 @@ if(params.has('user')) {
         let response = await fetch("/api/msg/newChatMsg", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user2:user2, msg: chat.value, timestamp: time}) });
         if(socket != null){
             socket.send(JSON.stringify({ type: 'update', message: chat.value}));
+            chatBody.appendChild(makeNewMessage(chat.value, time, true));
         }
     });
 }
