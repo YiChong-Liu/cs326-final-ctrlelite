@@ -250,7 +250,7 @@ export function getMessages(userIDFrom, userIDTo, numMessages=20){
  * @param {String} userID user to find matches from
  * @returns {[]Matches} Returns all user matches
  */
-export function getMatches(userID){
+export async function getMatches(userID){
     let userMatches = [];
     const randomUUID = () => faker.datatype.uuid();
 
