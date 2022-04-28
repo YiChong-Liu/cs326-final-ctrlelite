@@ -76,12 +76,17 @@ interested.addEventListener('click', async function (e) {
     let response = await fetch("/api/matches/acceptMatch", { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user2: users[currProfile].user }) });
     if (response.ok) {
         if (users.length > 1) {
+
             fillValues(users[(currProfile + 1) % users.length]);
-            users.splice(currProfile, 1);
+            let temp = currProfile;
+            currProfile = (currProfile + 1) % users.length;
+            users.splice(temp, 1);
         }
         else {
             outOfProfiles();
-            users.splice(currProfile, 1);
+            let temp = currProfile;
+            currProfile = (currProfile + 1) % users.length;
+            users.splice(temp, 1);
         }
     }
     if (currProfile === 0) {
@@ -101,11 +106,15 @@ interested.addEventListener('click', async function (e) {
 reject.addEventListener('click', async function (e) {
     if (users.length > 1) {
         fillValues(users[(currProfile + 1) % users.length]);
-        users.splice(currProfile, 1);
+        let temp = currProfile;
+        currProfile = (currProfile + 1) % users.length;
+        users.splice(temp, 1);
     }
     else {
         outOfProfiles();
-        users.splice(currProfile, 1);
+        let temp = currProfile;
+        currProfile = (currProfile + 1) % users.length;
+        users.splice(temp, 1);
     }
     if (currProfile === 0) {
         leftBtn.hidden = true;
@@ -133,6 +142,5 @@ function fillValues(user) {
 function outOfProfiles() {
     bio.innerText = "Lorem ipsum dolor sit amet, error fabellas interesset at pri, id nam detraxit constituam. In vim eius ridens consequuntur, eam ipsum epicurei eu. Facer veniam consul sea ea. At atomorum efficiendi signiferumque pri, ne dolorem erroribus salutatus quo, ad possit quodsi mea. Ea corrumpit intellegebat mei. Idque definiebas inciderint ad est, vix ut brute docendi.";
     profilePicture.src = "https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png";
-    fullname.innerText = "No More Potential Matches At This Time";
-
+    fullname.innerText = "No More Potential Matches At This Time"
 }
