@@ -25,11 +25,12 @@ wsServer.on("request", function (req) {
     let connection = req.accept(null, req.origin);
     //Group closure to keep track of the group the socket is in for easy alerting
     let group = {};
+    let roomID;
     connection.on('open', () => console.log("Connection opened"));
     connection.on('close', () => {
         console.log("Connection closed");
-        if (group != undefined) {
-            group.sockets.splice(group.sockets.indexOf(connection), 1)
+        if (roomID != undefined) {
+            console.log(rooms[roomID]);
         }
     });
     connection.on('message', e => {
@@ -41,15 +42,21 @@ wsServer.on("request", function (req) {
             case ('connect'):
                 if (rooms[`${parsedJSON.user1}${parsedJSON.user2}`] !== undefined) {
                     rooms[`${parsedJSON.user1}${parsedJSON.user2}`].sockets.push(connection);
+                    roomID = `${parsedJSON.user1}${parsedJSON.user2}`;
+                    console.log(roomID);
                     group = rooms[`${parsedJSON.user1}${parsedJSON.user2}`];
                 }
                 else if (rooms[`${parsedJSON.user2}${parsedJSON.user1}`] !== undefined) {
                     rooms[`${parsedJSON.user2}${parsedJSON.user1}`].sockets.push(connection);
+                    roomID = `${parsedJSON.user2}${parsedJSON.user1}`;
+                    console.log(roomID);
                     group = rooms[`${parsedJSON.user2}${parsedJSON.user2}`];
                 }
                 else {
                     rooms[`${parsedJSON.user1}${parsedJSON.user2}`] = { sockets: [connection] };
                     group = rooms[`${parsedJSON.user1}${parsedJSON.user2}`];
+                    roomID = `${parsedJSON.user1}${parsedJSON.user2}`;
+                    console.log(roomID);
                 }
                 console.log(group);
                 break;
