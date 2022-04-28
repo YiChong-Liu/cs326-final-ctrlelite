@@ -153,7 +153,7 @@ export async function createNewUser(email, password, name){
  * @returns {Boolean} Returns if the insert was successfull
  */
 export async function acceptMatch(userID1, userID2){
-    if(matchExists(userID1, userID2)){
+    if(await matchExists(userID1, userID2)){
         await findAndUpdate('matches', `(uID1='${userID1}' AND uID2='${userID2}')`, [{Column: 'u1Accept', Data: `'1'`}]);
         await findAndUpdate('matches', `(uID1='${userID2}' AND uID2='${userID1}')`, [{Column: 'u2Accept', Data:`'1'`}]);
     }
@@ -220,7 +220,7 @@ export function idExists(userID){
  */
 export async function matchExists(userID1, userID2){
     let res = await find("matches", `(uID1='${userID1}' AND uID2='${userID2}') OR (uID1='${userID2}' AND uID2='${userID1}')`);
-    console.log(res);
+    console.log("found: " , res);
     return (res.length != 0);
 }
 
