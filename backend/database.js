@@ -159,7 +159,7 @@ export async function acceptMatch(userID1, userID2){
     }
     else{
         console.log("Creating new match: ");
-        return await insert('matches', [{Column: 'uID1', Data: `'${userID1}'`}, {Column: 'uID2', Data:`'${userID2}'`}]);
+        return await insert('matches', [{Column: 'uID1', Data: `'${userID1}'`}, {Column: 'uID2', Data:`'${userID2}'`}, {Column: 'u1Accept', Data: `'1'`}]);
     }
     return true;
 }
@@ -261,7 +261,7 @@ export async function getMatches(userID){
     }
 
     //Test the query ouput for eventual SQL
-    const userMatchesResults = await find("matches", `uID1='${userID}' OR uID2='${userID} AND u1Accept='1' AND u2Accept='1'`);
+    const userMatchesResults = await find("matches", `uID1='${userID}' OR uID2='${userID}' AND u1Accept='1' AND u2Accept='1'`);
     console.log(userMatchesResults);
     return userMatchesResults;
 }
