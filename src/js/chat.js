@@ -75,9 +75,29 @@ if(params.has('user') && params.has('userName')) {
     document.getElementById('chat_header').innerHTML = 'Chat - ' + user2Name;
 
     // Fill in the fake messages
-    for(let i = 0; i < msgCount; i++) {
-        chatBody.appendChild(makeNewMessage(msgData.fromMsgs[i].msg, msgData.fromMsgs[i].time, false));
-        chatBody.appendChild(makeNewMessage(msgData.toMsgs[i].msg, msgData.toMsgs[i].time, true));
+    let index1 = 0; 
+    let index2 = 0;
+    for(let i = 0; i < msgData.fromMsgs.length + msgData.toMsgs.length; i++) {
+        if(msgData.fromMsgs[index1] === undefined){
+            chatBody.appendChild(makeNewMessage(msgData.toMsgs[index2].msg, msgData.toMsgs[i].time, true));
+            index2++;
+        }
+        else if(msgData.toMsgs[index2] === undefined){
+            chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, msgData.fromMsgs[i].time, false));
+            index1++;
+        }
+        else{
+            let time1 = new Date(msgData.fromMsgs[index1].time.replace(' ', 'T'));
+            let time2 = new Date(msgData.toMsgs[index2].time.replace(' ', 'T'));
+            if(time1 <= time2){
+                chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, msgData.fromMsgs[i].time, false));
+                index1++;
+            }
+            else{
+                chatBody.appendChild(makeNewMessage(msgData.toMsgs[index2].msg, msgData.toMsgs[i].time, true));
+                index2++;
+            }
+        }
         updateScroll();
     }
     let HOST = location.origin.replace(/^http/, 'ws')
