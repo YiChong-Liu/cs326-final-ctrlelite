@@ -34,7 +34,7 @@ window.onload = async () =>{
     let response = await fetch(`/api/user/data?user=${userID}`);
     if(response.ok){
         let responseJSON = await response.json();
-        if(responseJSON.worked){
+        if(responseJSON.worked && responseJSON.user_data.profile != undefined && responseJSON.user_data.profile.profilejson != undefined){
             let data = JSON.parse(responseJSON.user_data.profile.profilejson);
             bio.innerText = data.bio;
             profilePicture.src = data.profilePicture;

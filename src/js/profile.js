@@ -43,8 +43,10 @@ rightBtn.addEventListener('click', function (e) {
 });
 
 function fillValues(user) {
-    let data = JSON.parse(user.profile.profilejson);
-    bio.innerText = data.bio;
-    profilePicture.src = data.profilePicture;
-    fullname.innerText = data.userName;
+    if(user.profile != undefined && user.profile.profilejson != undefined){
+        let data = JSON.parse(user.profile.profilejson);
+        bio.innerText = data.bio;
+        profilePicture.src = data.profilePicture;
+        fullname.innerText = data.userName;
+    }
 }
