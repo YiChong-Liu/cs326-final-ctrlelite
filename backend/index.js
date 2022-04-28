@@ -46,6 +46,7 @@ wsServer.on("request", function(req){
                     rooms[`${parsedJSON.user1}${parsedJSON.user2}`] = {sockets: [connection]};
                     group = rooms[`${parsedJSON.user1}${parsedJSON.user2}`];
                 }
+                console.log(group);
                 break;
             //If it is a disconnect, delete the socket from the group
             case('disconnect'):
