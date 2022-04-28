@@ -51,10 +51,11 @@ const chat = document.getElementById('chat-message');
 
 let socket;
 
-if(params.has('user')) {
+if(params.has('user') && params.has('userName')) {
     // Gather user names and other important data
     const user1 = parseJwt(document.cookie).user;
     const user2 = params.get('user');
+    const user2Name = params.get('userName');
     const msgCount = 10;
     let msgData;
     let chatBody = document.getElementById('chat_body');
@@ -69,8 +70,9 @@ if(params.has('user')) {
         console.log('ERROR: failed to update preferences');
     }
 
+
     // Set chat header
-    document.getElementById('chat_header').innerHTML = 'Chat - ' + user2;
+    document.getElementById('chat_header').innerHTML = 'Chat - ' + user2Name;
 
     // Fill in the fake messages
     for(let i = 0; i < msgCount; i++) {
@@ -105,7 +107,7 @@ if(params.has('user')) {
 }
 
 function updateScroll(){
-    var element = document.getElementById("card-body");
+    let element = document.getElementById("chat_body");
     element.scrollTop = element.scrollHeight;
 }
 
