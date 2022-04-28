@@ -242,8 +242,8 @@ export function getMessages(userIDFrom, userIDTo, numMessages=20){
     }
 
     //Test the query ouput for eventual SQL
-    const userToMsgsResults = find("chat", `userFromID='${userIDFrom}' AND userToID='${userIDTo}'`, "timestamp DESC");
-    const userFromMsgsResults = find("chat", `userFromID='${userIDTo}' AND userToID='${userIDFrom}'`, "timestamp DESC");
+    const userToMsgsResults = find("chat", `uid1='${userIDFrom}' AND uid2='${userIDTo}'`, "timestamp DESC");
+    const userFromMsgsResults = find("chat", `uid2='${userIDTo}' AND uid1='${userIDFrom}'`, "timestamp DESC");
 
     return {fromMsgs: userFromMsgs, toMsgs: userToMsgs};
 }
