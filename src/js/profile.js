@@ -7,6 +7,7 @@ const interested = document.getElementById('accept');
 
 let users = [];
 
+const params = new URLSearchParams(window.location.search);
 const user = params.get('user');
 
 if(user === undefined){
