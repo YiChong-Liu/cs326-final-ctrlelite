@@ -74,8 +74,9 @@ if(params.has('user')) {
 
     // Fill in the fake messages
     for(let i = 0; i < msgCount; i++) {
-        chatBody.appendChild(makeNewMessage(msgData.fromMsgs[i], '10:42pm', false));
-        chatBody.appendChild(makeNewMessage(msgData.toMsgs[i], '10:42pm', true));
+        chatBody.appendChild(makeNewMessage(msgData.fromMsgs[i].msg, msgData.fromMsgs[i].time, false));
+        chatBody.appendChild(makeNewMessage(msgData.toMsgs[i].msg, msgData.toMsgs[i].time, true));
+        updateScroll();
     }
     let HOST = location.origin.replace(/^http/, 'ws')
     socket = new WebSocket(HOST);
@@ -98,8 +99,14 @@ if(params.has('user')) {
         if(socket != null){
             socket.send(JSON.stringify({ type: 'update', message: chat.value}));
             chatBody.appendChild(makeNewMessage(chat.value, time, true));
+            updateScroll();
         }
     });
+}
+
+function updateScroll(){
+    var element = document.getElementById("card-body");
+    element.scrollTop = element.scrollHeight;
 }
 
 
