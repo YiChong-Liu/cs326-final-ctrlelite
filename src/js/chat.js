@@ -119,14 +119,25 @@ if(params.has('user') && params.has('userName')) {
     });
 
     send.addEventListener('click', async function(e){
-        let time = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        let response = await fetch("/api/msg/newChatMsg", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user2:user2, msg: chat.value, timestamp: time}) });
-        if(socket != null){
-            socket.send(JSON.stringify({ type: 'update', message: chat.value}));
-            chatBody.appendChild(makeNewMessage(chat.value, time.toLocaleString(), true));
-            updateScroll();
+        sendMessage(user2);
+    });
+
+    chat.addEventListener('keyup', async function(e){
+        if(e.code = "Enter"){
+            sendMessage(user2);
         }
     });
+}
+
+async function sendMessage(user2){
+    let time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    let response = await fetch("/api/msg/newChatMsg", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user2:user2, msg: chat.value, timestamp: time}) });
+    if(socket != null){
+        socket.send(JSON.stringify({ type: 'update', message: chat.value}));
+        chatBody.appendChild(makeNewMessage(chat.value, time.toLocaleString(), true));
+        updateScroll();
+    }
+    chat.innerText = "";
 }
 
 function updateScroll(){
