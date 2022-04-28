@@ -253,7 +253,7 @@ app.get('/user/data', async (req, res) => {
 
   // Get Data from the Request
   const id = req.query.user;
-
+  console.log("Getting data of user: ", id);
   // Gather user Data
   const data = await db.getUserData(id);
 
