@@ -110,7 +110,7 @@ if(params.has('user') && params.has('userName')) {
     });
     socket.addEventListener('message', function (e) {
         console.log(e);
-        chatBody.appendChild(makeNewMessage(e.data, '10:42pm', false));
+        chatBody.appendChild(makeNewMessage(e.data, new Date().toLocaleString(), false));
         updateScroll();
     });
     socket.addEventListener('close', e => {
@@ -123,7 +123,7 @@ if(params.has('user') && params.has('userName')) {
         let response = await fetch("/api/msg/newChatMsg", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user2:user2, msg: chat.value, timestamp: time}) });
         if(socket != null){
             socket.send(JSON.stringify({ type: 'update', message: chat.value}));
-            chatBody.appendChild(makeNewMessage(chat.value, time, true));
+            chatBody.appendChild(makeNewMessage(chat.value, time.toLocaleString(), true));
             updateScroll();
         }
     });
