@@ -221,7 +221,7 @@ app.get('/msg/fetch', (req, res) => {
   res.status(200).send({ worked: true, msg_object: data });
 });
 // Grab a User's Matches
-app.get('/matches', (req, res) => {
+app.get('/matches',async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -235,7 +235,7 @@ app.get('/matches', (req, res) => {
   const id = authInfo.data.user;
 
   // Gather user Matches
-  const data = db.getMatches(id);
+  const data = await db.getMatches(id);
 
   // Send Response
   res.status(200).send({ worked: true, user: id, user_matches: data });

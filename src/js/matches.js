@@ -49,7 +49,7 @@ let response = await fetch("/api/matches");
 if(response.ok){
     let responseJSON = await response.json();  
     for(const match of responseJSON.user_matches){
-        let matchResponse = await fetch(`api/user/data?user=${match}`);
+        let matchResponse = await fetch(`api/user/data?user=${match.uid}`);
         if(matchResponse.ok){
             let matchJSON = await matchResponse.json();
             console.log(matchJSON);
