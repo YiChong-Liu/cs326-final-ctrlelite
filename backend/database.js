@@ -261,10 +261,10 @@ export async function getMatches(userID){
     }
 
     //Test the query ouput for eventual SQL
-    let  userMatchesResults = (await find("matches", `uID1='${userID}' AND u1Accept='1' AND u2Accept='1'`)).map(m => {return {uid:m.uid2}});
-    userMatchesResults.concat((await find("matches", `uID2='${userID}' AND u1Accept='1' AND u2Accept='1'`)).map(m => {return {uid:m.uid1}}))
-    console.log(userMatchesResults);
-    return userMatchesResults;
+    let userMatchesResults1 = (await find("matches", `uID1='${userID}' AND u1Accept='1' AND u2Accept='1'`));
+    let userMatchesResults2 = (await find("matches", `uID2='${userID}' AND u1Accept='1' AND u2Accept='1'`));
+    console.log(userMatchesResults1, userMatchesResults2);
+    return userMatchesResults2;
 }
 
 /**
