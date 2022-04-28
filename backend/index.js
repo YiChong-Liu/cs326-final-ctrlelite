@@ -30,7 +30,7 @@ wsServer.on("request", function(req){
     connection.on('message', e => {
         //Parse the incoming message
         let parsedJSON = JSON.parse(e.utf8Data);
-        console.log(pasrsedJSON);
+        console.log(parsedJSON);
         switch(parsedJSON.type){
             //If it is a connection, add it to the correct document group
             case('connect'):
