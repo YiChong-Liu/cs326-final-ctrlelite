@@ -88,7 +88,7 @@ async function findAndUpdate(database, whereQuery, dataEntry){
     }
     let query = `UPDATE ${database} SET ${columns} WHERE ${whereQuery};`;
     console.log(query);
-    queryClient(query);
+    await queryClient(query);
     return true; //TODO: Make this return success value of query
 }
 
@@ -101,6 +101,7 @@ async function findAndUpdate(database, whereQuery, dataEntry){
 async function findAndDelete(database, whereQuery){
     let query = `DELETE * FROM ${database} WHERE ${whereQuery};`;
     console.log(query);
+    await queryClient(query);
     return true; //TODO: Make this return success value of query
 }
 
@@ -351,7 +352,7 @@ export function updateUserPassword(userID, password){
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 export function deleteUser(userID){
-    return findAndDelete("Users", `userID='${userID}'`);
+    return findAndDelete("Users", `uid='${userID}'`);
 }
 
 
