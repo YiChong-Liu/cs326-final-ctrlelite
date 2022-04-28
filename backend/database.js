@@ -154,8 +154,8 @@ export async function createNewUser(email, password, name){
  */
 export async function acceptMatch(userID1, userID2){
     if(matchExists(userID1, userID2)){
-        await findAndUpdate('matches', `(uID1='${userID1}' AND uID2='${userID2})'`[{Column: 'u1Accept', Data: `'1'`}]);
-        await findAndUpdate('matches', `(uID1='${userID2}' AND uID2='${userID1})'`[{Column: 'u2Accept', Data:`'1'`}]);
+        await findAndUpdate('matches', `(uID1='${userID1}' AND uID2='${userID2})'`, [{Column: 'u1Accept', Data: `'1'`}]);
+        await findAndUpdate('matches', `(uID1='${userID2}' AND uID2='${userID1})'`, [{Column: 'u2Accept', Data:`'1'`}]);
     }
     else{
         console.log("Creating new match: ");
