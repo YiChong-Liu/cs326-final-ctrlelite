@@ -83,12 +83,12 @@ async function findAndUpdate(database, whereQuery, dataEntry){
     let values = '';
     let i = 0;
     for(const dataPoint of dataEntry){
-        columns += i !== dataEntry.length - 1 ? `${dataPoint.Column}, ` : `${dataPoint.Column}`;
-        values += i !== dataEntry.length - 1? `${dataPoint.Data}, ` : `${dataPoint.Data}`;
+        columns += i !== dataEntry.length - 1 ? `${dataPoint.Column} = ${dataPoint.Data}, ` : `${dataPoint.Column} = ${dataPoint.Data}`;
         i++;
     }
-    let query = `UPDATE ${database} (${columns}) VALUES (${values}) WHERE ${whereQuery};`;
+    let query = `UPDATE ${database} SET ${columns} WHERE ${whereQuery};`;
     console.log(query);
+    queryClient(query);
     return true; //TODO: Make this return success value of query
 }
 
@@ -131,13 +131,19 @@ async function queryClient(query){
  * @param {String} password User password
  * @returns {Boolean} Returns if the insert was successfull
  */
-export async function createNewUser(email, password){
+export async function createNewUser(email, password, name){
     const newUUId = randomUUID();
-    await insert('users', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'email', Data: `'${email}'`}, {Column: 'password', Data: `'${password}'`}]);
-    await insert('userpreferences', [{Column: 'uID', Data: `'${newUUId}'`}]);
-    await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}]);
-    console.log("New User Created");
-    return true;
+    let userExists = await find('users', `email='${email}'`);
+    if(! (userExists.length > 0) && email.length > 0 && password.length > 7){
+        await insert('users', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'email', Data: `'${email}'`}, {Column: 'password', Data: `'${password}'`}]);
+        await insert('userpreferences', [{Column: 'uID', Data: `'${newUUId}'`}]);
+        await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'profilejson', Data: `'${JSON.stringify({userName: name, profilePicture :"https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png", bio: ""})}'`}]);
+        console.log("New User Created");
+        return newUUId;
+    } 
+    else{
+        return false;
+    }   
 }
 
 /** Creates a new match between two users
@@ -149,7 +155,7 @@ export async function createNewUser(email, password){
 export async function acceptMatch(userID1, userID2){
     let res = await client.query(`select * FROM matches WHERE (uID1='${userID1}' AND uID2='${userID2}') OR (uID1='${userID2}' AND uID2='${userID1}')`);
     console.log(res);
-    return insert('matches', [{Column: 'userID1', Data: userID1}, {Column: 'userID2', Data:userID2}]);
+    return await insert('matches', [{Column: 'userID1', Data: `'${userID1}'`}, {Column: 'userID2', Data:`'${userID2}'`}]);
 }
 
 /** Adds a new message between two users.
@@ -159,8 +165,8 @@ export async function acceptMatch(userID1, userID2){
  * @param {String} Message The message sent
  * @returns {Boolean} Returns if the insert was successfull
  */
-export function createMessage(userFromID, userToID, Message){
-    return insert('chat', [{Column: 'userFromID', Data: userFromID}, {Column: 'userToID', Data:userToID}, {Column: 'message', Data: Message}]);
+export async function createMessage(userFromID, userToID, Message){
+    return await insert('chat', [{Column: 'uID1', Data: `'${userFromID}'`}, {Column: 'uID2', Data:`'${userToID}'`}, {Column: 'msg', Data: `'${Message}'`}]);
 }
 
 
@@ -176,7 +182,7 @@ export function createMessage(userFromID, userToID, Message){
  * @param {String} userID User id to get data of
  * @returns {Object: {uId: String, preferences: Object, profile: Object}} Profile and Preferences to return
  */
-export function getUserData(userID){
+export async function getUserData(userID){
     const randomName = faker.name.findName();
     const randomImg = faker.image.avatar();
     const loremBio = faker.lorem.paragraph();
@@ -185,10 +191,10 @@ export function getUserData(userID){
     const importance = () => Math.random()*10;
 
     //Test the query ouput for eventual SQL
-    const preferences = find("userPreferences", `uID='${userID}'`);
-    const profile = find("userProfiles", `uID='${userID}'`)
+    const preferences = await find("userPreferences", `uID='${userID}'`);
+    const profile = await find("userProfiles", `uID='${userID}'`);
 
-    return {user_ID: userID, preferences:{"bedtime":{"time":bedtime,"importance":importance()},"cleanliness":{"level":importance(),"importance":importance()}}, profile:{userName:randomName, bio:loremBio, profilePicture:randomImg}}
+    return {user_ID: userID, preferences:preferences[0], profile:profile[0]};
 }
 
 /** Checks if the user is in the database
@@ -207,7 +213,7 @@ export function idExists(userID){
  * @returns Boolean
  */
 export function matchExists(userID1, userID2){
-    return (find("matches", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`).length == 0);
+    return (find("matches", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`).length != 0);
 }
 
 /**Gets the messages between the two users.
@@ -254,18 +260,31 @@ export function getMatches(userID){
 
 /**
  *
+ * @param {String} userID user to find matches from
+ * @returns {[]Matches} Returns all user matches
+ */
+ export function getPotentialMatches(userID){
+    //Test the query ouput for eventual SQL
+    const userMatchesResults = find("users", `uID!='${userID}'`);
+
+    return userMatchesResults;
+}
+
+/**
+ *
  * @param {String} userID
  * @returns {String} Returns the hashed users password stored in the db
  */
-export async function getPasswordHash(email){
+export async function getUserFromEmail(email){
     let password = faker.internet.password();
 
     //Test for sql result
     const passwordResult = await find("users", `email='${email}'`);
     if(passwordResult.length > 0){
-        console.log(passwordResult.rows[0]);
+        console.log(passwordResult[0]);
+        return passwordResult[0];
     }
-    return password;
+    return undefined;
 }
 
 
@@ -286,7 +305,7 @@ export function updateUserPreferences(userID, userPreferences){
     for(const key of Object.keys(userPreferences)){
         preferences.push({Column:key, Data:userPreferences[key]});
     }
-    return findAndUpdate("Preferences", `userID='${userID}'`, preferences);
+    return findAndUpdate("userPreferences", `uID='${userID}'`, preferences);
 }
 
 /**Updates the user profile in the database
@@ -295,11 +314,7 @@ export function updateUserPreferences(userID, userPreferences){
  * @param {Object} userProfile New Profile
  */
  export function updateUserProfile(userID, userProfile){
-    let profile = [];
-    for(const key of Object.keys(userProfile)){
-        profile.push({Column:key, Data:userProfile[key]});
-    }
-    return findAndUpdate("Profiles", `userID='${userID}'`, profile);
+    return findAndUpdate("userProfiles", `uID='${userID}'`, [{Column: 'profileJSON', Data: `'${JSON.stringify(userProfile)}'`}]);
 }
 
 /**Updates the given users password in the database
@@ -309,7 +324,7 @@ export function updateUserPreferences(userID, userPreferences){
  * @returns
  */
 export function updateUserPassword(userID, password){
-    return findAndUpdate("Users", `userID=${userID}`, [{Column:'password', Data:`'${password}'`}]);
+    return findAndUpdate("Users", `uID=${userID}`, [{Column:'password', Data:`'${password}'`}]);
 }
 
 /**-------------------------------------------------------------

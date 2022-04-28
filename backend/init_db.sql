@@ -34,14 +34,14 @@ CREATE TABLE IF NOT EXISTS userPreferences(
 
 CREATE TABLE IF NOT EXISTS userProfiles(
     uID UUID NOT NULL,
-    profileJSON varchar(2048),
+    profileJSON text,
     PRIMARY KEY(uID)
 );
 
 CREATE TABLE IF NOT EXISTS chat(
     uID1 UUID NOT NULL,
     uID2 UUID NOT NULL,
-    msg varchar(200),
+    msg text,
     PRIMARY KEY(uID1, uID2)
 );
 
