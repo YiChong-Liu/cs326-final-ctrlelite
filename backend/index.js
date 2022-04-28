@@ -21,40 +21,45 @@ const wsServer = new ws.server({
 });
 
 let rooms = {};
-wsServer.on("request", function(req){
+wsServer.on("request", function (req) {
     let connection = req.accept(null, req.origin);
     //Group closure to keep track of the group the socket is in for easy alerting
-    let group = [];
+    let group = {};
     connection.on('open', () => console.log("Connection opened"));
-    connection.on('close', () => {console.log("Connection closed"); group.sockets.splice(group.sockets.indexOf(connection), 1)});
+    connection.on('close', () => {
+        console.log("Connection closed");
+        if (group != undefined) {
+            group.sockets.splice(group.sockets.indexOf(connection), 1)
+        }
+    });
     connection.on('message', e => {
         //Parse the incoming message
         let parsedJSON = JSON.parse(e.utf8Data);
         console.log(parsedJSON);
-        switch(parsedJSON.type){
+        switch (parsedJSON.type) {
             //If it is a connection, add it to the correct document group
-            case('connect'):
-                if(rooms[`${parsedJSON.user1}${parsedJSON.user2}`] !== undefined){
+            case ('connect'):
+                if (rooms[`${parsedJSON.user1}${parsedJSON.user2}`] !== undefined) {
                     rooms[`${parsedJSON.user1}${parsedJSON.user2}`].sockets.push(connection);
                     group = rooms[`${parsedJSON.user1}${parsedJSON.user2}`];
                 }
-                else if(rooms[`${parsedJSON.user2}${parsedJSON.user1}`] !== undefined){
+                else if (rooms[`${parsedJSON.user2}${parsedJSON.user1}`] !== undefined) {
                     rooms[`${parsedJSON.user2}${parsedJSON.user1}`].sockets.push(connection);
                     group = rooms[`${parsedJSON.user2}${parsedJSON.user2}`];
                 }
-                else{
-                    rooms[`${parsedJSON.user1}${parsedJSON.user2}`] = {sockets: [connection]};
+                else {
+                    rooms[`${parsedJSON.user1}${parsedJSON.user2}`] = { sockets: [connection] };
                     group = rooms[`${parsedJSON.user1}${parsedJSON.user2}`];
                 }
                 console.log(group);
                 break;
             //If it is a disconnect, delete the socket from the group
-            case('disconnect'):
+            case ('disconnect'):
                 group.sockets.splice(group.sockets.indexOf(connection), 1);
                 break;
             //If it is sending text, send the update to the whole group (except sending connection)
-            case('update'):
-                group.sockets.forEach((s) => {s.send(parsedJSON.message)});
+            case ('update'):
+                group.sockets.forEach((s) => {if(s != connection){s.send(parsedJSON.message) }});
                 break;
         }
     });
