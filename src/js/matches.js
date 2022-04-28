@@ -1,7 +1,7 @@
 const matchDIV = document.getElementById('matchList');
 
 function newMatch(user_data){
-    let profileData = JSON.parse(user_data.profilejson);
+    let profileData = JSON.parse(user_data.profile.profilejson);
 
     let wrapper  = document.createElement('li');
     wrapper.classList.add("list-group-item");
