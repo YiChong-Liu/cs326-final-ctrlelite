@@ -231,7 +231,7 @@ export async function matchExists(userID1, userID2){
  * @param {String} userIDTo The other user involved with the request
  * @returns {Object: {fromMsgs: []Messages, toMsgs: []Messages}} Returns two list of chat objects
  */
-export function getMessages(userIDFrom, userIDTo, numMessages=20){
+export async function getMessages(userIDFrom, userIDTo, numMessages=20){
     let userFromMsgs = [];
     let userToMsgs = [];
     const randomMsg = () => faker.lorem.paragraph();
@@ -242,9 +242,13 @@ export function getMessages(userIDFrom, userIDTo, numMessages=20){
     }
 
     //Test the query ouput for eventual SQL
-    const userToMsgsResults = find("chat", `uid1='${userIDFrom}' AND uid2='${userIDTo}'`, "timestamp DESC");
-    const userFromMsgsResults = find("chat", `uid2='${userIDTo}' AND uid1='${userIDFrom}'`, "timestamp DESC");
-
+    try{
+    const userToMsgsResults = await find("chat", `uid1='${userIDFrom}' AND uid2='${userIDTo}'`, "timestamp DESC");
+    const userFromMsgsResults = await find("chat", `uid2='${userIDTo}' AND uid1='${userIDFrom}'`, "timestamp DESC");
+    }
+    catch(e){
+        console.log(e);
+    }
     return {fromMsgs: userFromMsgs, toMsgs: userToMsgs};
 }
 

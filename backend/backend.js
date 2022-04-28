@@ -200,7 +200,7 @@ app.post('/msg/newChatMsg', async(req, res) => {
 // GET
 
 // Grab a Conversation of Messages
-app.get('/msg/fetch', (req, res) => {
+app.get('/msg/fetch', async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -216,7 +216,7 @@ app.get('/msg/fetch', (req, res) => {
   const amt = req.query.msgAmt;
 
   // Gather the message data
-  const data = db.getMessages(sender, receiver, amt);
+  const data = await db.getMessages(sender, receiver, amt);
 
   // Send Response
   res.status(200).send({ worked: true, msg_object: data });
