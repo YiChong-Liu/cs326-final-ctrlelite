@@ -79,22 +79,24 @@ if(params.has('user') && params.has('userName')) {
     let index2 = 0;
     for(let i = 0; i < msgData.fromMsgs.length + msgData.toMsgs.length; i++) {
         if(msgData.fromMsgs[index1] === undefined){
-            chatBody.appendChild(makeNewMessage(msgData.toMsgs[index2].msg, msgData.toMsgs[index2].time, true));
+            let time2 = new Date(msgData.toMsgs[index2].time.replace(' ', 'T'));
+            chatBody.appendChild(makeNewMessage(msgData.toMsgs[index2].msg, time2.toLocaleString, true));
             index2++;
         }
         else if(msgData.toMsgs[index2] === undefined){
-            chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, msgData.fromMsgs[index1].time, false));
+            let time1 = new Date(msgData.fromMsgs[index1].time.replace(' ', 'T'));
+            chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, time1.toLocaleString, false));
             index1++;
         }
         else{
             let time1 = new Date(msgData.fromMsgs[index1].time.replace(' ', 'T'));
             let time2 = new Date(msgData.toMsgs[index2].time.replace(' ', 'T'));
             if(time1 <= time2){
-                chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, msgData.fromMsgs[index1].time, false));
+                chatBody.appendChild(makeNewMessage(msgData.fromMsgs[index1].msg, time1.toLocaleString, false));
                 index1++;
             }
             else{
-                chatBody.appendChild(makeNewMessage(msgData.toMsgs[index2].msg, msgData.toMsgs[index2i].time, true));
+                chatBody.appendChild(makeNewMessage(msgData.toMsgs[index2].msg, time2.toLocaleString, true));
                 index2++;
             }
         }
