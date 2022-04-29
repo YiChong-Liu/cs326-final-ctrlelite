@@ -160,7 +160,7 @@
   text-decoration: none;
   color: #fff;
   font-family: Pacifico;
-  animation: neon6 1.5s ease-in-out infinite alternate;
+  animation: neon6 2s ease-in-out infinite alternate;
 }
 
 .welcomeMessage2 {
@@ -172,7 +172,7 @@
   text-decoration: none;
   color: #fff;
   font-family: "Press Start 2P";
-  animation: neon6 1.5s ease-in-out infinite alternate;
+  animation: neon6 2s ease-in-out infinite alternate;
 }
 
 
