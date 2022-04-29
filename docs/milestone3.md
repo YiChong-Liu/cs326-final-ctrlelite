@@ -67,5 +67,5 @@
 
 Conlan: Postgres Integration \
 Ben: userPreferences DB integration \
-Liam: SQL querys, webSockets for Chat, profile.js DB integration \
+Liam: SQL querys, webSockets for Chat, profile.js DB integration, DB documentation\
 Yichong: 
