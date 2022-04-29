@@ -130,7 +130,7 @@ async function loadPreviousData() {
         case 'any-gender': any_genderRadio.checked = true; break;
         default: break;
     }
-    genderImportanceBar.value = parseInt(prefObj.genderimportance);
+    genderImportanceBar.value = prefObj.genderimportance;
 
     // Age
     switch(prefObj.age) {
@@ -141,7 +141,7 @@ async function loadPreviousData() {
         case 'any-age': any_ageRadio.checked = true; break;
         default: break;
     }
-    ageImportanceBar.value = parseInt(prefObj.ageimportance);
+    ageImportanceBar.value = prefObj.ageimportance;
 
     // Housing
     switch(prefObj.housingtype) {
@@ -150,7 +150,7 @@ async function loadPreviousData() {
         case 'condo': condo_housingRadio.checked = true; break;
         default: break;
     }
-    housingImportanceBar.value = parseInt(prefObj.housingtypeimportance);
+    housingImportanceBar.value = prefObj.housingtypeimportance;
 
     // Noise
     switch(prefObj.noiselevel) {
@@ -159,7 +159,7 @@ async function loadPreviousData() {
         case 'a-lot-of-noise': aLotOfNoise_sleepRadio.checked = true; break;
         default: break;
     }
-    sleepImportanceBar.value = parseInt(prefObj.noiseimportance);
+    sleepImportanceBar.value = prefObj.noiseimportance;
 
     // Clean
     switch(prefObj.cleanliness) {
@@ -168,7 +168,7 @@ async function loadPreviousData() {
         case 'not_clean': not_cleanRadio.checked = true; break;
         default: break;
     }
-    cleanImportanceBar.value = parseInt(prefObj.cleanlinessimportance);
+    cleanImportanceBar.value = prefObj.cleanlinessimportance;
 
     // Sharing
     switch(prefObj.sharing) {
@@ -177,7 +177,7 @@ async function loadPreviousData() {
         case 'nothing': none_shareRadio.checked = true; break;
         default: break;
     }
-    shareImportanceBar.value = parseInt(prefObj.sharingimportance);
+    shareImportanceBar.value = prefObj.sharingimportance;
 }
 
 loadPreviousData();
