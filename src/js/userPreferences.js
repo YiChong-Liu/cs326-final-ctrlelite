@@ -4,8 +4,7 @@
 
 import { parseJwt } from "./main.js";
 
-const params = new URLSearchParams(window.location.search);
-const userQuery = params.get('user');
+let userID = parseJwt(document.cookie).user;
 
 // Gender
 let male_genderRadio = document.getElementById('gender_male');
@@ -113,12 +112,72 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
 });
 
 async function loadPreviousData() {
-    console.log(userQuery);
-    let response = await fetch(`api/user/data?user=${userQuery}`);
+    userID = userID;
+    let response = await fetch(`api/user/data?user=${userID}`);
+    let prefObj = null;
     if(response.ok) {
         let responseJSON = await response.json();
-        console.log(responseJSON.user_data.preferences);
+        prefObj = responseJSON.user_data.preferences;
     }
+
+    if(prefObj === undefined) { return; }
+
+    // Gender
+    switch(prefObj.gender) {
+        case 'male': male_genderRadio.checked = true; break;
+        case 'female': female_genderRadio.checked = true; break;
+        case 'non-binary': nonbinary_genderRadio.checked = true; break;
+        case 'any-gender': any_genderRadio.checked = true; break;
+        default: break;
+    }
+    genderImportanceBar.value = parseInt(prefObj.genderimportance);
+
+    // Age
+    switch(prefObj.gender) {
+        case 'teenage': teen_ageRadio.checked = true; break;
+        case 'middle-age': middle_ageRadio.checked = true; break;
+        case 'senior': senior_ageRadio.checked = true; break;
+        case 'elderly': elderly_ageRadio.checked = true; break;
+        case 'any-age': any_ageRadio.checked = true; break;
+        default: break;
+    }
+    ageImportanceBar.value = parseInt(prefObj.ageimportance);
+
+    // Housing
+    switch(prefObj.gender) {
+        case 'apartment': apartment_housingRadio.checked = true; break;
+        case 'townhouse': townhouse_housingRadio.checked = true; break;
+        case 'condo': condo_housingRadio.checked = true; break;
+        default: break;
+    }
+    housingImportanceBar.value = parseInt(prefObj.housingtypeimportance);
+
+    // Noise
+    switch(prefObj.gender) {
+        case 'no-noise': noNoise_sleepRadio.checked = true; break;
+        case 'a-little-noise': aLittleNoise_sleepRadio.checked = true; break;
+        case 'a-lot-of-noise': aLotOfNoise_sleepRadio.checked = true; break;
+        default: break;
+    }
+    sleepImportanceBar.value = parseInt(prefObj.noiseimportance);
+
+    // Clean
+    switch(prefObj.gender) {
+        case 'very_clean': very_cleanRadio.checked = true; break;
+        case 'somewhat_clean': somewhat_cleanRadio.checked = true; break;
+        case 'not_clean': not_cleanRadio.checked = true; break;
+        default: break;
+    }
+    cleanImportanceBar.value = parseInt(prefObj.cleanlinessimportance);
+
+    // Sharing
+    switch(prefObj.gender) {
+        case 'everything': everything_shareRadio.checked = true; break;
+        case 'some': some_shareRadio.checked = true; break;
+        case 'nothing': none_shareRadio.checked = true; break;
+        default: break;
+    }
+    shareImportanceBar.value = parseInt(prefObj.sharingimportance);
 }
 
 loadPreviousData();

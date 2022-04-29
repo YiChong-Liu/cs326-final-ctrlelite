@@ -277,11 +277,18 @@ app.get('/user/data', async (req, res) => {
   // Get Data from the Request
   const id = req.query.user;
   console.log("Getting data of user: ", id);
+
   // Gather user Data
   const data = await db.getUserData(id);
 
-  // Send Response
-  res.status(200).send({ worked: true, user: id, user_data: data });
+  // Validate the Data
+  if(data.preferences === undefined || data.profile === undefined) {
+    // Send Response
+    res.status(404).send({ worked: false, user: id });
+  } else {
+    // Send Response
+    res.status(200).send({ worked: true, user: id, user_data: data });
+  }
 });
 // Grab a User's Matches
 app.get('/matches/potentialMatches', async (req, res) => {
