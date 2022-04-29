@@ -4,6 +4,9 @@
 
 import { parseJwt } from "./main.js";
 
+const params = new URLSearchParams(window.location.search);
+const userQuery = params.get('user');
+
 // Gender
 let male_genderRadio = document.getElementById('gender_male');
 let female_genderRadio = document.getElementById('gender_female');
@@ -108,3 +111,14 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
         console.log('ERROR: failed to update preferences');
     }
 });
+
+async function loadPreviousData() {
+    console.log(userQuery);
+    let response = await fetch(`api/user/data?user=${userQuery}`);
+    if(response.ok) {
+        let responseJSON = await response.json();
+        console.log(responseJSON.user_data.preferences);
+    }
+}
+
+loadPreviousData();
