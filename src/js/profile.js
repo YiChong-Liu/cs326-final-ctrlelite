@@ -43,7 +43,7 @@ function initProfile() {
         fillValues(users[0]);
     }
     leftBtn.hidden = true;
-    rightBtn.hidden = userQuery !== null || users.length < 1;
+    rightBtn.hidden = userQuery !== null || users.length < 2;
 }
 
 leftBtn.addEventListener('click', function (e) {
