@@ -324,7 +324,7 @@ export async function getUserFromEmail(email){
 export function updateUserPreferences(userID, userPreferences){
     let preferences = [];
     for(const key of Object.keys(userPreferences)){
-        preferences.push({Column:key, Data:userPreferences[key]});
+        preferences.push({Column:key, Data:`'${userPreferences[key]}`});
     }
     return findAndUpdate("userPreferences", `uID='${userID}'`, preferences);
 }
