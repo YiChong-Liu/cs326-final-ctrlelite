@@ -76,9 +76,9 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
     let sleepImportance = sleepImportanceBar.value;
 
     // Cleanliness Preferences
-    if(very_cleanRadio.checked) { c = 'no-noise'; }
-    if(somewhat_cleanRadio.checked) { c = 'a-little-noise'; }
-    if(not_cleanRadio.checked) { c = 'a-lot-of-noise'; }
+    if(very_cleanRadio.checked) { c = 'very_clean'; }
+    if(somewhat_cleanRadio.checked) { c = 'somewhat_clean'; }
+    if(not_cleanRadio.checked) { c = 'not_clean'; }
     let cleanImportance = cleanImportanceBar.value;
 
     // Sharing Preferences
