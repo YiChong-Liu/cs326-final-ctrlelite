@@ -7,7 +7,7 @@ import * as db from './database.js';
 
 const app = express.Router();
 
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 app.use(cookieParser());
 
@@ -35,7 +35,7 @@ app.post('/login/passwd', async (req, res) => {
     const signedJWT = sign({ user: user.uid }, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
     res.redirect("/personalProfile.html");
-  } 
+  }
   else {
     res.status(401).send('Password not validated');
   }
@@ -174,7 +174,7 @@ app.put('/update/userPassword', (req, res) => {
 // POST
 
 // Send a Message
-app.post('/msg/newChatMsg', async(req, res) => {
+app.post('/msg/newChatMsg', async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -222,7 +222,7 @@ app.get('/msg/fetch', async (req, res) => {
   res.status(200).send({ worked: true, msg_object: data });
 });
 // Grab a User's Matches
-app.get('/matches',async (req, res) => {
+app.get('/matches', async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -278,7 +278,7 @@ app.get('/matches/potentialMatches', async (req, res) => {
   let matches = await db.getPotentialMatches(id);
 
   // Send Response
-  res.status(200).send({ worked: true, user: id, potential_matches: matches.map((m) => {return {uid: m.uid}})});
+  res.status(200).send({ worked: true, user: id, potential_matches: matches.map((m) => { return { uid: m.uid } }) });
 });
 
 
