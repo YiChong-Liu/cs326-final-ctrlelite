@@ -284,10 +284,9 @@ export async function getMatches(userID){
  * @param {String} userID user to find matches from
  * @returns {[]Matches} Returns all user matches
  */
- export function getPotentialMatches(userID){
+ export async function getPotentialMatches(userID){
     //Test the query ouput for eventual SQL
-    const userMatchesResults = find("users", `uID!='${userID}'`);
-
+    const userMatchesResults = find("users", `users.uid!='${userID}'`);
     return userMatchesResults;
 }
 
