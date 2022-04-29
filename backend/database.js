@@ -225,7 +225,7 @@ export function idExists(userID){
  */
 export async function matchExists(userID1, userID2){
     let res = await find("matches", `(uID1='${userID1}' AND uID2='${userID2}') OR (uID1='${userID2}' AND uID2='${userID1}')`);
-    console.log("found: " , res);
+    console.log("found: " , res.length != 0);
     return (res.length != 0);
 }
 
@@ -289,11 +289,11 @@ export async function getMatches(userID){
     
     let notMatchedUsers = [];
     for(let match of userMatchesResults){
-        if(matchExists(userID, match.uid)){
-            if((await find("matches", `uID1='${userID}' AND uID2='${match.uid}' AND u1Accept='0'`)).length != 0){
+        if(await matchExists(userID, match.uid)){
+            if((await find("matches", `uID1='${userID}' AND uID2='${match.uid}' AND u1accept='0'`)).length != 0){
                 notMatchedUsers.push(match);
             }
-            else if((await find("matches", `uID2='${userID}' AND uID1='${match.uid}' AND u2Accept='0'`)).length != 0){
+            else if((await find("matches", `uID2='${userID}' AND uID1='${match.uid}' AND u2accept='0'`)).length != 0){
                 notMatchedUsers.push(match);
             }
         }
