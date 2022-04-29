@@ -133,7 +133,7 @@ async function loadPreviousData() {
     genderImportanceBar.value = parseInt(prefObj.genderimportance);
 
     // Age
-    switch(prefObj.gender) {
+    switch(prefObj.age) {
         case 'teenage': teen_ageRadio.checked = true; break;
         case 'middle-age': middle_ageRadio.checked = true; break;
         case 'senior': senior_ageRadio.checked = true; break;
@@ -144,7 +144,7 @@ async function loadPreviousData() {
     ageImportanceBar.value = parseInt(prefObj.ageimportance);
 
     // Housing
-    switch(prefObj.gender) {
+    switch(prefObj.housingtype) {
         case 'apartment': apartment_housingRadio.checked = true; break;
         case 'townhouse': townhouse_housingRadio.checked = true; break;
         case 'condo': condo_housingRadio.checked = true; break;
@@ -153,7 +153,7 @@ async function loadPreviousData() {
     housingImportanceBar.value = parseInt(prefObj.housingtypeimportance);
 
     // Noise
-    switch(prefObj.gender) {
+    switch(prefObj.noiselevel) {
         case 'no-noise': noNoise_sleepRadio.checked = true; break;
         case 'a-little-noise': aLittleNoise_sleepRadio.checked = true; break;
         case 'a-lot-of-noise': aLotOfNoise_sleepRadio.checked = true; break;
@@ -162,7 +162,7 @@ async function loadPreviousData() {
     sleepImportanceBar.value = parseInt(prefObj.noiseimportance);
 
     // Clean
-    switch(prefObj.gender) {
+    switch(prefObj.cleanliness) {
         case 'very_clean': very_cleanRadio.checked = true; break;
         case 'somewhat_clean': somewhat_cleanRadio.checked = true; break;
         case 'not_clean': not_cleanRadio.checked = true; break;
@@ -171,7 +171,7 @@ async function loadPreviousData() {
     cleanImportanceBar.value = parseInt(prefObj.cleanlinessimportance);
 
     // Sharing
-    switch(prefObj.gender) {
+    switch(prefObj.sharing) {
         case 'everything': everything_shareRadio.checked = true; break;
         case 'some': some_shareRadio.checked = true; break;
         case 'nothing': none_shareRadio.checked = true; break;
