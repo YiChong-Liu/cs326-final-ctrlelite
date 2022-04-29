@@ -205,7 +205,6 @@ export async function getUserData(userID){
     //Test the query ouput for eventual SQL
     const preferences = await find("userPreferences", `uID='${userID}'`);
     const profile = await find("userProfiles", `uID='${userID}'`);
-
     return {user: userID, preferences:preferences[0], profile:profile[0]};
 }
 
