@@ -42,6 +42,9 @@ function initProfile() {
     if (users.length > 0) {
         fillValues(users[0]);
     }
+    else{
+        outOfProfiles();
+    }
     leftBtn.hidden = true;
     rightBtn.hidden = userQuery !== null || users.length < 2;
 }
