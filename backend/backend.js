@@ -4,6 +4,7 @@ const { sign, verify } = jwtSigner;
 import jwt from 'express-jwt';
 import cookieParser from 'cookie-parser';
 import * as db from './database.js';
+import * as crypto from 'crypto';
 
 const app = express.Router();
 
@@ -12,6 +13,27 @@ app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 app.use(cookieParser());
 
 const SUPER_SECRET = process.env.JWT_SECRET || '8253c11f1244dd66854a026f537d68c350527cebb5678da5c05410e51ddbe32587a3464be4867aa5367f7b4bd4f23fd795ab61b0eed63a30e5f47c73384f222e';
+
+async function hash(password) {
+  return new Promise((resolve, reject) => {
+      const salt = crypto.randomBytes(8).toString("hex")
+
+      crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+          if (err) reject(err);
+          resolve(salt + ":" + derivedKey.toString('hex'))
+      });
+  })
+}
+
+async function verifyPass(password, hash) {
+  return new Promise((resolve, reject) => {
+      const [salt, key] = hash.split(":")
+      crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+          if (err) reject(err);
+          resolve(key == derivedKey.toString('hex'))
+      });
+  })
+}
 
 // LOGIN
 app.use(jwt({
@@ -30,7 +52,7 @@ app.use(jwt({
 app.post('/login/passwd', async (req, res) => {
   const options = req.body;
   let user = await db.getUserFromEmail(options.email);
-  if (user != undefined && user.password == options.password) {
+  if (user != undefined && await verifyPass(options.password, user.password)) {
     console.log(user.uid);
     const signedJWT = sign({ user: user.uid }, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
@@ -89,7 +111,7 @@ app.put('/users/newUser', async (req, res) => {
   // Get the user and their proposed partner
   let options = req.body;
   const e = options.email;
-  const pass = options.password;
+  const pass = await hash(options.password);
   const userName = options.username;
 
   // TODO database call to run them
