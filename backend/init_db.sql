@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS userPreferences(
     city varchar(40),
     gender varchar(20), 
     genderImportance decimal,
-    age integer,
+    age varchar(40),
     ageImportance decimal,
     housingType varchar(20),
     housingTypeImportance decimal, 
@@ -42,6 +42,6 @@ CREATE TABLE IF NOT EXISTS chat(
     uID1 UUID NOT NULL,
     uID2 UUID NOT NULL,
     msg text,
-    PRIMARY KEY(uID1, uID2)
+    time TIMESTAMP 
 );
 

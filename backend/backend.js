@@ -75,11 +75,11 @@ app.put('/matches/acceptMatch', (req, res) => {
   }
 
   // Get the user and their proposed partner
-  const otherGuy = req.body.secondaryUserID;
+  const otherGuy = req.body.user2;
   const myself = authInfo.data.user;
 
   // TODO database call to run them
-  const result = db.acceptMatch(otherGuy, myself);
+  const result = db.acceptMatch(myself, otherGuy);
 
   // TODO return HTTP header / JSON response with real data
   res.status(200).send({ worked: result, user2: otherGuy });
@@ -174,7 +174,7 @@ app.put('/update/userPassword', (req, res) => {
 // POST
 
 // Send a Message
-app.post('/msg/newChatMsg', (req, res) => {
+app.post('/msg/newChatMsg', async(req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -188,9 +188,10 @@ app.post('/msg/newChatMsg', (req, res) => {
   const sender = authInfo.data.user;
   const receiver = req.body.user2;
   const msg = req.body.msg;
+  const timestamp = req.body.timestamp;
 
   // TODO actual databasing
-  const result = db.createMessage(sender, receiver, msg);
+  const result = await db.createMessage(sender, receiver, msg, timestamp);
 
   // TODO return HTTP header / JSON response with real data
   res.status(200).send({ worked: result, msg_content: msg });
@@ -199,7 +200,7 @@ app.post('/msg/newChatMsg', (req, res) => {
 // GET
 
 // Grab a Conversation of Messages
-app.get('/msg/fetch', (req, res) => {
+app.get('/msg/fetch', async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -215,13 +216,13 @@ app.get('/msg/fetch', (req, res) => {
   const amt = req.query.msgAmt;
 
   // Gather the message data
-  const data = db.getMessages(sender, receiver, amt);
+  const data = await db.getMessages(sender, receiver, amt);
 
   // Send Response
   res.status(200).send({ worked: true, msg_object: data });
 });
 // Grab a User's Matches
-app.get('/matches', (req, res) => {
+app.get('/matches',async (req, res) => {
   // authenticate & authorize via JWT
   const authInfo = validateUser(req.cookies["auth"]);
 
@@ -235,7 +236,7 @@ app.get('/matches', (req, res) => {
   const id = authInfo.data.user;
 
   // Gather user Matches
-  const data = db.getMatches(id);
+  const data = await db.getMatches(id);
 
   // Send Response
   res.status(200).send({ worked: true, user: id, user_matches: data });
@@ -275,10 +276,9 @@ app.get('/matches/potentialMatches', async (req, res) => {
   const id = authInfo.data.user;
 
   let matches = await db.getPotentialMatches(id);
-  console.log(matches);
 
   // Send Response
-  res.status(200).send({ worked: true, user: id, potential_matches: matches.map((m) => {uid: m.uid}) });
+  res.status(200).send({ worked: true, user: id, potential_matches: matches.map((m) => {return {uid: m.uid}})});
 });
 
 
@@ -317,7 +317,7 @@ app.delete('/delete/match', (req, res) => {
 
   // Get Data from the Request
   const ufID = authInfo.data.user;
-  const mtID = req.body.matchToID;
+  const mtID = req.body.user2;
 
   // Attempt to Delete this match
   const result = db.deleteMatch(ufID, mtID);

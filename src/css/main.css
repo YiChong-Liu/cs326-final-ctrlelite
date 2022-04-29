@@ -126,6 +126,10 @@
   width: 42%;
 }
 
+.chat-header {
+  text-align: center;
+}
+
 .text-center {
   margin-top: 20px;
   color: white;

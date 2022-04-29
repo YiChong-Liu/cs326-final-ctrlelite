@@ -1,6 +1,8 @@
 const matchDIV = document.getElementById('matchList');
 
 function newMatch(user_data){
+    let profileData = JSON.parse(user_data.profile.profilejson);
+
     let wrapper  = document.createElement('li');
     wrapper.classList.add("list-group-item");
     let contentDiv = document.createElement('div');
@@ -12,7 +14,7 @@ function newMatch(user_data){
     contentDiv.appendChild(profilePictureDIV);
     let profilePicture = document.createElement('img');
     profilePicture.classList.add('rounded-circle', 'w-100');
-    profilePicture.src = user_data.profile.profilePicture;
+    profilePicture.src = profileData.profilePicture;
     profilePictureDIV.appendChild(profilePicture);
 
     let profileLinkDiv = document.createElement('div');
@@ -20,8 +22,8 @@ function newMatch(user_data){
     contentDiv.appendChild(profileLinkDiv);
     let profileLink = document.createElement('a');
     profileLink.classList.add('link-primary');
-    profileLink.innerHTML = `<h2>${user_data.profile.userName}</h2>`;
-    profileLink.href = "profile.html?userID=" + user_data.user_ID;
+    profileLink.innerHTML = `<h2>${profileData.userName}</h2>`;
+    profileLink.href = "profile.html?user=" + user_data.user;
     profileLinkDiv.appendChild(profileLink);
 
     let spacingDIV = document.createElement('div');
@@ -35,11 +37,12 @@ function newMatch(user_data){
     let chatButton = document.createElement('a');
     chatButton.classList.add("btn", "btn-primary", "btn-block", "mb-3");
     chatButton.innerHTML = "Chat";
-    chatButton.href = `chat.html?userID2=${user_data.profile.userName}`;
+    chatButton.href = `chat.html?user=${user_data.user}&userName=${profileData.userName}`;
     buttonDIV.appendChild(chatButton);
     let removeButton = document.createElement('a');
     removeButton.classList.add("btn", "btn-primary", "btn-danger", "mb-3")
     removeButton.innerHTML = "Unmatch";
+    removeButton.addEventListener('click', (e) => unmatch(user_data.user, wrapper));
     buttonDIV.appendChild(removeButton);
 
     matchDIV.appendChild(wrapper);
@@ -49,7 +52,7 @@ let response = await fetch("/api/matches");
 if(response.ok){
     let responseJSON = await response.json();  
     for(const match of responseJSON.user_matches){
-        let matchResponse = await fetch(`api/user/data?user=${match}`);
+        let matchResponse = await fetch(`api/user/data?user=${match.uid}`);
         if(matchResponse.ok){
             let matchJSON = await matchResponse.json();
             console.log(matchJSON);
@@ -57,4 +60,11 @@ if(response.ok){
         }
     } 
     console.log(responseJSON);
+}
+
+async function unmatch(uID, element){
+    let response = await fetch("/api/delete/match", {method: 'DELETE', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({user2: uID})});
+    if(response.ok){
+        element.remove();
+    }
 }

@@ -88,7 +88,7 @@ async function findAndUpdate(database, whereQuery, dataEntry){
     }
     let query = `UPDATE ${database} SET ${columns} WHERE ${whereQuery};`;
     console.log(query);
-    queryClient(query);
+    await queryClient(query);
     return true; //TODO: Make this return success value of query
 }
 
@@ -99,8 +99,9 @@ async function findAndUpdate(database, whereQuery, dataEntry){
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 async function findAndDelete(database, whereQuery){
-    let query = `DELETE * FROM ${database} WHERE ${whereQuery};`;
+    let query = `DELETE FROM ${database} WHERE ${whereQuery};`;
     console.log(query);
+    await queryClient(query);
     return true; //TODO: Make this return success value of query
 }
 
@@ -111,8 +112,13 @@ async function findAndDelete(database, whereQuery){
  */
 async function queryClient(query){
     if(connected){
-        let res = await client.query(query);
-        return {success: true, data: res};
+        try{
+            let res = await client.query(query);
+            return {success: true, data: res};
+        }
+        catch(e){
+            console.log(e);
+        }
     }
     return {success: false};
 }
@@ -153,9 +159,15 @@ export async function createNewUser(email, password, name){
  * @returns {Boolean} Returns if the insert was successfull
  */
 export async function acceptMatch(userID1, userID2){
-    let res = await client.query(`select * FROM matches WHERE (uID1='${userID1}' AND uID2='${userID2}') OR (uID1='${userID2}' AND uID2='${userID1}')`);
-    console.log(res);
-    return await insert('matches', [{Column: 'userID1', Data: `'${userID1}'`}, {Column: 'userID2', Data:`'${userID2}'`}]);
+    if(await matchExists(userID1, userID2)){
+        await findAndUpdate('matches', `(uID1='${userID1}' AND uID2='${userID2}')`, [{Column: 'u1Accept', Data: `'1'`}]);
+        await findAndUpdate('matches', `(uID1='${userID2}' AND uID2='${userID1}')`, [{Column: 'u2Accept', Data:`'1'`}]);
+    }
+    else{
+        console.log("Creating new match: ");
+        return await insert('matches', [{Column: 'uID1', Data: `'${userID1}'`}, {Column: 'uID2', Data:`'${userID2}'`}, {Column: 'u1Accept', Data: `'1'`}]);
+    }
+    return true;
 }
 
 /** Adds a new message between two users.
@@ -165,8 +177,8 @@ export async function acceptMatch(userID1, userID2){
  * @param {String} Message The message sent
  * @returns {Boolean} Returns if the insert was successfull
  */
-export async function createMessage(userFromID, userToID, Message){
-    return await insert('chat', [{Column: 'uID1', Data: `'${userFromID}'`}, {Column: 'uID2', Data:`'${userToID}'`}, {Column: 'msg', Data: `'${Message}'`}]);
+export async function createMessage(userFromID, userToID, message, timestamp){
+    return await insert('chat', [{Column: 'uID1', Data: `'${userFromID}'`}, {Column: 'uID2', Data:`'${userToID}'`}, {Column: 'msg', Data: `'${message}'`}, {Column: 'time', Data: `'${timestamp}'`}]);
 }
 
 
@@ -194,7 +206,7 @@ export async function getUserData(userID){
     const preferences = await find("userPreferences", `uID='${userID}'`);
     const profile = await find("userProfiles", `uID='${userID}'`);
 
-    return {user_ID: userID, preferences:preferences[0], profile:profile[0]};
+    return {user: userID, preferences:preferences[0], profile:profile[0]};
 }
 
 /** Checks if the user is in the database
@@ -212,8 +224,10 @@ export function idExists(userID){
  * @param {String} userID2
  * @returns Boolean
  */
-export function matchExists(userID1, userID2){
-    return (find("matches", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`).length != 0);
+export async function matchExists(userID1, userID2){
+    let res = await find("matches", `(uID1='${userID1}' AND uID2='${userID2}') OR (uID1='${userID2}' AND uID2='${userID1}')`);
+    console.log("found: " , res);
+    return (res.length != 0);
 }
 
 /**Gets the messages between the two users.
@@ -222,7 +236,7 @@ export function matchExists(userID1, userID2){
  * @param {String} userIDTo The other user involved with the request
  * @returns {Object: {fromMsgs: []Messages, toMsgs: []Messages}} Returns two list of chat objects
  */
-export function getMessages(userIDFrom, userIDTo, numMessages=20){
+export async function getMessages(userIDFrom, userIDTo, numMessages=20){
     let userFromMsgs = [];
     let userToMsgs = [];
     const randomMsg = () => faker.lorem.paragraph();
@@ -233,9 +247,13 @@ export function getMessages(userIDFrom, userIDTo, numMessages=20){
     }
 
     //Test the query ouput for eventual SQL
-    const userToMsgsResults = find("chat", `userFromID='${userIDFrom}' AND userToID='${userIDTo}'`, "timestamp DESC");
-    const userFromMsgsResults = find("chat", `userFromID='${userIDTo}' AND userToID='${userIDFrom}'`, "timestamp DESC");
-
+    try{
+    userToMsgs = await find("chat", `uid1='${userIDFrom}' AND uid2='${userIDTo}'`, "time ASC");
+    userFromMsgs = await find("chat", `uid1='${userIDTo}' AND uid2='${userIDFrom}'`, "time ASC");
+    }
+    catch(e){
+        console.log(e);
+    }
     return {fromMsgs: userFromMsgs, toMsgs: userToMsgs};
 }
 
@@ -244,7 +262,7 @@ export function getMessages(userIDFrom, userIDTo, numMessages=20){
  * @param {String} userID user to find matches from
  * @returns {[]Matches} Returns all user matches
  */
-export function getMatches(userID){
+export async function getMatches(userID){
     let userMatches = [];
     const randomUUID = () => faker.datatype.uuid();
 
@@ -253,9 +271,12 @@ export function getMatches(userID){
     }
 
     //Test the query ouput for eventual SQL
-    const userMatchesResults = find("matches", `userID1='${userID}' OR userID2='${userID}'`);
-
-    return userMatches;
+    let userMatchesResults1 = (await find("matches", `uID1='${userID}' AND u1Accept='1' AND u2Accept='1'`));
+    let userMatchesResults2 = (await find("matches", `uID2='${userID}' AND u1Accept='1' AND u2Accept='1'`));
+    userMatchesResults1 = userMatchesResults1.map( (m) => {return {uid: m.uid2}});
+    userMatchesResults2 = userMatchesResults2.map( (m) => {return {uid: m.uid1}});
+    console.log(userMatchesResults1, userMatchesResults2);
+    return userMatchesResults1.concat(userMatchesResults2);
 }
 
 /**
@@ -263,10 +284,9 @@ export function getMatches(userID){
  * @param {String} userID user to find matches from
  * @returns {[]Matches} Returns all user matches
  */
- export function getPotentialMatches(userID){
+ export async function getPotentialMatches(userID){
     //Test the query ouput for eventual SQL
-    const userMatchesResults = find("users", `uID!='${userID}'`);
-
+    const userMatchesResults = find("users", `users.uid!='${userID}'`);
     return userMatchesResults;
 }
 
@@ -303,7 +323,12 @@ export async function getUserFromEmail(email){
 export function updateUserPreferences(userID, userPreferences){
     let preferences = [];
     for(const key of Object.keys(userPreferences)){
-        preferences.push({Column:key, Data:userPreferences[key]});
+        if(typeof(userPreferences[key]) === 'string'){
+            preferences.push({Column:key, Data:`'${userPreferences[key]}'`});
+        }
+        else{
+            preferences.push({Column:key, Data:`${userPreferences[key]}`});
+        }
     }
     return findAndUpdate("userPreferences", `uID='${userID}'`, preferences);
 }
@@ -340,7 +365,7 @@ export function updateUserPassword(userID, password){
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 export function deleteUser(userID){
-    return findAndDelete("Users", `userID='${userID}'`);
+    return findAndDelete("Users", `uid='${userID}'`);
 }
 
 
@@ -351,5 +376,5 @@ export function deleteUser(userID){
  * @returns {Boolean} Returns true if it was successfully deleted, false otherwise
  */
 export function deleteMatch(userID1, userID2){
-    return findAndDelete("Users", `(userID1='${userID1}' AND userID2='${userID2}) OR (userID1='${userID2}' AND userID2='${userID1})'`);
+    return findAndDelete("matches", `(uid1='${userID1}' AND uid2='${userID2}') OR (uid1='${userID2}' AND uid2='${userID1}')`);
 }

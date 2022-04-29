@@ -76,9 +76,9 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
     let sleepImportance = sleepImportanceBar.value;
 
     // Cleanliness Preferences
-    if(very_cleanRadio.checked) { c = 'no-noise'; }
-    if(somewhat_cleanRadio.checked) { c = 'a-little-noise'; }
-    if(not_cleanRadio.checked) { c = 'a-lot-of-noise'; }
+    if(very_cleanRadio.checked) { c = 'very_clean'; }
+    if(somewhat_cleanRadio.checked) { c = 'somewhat_clean'; }
+    if(not_cleanRadio.checked) { c = 'not_clean'; }
     let cleanImportance = cleanImportanceBar.value;
 
     // Sharing Preferences
@@ -89,12 +89,12 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
 
     // Create the preferences object
     let userPreferences = {
-        gender: g, gender_importance: genderImportance,
-        age: a, age_importance: ageImportance,
-        housing: h, housing_importance: housingImportance,
-        sleep: s, sleep_importance: sleepImportance,
-        clean: c, clean_importance: cleanImportance,
-        share: sh, share_importance: shareImportance
+        gender: g, genderImportance: genderImportance,
+        age: a, ageImportance: ageImportance,
+        housingType: h, housingTypeImportance: housingImportance,
+        noiseLevel: s, noiseImportance: sleepImportance,
+        cleanliness: c, cleanlinessImportance: cleanImportance,
+        sharing: sh, sharingImportance: shareImportance
     };
 
     let user = parseJwt(document.cookie).user;
