@@ -25,7 +25,7 @@ async function hash(password) {
   })
 }
 
-async function verify(password, hash) {
+async function verifyPass(password, hash) {
   return new Promise((resolve, reject) => {
       const [salt, key] = hash.split(":")
       crypto.scrypt(password, salt, 64, (err, derivedKey) => {
@@ -52,7 +52,7 @@ app.use(jwt({
 app.post('/login/passwd', async (req, res) => {
   const options = req.body;
   let user = await db.getUserFromEmail(options.email);
-  if (user != undefined && await verify(options.password, user.password)) {
+  if (user != undefined && await verifyPass(options.password, user.password)) {
     console.log(user.uid);
     const signedJWT = sign({ user: user.uid }, SUPER_SECRET, { expiresIn: '1 day' });
     res.cookie('auth', signedJWT, { maxAge: 43200000 });
