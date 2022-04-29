@@ -285,8 +285,22 @@ export async function getMatches(userID){
  */
  export async function getPotentialMatches(userID){
     //Test the query ouput for eventual SQL
-    const userMatchesResults = find("users", `users.uid!='${userID}'`);
-    return userMatchesResults;
+    const userMatchesResults = await find("users", `users.uid!='${userID}'`);
+    
+    let notMatchedUsers = [];
+    for(let match of userMatchesResults){
+        if(matchExists(userID, match.uid)){
+            if((await find("matches", `uID1='${userID}' AND uID2='${match.uid}' AND u1Accept='0'`)).length != 0){
+                notMatchedUsers.push(match);
+            }
+            else if((await find("matches", `uID2='${userID}' AND uID1='${match.uid}' AND u2Accept='0'`)).length != 0){
+                notMatchedUsers.push(match);
+            }
+        }
+    }
+
+    
+    return notMatchedUsers;
 }
 
 /**
