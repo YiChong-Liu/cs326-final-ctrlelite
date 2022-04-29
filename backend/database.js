@@ -297,9 +297,12 @@ export async function getMatches(userID){
                 notMatchedUsers.push(match);
             }
         }
+        else{
+            notMatchedUsers.push(match);
+        }
     }
 
-    
+
     return notMatchedUsers;
 }
 
