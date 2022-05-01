@@ -19,7 +19,7 @@ if (process.env.DATABASE_URL) {
 
     var sql = fs.readFileSync('./backend/init_db.sql').toString();
     client.query(sql);
-    connected = true; 
+    connected = true;
 }
 
 /**-------------------------------------------------------------
@@ -106,7 +106,7 @@ async function findAndDelete(database, whereQuery){
 }
 
 /**
- * 
+ *
  * @param {String} query SQL query to run on the postgres database
  * @returns Returns the rows of the query
  */
@@ -146,10 +146,10 @@ export async function createNewUser(email, password, name){
         await insert('userprofiles', [{Column: 'uID', Data: `'${newUUId}'`}, {Column: 'profilejson', Data: `'${JSON.stringify({userName: name, profilePicture :"https://downtownseattle.org/app/uploads/2017/04/thumbnail_Placeholder-person.png", bio: ""})}'`}]);
         console.log("New User Created");
         return newUUId;
-    } 
+    }
     else{
         return false;
-    }   
+    }
 }
 
 /** Creates a new match between two users
@@ -282,12 +282,17 @@ export async function getMatches(userID){
  *
  * @param {String} userID user to find matches from
  * @returns {[]Matches} Returns all user matches
+ *
  */
  export async function getPotentialMatches(userID){
     //Test the query ouput for eventual SQL
     const userMatchesResults = await find("users", `users.uid!='${userID}'`);
-    
+
     let notMatchedUsers = [];
+
+    // recommendation algorithm : preference score system
+    // will add users depending on scores from high to low and eliminate users whose score is less than 50%
+
     for(let match of userMatchesResults){
         if(await matchExists(userID, match.uid)){
             if((await find("matches", `uID1='${userID}' AND uID2='${match.uid}' AND u1accept='0'`)).length != 0){

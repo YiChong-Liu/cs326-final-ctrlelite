@@ -290,6 +290,7 @@ app.get('/user/data', async (req, res) => {
     res.status(200).send({ worked: true, user: id, user_data: data });
   }
 });
+
 // Grab a User's Matches
 app.get('/matches/potentialMatches', async (req, res) => {
   // authenticate & authorize via JWT
