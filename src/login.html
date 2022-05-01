@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="google-signin-scope" content="profile email">
-  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="742368847732-4hh9pvd4s9k5o8g8mfscohcq1o7oh50c.apps.googleusercontent.com">
   <link rel="stylesheet" href="css/main.css" />
 
   <!-- Bootstrap CSS -->
@@ -71,28 +72,17 @@
     <p class="googleLoginHint">
       <b>----------------------------- or connect with --------------------------</b>
     </p>
-    <div id="my-signin2"></div>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
     <script>
-      function onSuccess(googleUser) {
-        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-      }
-      function onFailure(error) {
-        console.log(error);
-      }
-      function renderButton() {
-        gapi.signin2.render('my-signin2', {
-          'scope': 'profile email',
-          'width': 240,
-          'height': 50,
-          'longtitle': true,
-          'theme': 'dark',
-          'onsuccess': onSuccess,
-          'onfailure': onFailure
-        });
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
       }
     </script>
 
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <h3>
       <br><b>Don't have an account?</b> <br><br>
     </h3>

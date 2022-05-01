@@ -65,7 +65,7 @@
 
  ## Division of Labor:
 
-Conlan: Postgres Integration \
-Ben: userPreferences DB integration \
-Liam: SQL querys, webSockets for Chat, profile.js DB integration, DB documentation\
-Yichong: 
+Conlan Cesar: Postgres Integration 
+Benjamin Tufano: userPreferences DB integration 
+Liam Neal Reilly: SQL querys, webSockets for Chat, profile.js DB integration, DB documentation
+Yichong Liu: footer, staff.html, social media, Google login option,  polish the front end
