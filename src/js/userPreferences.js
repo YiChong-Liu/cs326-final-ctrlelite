@@ -6,6 +6,14 @@ import { parseJwt } from "./main.js";
 
 let userID = parseJwt(document.cookie).user;
 
+// housing location
+let loc_bay = document.getElementById('location_bay');
+let loc_sea = document.getElementById('location_seattle');
+let loc_nyc = document.getElementById('location_nyc');
+let loc_austin = document.getElementById('location_austin');
+let loc_amherst = document.getElementById('location_amherst');
+let locationImportanceBar = document.getElementById('location_rangeBar');
+
 // Gender
 let male_genderRadio = document.getElementById('gender_male');
 let female_genderRadio = document.getElementById('gender_female');
@@ -46,51 +54,60 @@ let none_shareRadio = document.getElementById('share_none');
 let shareImportanceBar = document.getElementById('share_rangeBar');
 
 // Event Listener for the Submit Button
-document.getElementById('preferencesSubmit').addEventListener('click', async function(x) {
+document.getElementById('preferencesSubmit').addEventListener('click', async function (x) {
     // Declare preference variables
-    let g, a, h, s, c, sh;
+    let l, g, a, h, s, c, sh;
+
+    // Location Preferences
+    if (loc_bay.checked) { l = 'bay area'; }
+    if (loc_sea.checked) { l = 'Seattle'; }
+    if (loc_nyc.checked) { l = 'new york city'; }
+    if (loc_austin.checked) { l = 'austin'; }
+    if (loc_amherst.checked) { l = 'amherst'; }
+    let locationImportance = locationImportanceBar.value;
 
     // Gender Preferences
-    if(male_genderRadio.checked) { g = 'male'; }
-    if(female_genderRadio.checked) { g = 'female'; }
-    if(nonbinary_genderRadio.checked) { g = 'non-binary'; }
-    if(any_genderRadio.checked) { g = 'any-gender'; }
+    if (male_genderRadio.checked) { g = 'male'; }
+    if (female_genderRadio.checked) { g = 'female'; }
+    if (nonbinary_genderRadio.checked) { g = 'non-binary'; }
+    if (any_genderRadio.checked) { g = 'any-gender'; }
     let genderImportance = genderImportanceBar.value;
 
     // Age Preferences
-    if(teen_ageRadio.checked) { a = 'teenage'; }
-    if(middle_ageRadio.checked) { a = 'middle-age'; }
-    if(senior_ageRadio.checked) { a = 'senior'; }
-    if(elderly_ageRadio.checked) { a = 'elderly'; }
-    if(any_ageRadio.checked) { a = 'any-age'; }
+    if (teen_ageRadio.checked) { a = 'teenage'; }
+    if (middle_ageRadio.checked) { a = 'middle-age'; }
+    if (senior_ageRadio.checked) { a = 'senior'; }
+    if (elderly_ageRadio.checked) { a = 'elderly'; }
+    if (any_ageRadio.checked) { a = 'any-age'; }
     let ageImportance = ageImportanceBar.value;
 
     // Housing Preferences
-    if(apartment_housingRadio.checked) { h = 'apartment'; }
-    if(townhouse_housingRadio.checked) { h = 'townhouse'; }
-    if(condo_housingRadio.checked) { h = 'condo'; }
+    if (apartment_housingRadio.checked) { h = 'apartment'; }
+    if (townhouse_housingRadio.checked) { h = 'townhouse'; }
+    if (condo_housingRadio.checked) { h = 'condo'; }
     let housingImportance = housingImportanceBar.value;
 
     // Sleeping noise Preferences
-    if(noNoise_sleepRadio.checked) { s = 'no-noise'; }
-    if(aLittleNoise_sleepRadio.checked) { s = 'a-little-noise'; }
-    if(aLotOfNoise_sleepRadio.checked) { s = 'a-lot-of-noise'; }
+    if (noNoise_sleepRadio.checked) { s = 'no-noise'; }
+    if (aLittleNoise_sleepRadio.checked) { s = 'a-little-noise'; }
+    if (aLotOfNoise_sleepRadio.checked) { s = 'a-lot-of-noise'; }
     let sleepImportance = sleepImportanceBar.value;
 
     // Cleanliness Preferences
-    if(very_cleanRadio.checked) { c = 'very_clean'; }
-    if(somewhat_cleanRadio.checked) { c = 'somewhat_clean'; }
-    if(not_cleanRadio.checked) { c = 'not_clean'; }
+    if (very_cleanRadio.checked) { c = 'very_clean'; }
+    if (somewhat_cleanRadio.checked) { c = 'somewhat_clean'; }
+    if (not_cleanRadio.checked) { c = 'not_clean'; }
     let cleanImportance = cleanImportanceBar.value;
 
     // Sharing Preferences
-    if(everything_shareRadio.checked) { sh = 'everything'; }
-    if(some_shareRadio.checked) { sh = 'some'; }
-    if(none_shareRadio.checked) { sh = 'nothing'; }
+    if (everything_shareRadio.checked) { sh = 'everything'; }
+    if (some_shareRadio.checked) { sh = 'some'; }
+    if (none_shareRadio.checked) { sh = 'nothing'; }
     let shareImportance = shareImportanceBar.value;
 
     // Create the preferences object
     let userPreferences = {
+        location: l, locationImportance: locationImportance,
         gender: g, genderImportance: genderImportance,
         age: a, ageImportance: ageImportance,
         housingType: h, housingTypeImportance: housingImportance,
@@ -101,8 +118,8 @@ document.getElementById('preferencesSubmit').addEventListener('click', async fun
 
     let user = parseJwt(document.cookie).user;
 
-    let response = await fetch('/api/update/userPreferences', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'userID': user, 'preferences': userPreferences})});
-    if(response.ok){
+    let response = await fetch('/api/update/userPreferences', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ 'userID': user, 'preferences': userPreferences }) });
+    if (response.ok) {
         let responseJSON = await response.json();
         console.log(responseJSON);
         alert('Preferences Saved!');
@@ -115,15 +132,25 @@ async function loadPreviousData() {
     userID = userID;
     let response = await fetch(`api/user/data?user=${userID}`);
     let prefObj = null;
-    if(response.ok) {
+    if (response.ok) {
         let responseJSON = await response.json();
         prefObj = responseJSON.user_data.preferences;
     }
 
-    if(prefObj === undefined) { return; }
+    if (prefObj === undefined) { return; }
+
+    // location
+    switch (prefObj.location) {
+        case 'bay area': loc_bay.checked = true; break;
+        case 'seattle' : loc_sea.checked = true; break;
+        case 'new york city' : loc_nyc.checked = true; break;
+        case 'austin' : loc_austin.checked = true; break;
+        case 'amherst' : loc_amherst.checked = true; break;
+    }
+    locationImportanceBar.value = prefObj.locationImportance;
 
     // Gender
-    switch(prefObj.gender) {
+    switch (prefObj.gender) {
         case 'male': male_genderRadio.checked = true; break;
         case 'female': female_genderRadio.checked = true; break;
         case 'non-binary': nonbinary_genderRadio.checked = true; break;
@@ -133,7 +160,7 @@ async function loadPreviousData() {
     genderImportanceBar.value = prefObj.genderimportance;
 
     // Age
-    switch(prefObj.age) {
+    switch (prefObj.age) {
         case 'teenage': teen_ageRadio.checked = true; break;
         case 'middle-age': middle_ageRadio.checked = true; break;
         case 'senior': senior_ageRadio.checked = true; break;
@@ -144,7 +171,7 @@ async function loadPreviousData() {
     ageImportanceBar.value = prefObj.ageimportance;
 
     // Housing
-    switch(prefObj.housingtype) {
+    switch (prefObj.housingtype) {
         case 'apartment': apartment_housingRadio.checked = true; break;
         case 'townhouse': townhouse_housingRadio.checked = true; break;
         case 'condo': condo_housingRadio.checked = true; break;
@@ -153,7 +180,7 @@ async function loadPreviousData() {
     housingImportanceBar.value = prefObj.housingtypeimportance;
 
     // Noise
-    switch(prefObj.noiselevel) {
+    switch (prefObj.noiselevel) {
         case 'no-noise': noNoise_sleepRadio.checked = true; break;
         case 'a-little-noise': aLittleNoise_sleepRadio.checked = true; break;
         case 'a-lot-of-noise': aLotOfNoise_sleepRadio.checked = true; break;
@@ -162,7 +189,7 @@ async function loadPreviousData() {
     sleepImportanceBar.value = prefObj.noiseimportance;
 
     // Clean
-    switch(prefObj.cleanliness) {
+    switch (prefObj.cleanliness) {
         case 'very_clean': very_cleanRadio.checked = true; break;
         case 'somewhat_clean': somewhat_cleanRadio.checked = true; break;
         case 'not_clean': not_cleanRadio.checked = true; break;
@@ -171,7 +198,7 @@ async function loadPreviousData() {
     cleanImportanceBar.value = prefObj.cleanlinessimportance;
 
     // Sharing
-    switch(prefObj.sharing) {
+    switch (prefObj.sharing) {
         case 'everything': everything_shareRadio.checked = true; break;
         case 'some': some_shareRadio.checked = true; break;
         case 'nothing': none_shareRadio.checked = true; break;
