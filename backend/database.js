@@ -287,12 +287,18 @@ export async function getMatches(userID){
  export async function getPotentialMatches(userID){
     //Test the query ouput for eventual SQL
     const userMatchesResults = await find("users", `users.uid!='${userID}'`);
-
+    const userResults = await find("users", `users.uid=='${userID}'`);
+    console.log(userResults);
     let notMatchedUsers = [];
 
     // recommendation algorithm : preference score system
     // will add users depending on scores from high to low and eliminate users whose score is less than 50%
 
+    let importanceScore = 0;
+    let locationMatch = false;
+
+    for(let match of userMatchesResults) {
+    }
     for(let match of userMatchesResults){
         if(await matchExists(userID, match.uid)){
             if((await find("matches", `uID1='${userID}' AND uID2='${match.uid}' AND u1accept='0'`)).length != 0){
