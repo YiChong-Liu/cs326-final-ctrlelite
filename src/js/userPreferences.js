@@ -147,7 +147,7 @@ async function loadPreviousData() {
         case 'austin' : loc_austin.checked = true; break;
         case 'amherst' : loc_amherst.checked = true; break;
     }
-    locationImportanceBar.value = prefObj.locationImportance;
+    locationImportanceBar.value = prefObj.locationimportance;
 
     // Gender
     switch (prefObj.gender) {

@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS matches(
 CREATE TABLE IF NOT EXISTS userPreferences(
     uID UUID NOT NULL,
     location varchar(40),
+    locationImportance decimal,
     gender varchar(20), 
     genderImportance decimal,
     age varchar(40),
