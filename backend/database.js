@@ -290,14 +290,21 @@ export async function getMatches(userID){
     const userResults = await find("users", `users.uid=='${userID}'`);
     console.log(userResults);
     let notMatchedUsers = [];
-
     // recommendation algorithm : preference score system
     // will add users depending on scores from high to low and eliminate users whose score is less than 50%
 
     let importanceScore = 0;
     let locationMatch = false;
 
+    let userTemp = [];
     for(let match of userMatchesResults) {
+        // first, compare location between me and other users, if it's true, continue
+
+        // second, compare the preference one by one, if it's the same, add the score to the importanceScore
+
+        //  finally, if the score is above 18, keep the user and store it in userTemp.
+
+        // sort the userTemp by the importance score from high to low. that will be the sequence of the user recommendation displaying on the screen
     }
     for(let match of userMatchesResults){
         if(await matchExists(userID, match.uid)){
