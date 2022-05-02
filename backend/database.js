@@ -319,7 +319,10 @@ export async function getMatches(userID){
             notMatchedUsers.push(match);
         }
     }
-
+    /**
+     * Put matching algorithm here using the notMatchedUsers array
+     * 
+     */
 
     return notMatchedUsers;
 }
