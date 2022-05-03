@@ -305,9 +305,15 @@ export async function getMatches(userID){
             notMatchedUsers.push(match);
         }
     }
+<<<<<<< HEAD
     /**
      * Put matching algorithm here using the notMatchedUsers array
      *
+=======
+   /**
+     * Put matching algorithm here using the notMatchedUsers array
+     * 
+>>>>>>> 9ad2ab45209db19efae7a2e8c4fc9a7dc8aeaad3
      */
 
     // recommendation algorithm : preference score system
