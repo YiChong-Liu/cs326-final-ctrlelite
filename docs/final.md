@@ -1,19 +1,349 @@
-# CS326 Team 8: ctrlelite
+# CS326 Team 8: ctrlelite - The Rentern
+Spring 2022
 
-## The Rentern
+## Overview
 
-### Spring 2022
+Our project is to design and implement a corporate roommate finder — for example, if you are offered a new job and need to relocate, under such circumstances you are looking for new roommates to rent a house, you can sign up for our website by a valid email account and a password, specify the user preferences including housing location, housing type, age/gender preference, sleep schedule, cleanliness, and things to share, etc. And the website will provide recommended matches so they can send interests, chat and potentially become roommates.
 
-### Overview
-
-Our project is to design and implement a corporate roommate finder — for example, if you are offered a new job and need to relocate, under such circumstances you are looking for new roommates to rent a house, you can sign up for our website by a valid email account and a password, specify the user preferences including housing location, housing type, age/gender preference, sleep schedule, cleanliness, and things to share, etc. And the website will provide recommended matches so they can send interests, chat and potentially become roommates. 
-
-### Team Members
+## Team Members
 
 * Conlan Cesar	         ([@HeroCC](https://github.com/HeroCC))
-* Benjamin Tufano           ([@tufanobenjamin](https://github.com/tufanobenjamin))
-* Liam Neal Reilly             ([@lhnealreilly](https://github.com/lhnealreilly))
-* Yichong Liu                     ([@YiChong_Liu](https://github.com/YiChong-Liu))
+* Benjamin Tufano        ([@tufanobenjamin](https://github.com/tufanobenjamin))
+* Liam Neal Reilly       ([@lhnealreilly](https://github.com/lhnealreilly))
+* Yichong Liu            ([@YiChong_Liu](https://github.com/YiChong-Liu))
+
+## The Backend
+
+### API Endpoints
+
+#### PUT /api/users/newUser:
+
+Create a new user in the Rentern database. Arguments required: Email, Password.
+
+Query Parameters: Email, Password
+
+Requires JWT authentication: FALSE
+
+Example API call:
+```
+await fetch('/api/users/newUser',
+    {
+        method: 'PUT'
+        body:
+        {
+            email: 'name@user.com',
+            password: '1234'
+        }
+    });
+```
+Response:
+```
+{
+    "worked" : true,
+    "email" : "name@user.com",
+    "password" : "1234"
+}
+```
+If accepted is false, the user was not created. Likely because there exists a user in the database with the email already created.
+
+---
+
+#### PUT /api/matches/acceptMatch
+
+Attempts to accept a match betwen 2 users. It checks if a match has already been initilized (by the other user) and accepts if so. If not it initializes a match in the database that can be accepted by the other user.
+
+Query Parameters: user, user2
+
+Requires JWT authentication: TRUE
+
+Example API call:
+```
+await fetch('/api/matches/acceptMatch',
+    {
+        method: 'PUT'
+        {
+            user : 123,
+            user2 : 87654321
+        }
+    });
+```
+Response:
+```
+{
+    "worked" : true,
+    "user2" : 87654321
+}
+```
+If worked is false, the other user has not accepted the match yet. A match is created, but flagged as partially accepted.
+
+---
+#### POST /api/msg/newChatMsg
+
+Create a new message from one user to another.
+
+Requires JWT authentication: TRUE
+
+Query Parameters: user2
+
+Body: msg
+
+Example API call:
+```
+await fetch('/api/msg/newChatMsg,
+    {
+        method: 'POST'
+        body:
+        {
+            user2: 123456,
+            msg: "Hello World"
+        }
+    });
+```
+Response:
+```
+{
+    "worked" : true,
+    "msg_content" : Hello World
+}
+```
+
+#### GET /api/msg/fetch
+
+Fetch a number of messages between two users.
+
+Requires JWT authentication: TRUE
+
+Query Parameters: userTo, msgAmt(default 20)
+
+Example Fetch:
+```
+await fetch('/api/msg/newChatMsg?userTo=87654321&msgAmt=25');
+```
+Response:
+```
+{
+    "worked" : true,
+    "msg_object" :
+        {
+            "fromMsgs" : ["qqqqqq", "qwqwqeqwe", ...],
+            "toMsgs" : ["vfvfvfv", "vfvfsdsfa", ...]
+        }
+}
+```
+
+---
+
+#### GET /api/matches
+
+Get the list of matches for a user.
+
+Requires JWT authentication: TRUE
+
+Example Fetch:
+```
+await fetch('/api/matches');
+```
+Response:
+```
+{
+    "worked" : true,
+    "user" : "10290291", //This comes from the JWT in the cookie
+    "user_matches" : ["1", "2", "3", ...]
+}
+```
+
+---
+
+#### GET /api/user/data
+
+Fetches the profile and preferences of the given user.
+
+Requires JWT authentication: TRUE
+
+Query Parameter: user
+
+Example Fetch:
+```
+await fetch('/api/user/data?user=1234');
+```
+Response:
+```
+{
+    "worked" : true,
+    "user" : "1234",
+    "potential_matches" : ["1", "2", "3", ...]
+}
+```
+---
+
+#### GET /api/matches/potentialMatches
+
+Requires JWT authentication: TRUE
+
+Example Fetch:
+```
+await fetch('/api/user/data');
+```
+Response:
+```
+{
+    "worked" : true,
+    "user" : "10290291", //This comes from the JWT in the cookie
+    "user_data" :
+        {
+            "profile" :
+            {
+                "bio" : "lorem ipsum",
+                "profilePicture" : "img.png",
+                "userName": "John Smith"
+            }
+            "preferences" :
+            {
+                "cleanlines" : 10,
+                "bedtime" : 2200
+            }
+        }
+}
+```
+
+#### PUT /api/update/userPreferences
+
+Update userPreferences database with new preferences for the user.
+
+Example API call:
+```
+await fetch('/api/update/userPreferences',
+    {
+        method: 'PUT'
+        body:
+        {
+            "preferences" :
+            {
+                "cleanlines" : 10,
+                "bedtime" : 2200
+            }
+        }
+    });
+```
+Response:
+```
+{
+    "worked" : true,
+    "user" : "10290291", //This comes from the JWT in the cookie
+    "preferences" :
+    {
+        "cleanlines" : 10,
+        "bedtime" : 2200
+    }
+}
+```
+
+---
+
+#### PUT /api/update/userProfile
+
+Update userProfile database with new profile informtaion for the user.
+
+Example API call:
+```
+await fetch('/api/update/userProfile',
+    {
+        method: 'PUT'
+        body:
+        {
+            "profile" :
+            {
+                "bio" : "lorem ipsum",
+                "profilePicture" : "img.png",
+                "userName": "John Smith"
+            }
+        }
+    });
+```
+Response:
+```
+{
+    "worked" : true
+    "user" : "10290291", //This comes from the JWT in the cookie
+    "profile" :
+    {
+        "bio" : "lorem ipsum",
+        "profilePicture" : "img.png",
+        "userName": "John Smith"
+    }
+}
+```
+
+---
+
+#### PUT /api/update/userPassword
+
+Update the user's password
+
+Example API call:
+```
+await fetch('/api/update/userPassword',
+    {
+        method: 'PUT'
+        body:
+        {
+            "password" : "1234"
+        }
+    });
+```
+Response:
+```
+{
+    "worked" : true,
+    "user" : "10290291", //This comes from the JWT in the cookie
+    "password" : "1234"
+}
+```
+
+#### DELETE /api/delete/user
+
+Deletes a user from the users database.
+
+Example API call:
+```
+await fetch('/api/delete/user',
+    {
+        method: 'DELETE'
+    });
+```
+Response:
+```
+{
+    "worked" : true,
+    "user" : "10290291", //This comes from the JWT in the cookie
+}
+```
+
+#### DELETE /api/delete/match
+
+Deletes a match between 2 users.
+
+Example API call:
+```
+await fetch('/api/delete/user',
+    {
+        method: 'DELETE'
+        body:
+        {
+            "user2" : "1234"
+        }
+    });
+```
+Response:
+```
+{
+    "worked" : true,
+    "user" : "10290291", //This comes from the JWT in the cookie
+    "user2" : "1234"
+}
+```
+
+<br>
 
 ### Databases
 
@@ -78,9 +408,19 @@ Our project is to design and implement a corporate roommate finder — for examp
 <br>
 <br>
 
- ## Division of Labor:
 
-Conlan Cesar: Postgres Integration 
-Benjamin Tufano: userPreferences DB integration 
+### Authentication and Authorization
+
+We decided, rather than using state in the backend, to use JSON-Web-Tokens. This allows us to restart our backend or loadbalance to different nodes, without needing to manage the state of the user's login in the background.
+
+When a user logs in or registers, the page makes a request to those API endpoints (these are the only endpoints that don't require authentication). If the request is valid, we send back a new cookie with a cryptographically secure value, which when decoded, contains the user's ID. The client can attempt to modify this value, but we can verify its authenticity in the backend, so it is not possible to simply log in as another user.
+
+Further requests contain the cookie, which the backend verifies is secure and non-expired. If the user is allowed, the proper data is returned, otherwise throwing an HTTP 401 error.
+
+All users have the same privileges basic -- there is no concept of an admin or super user. All registered users are visible in the profile matching page. Only you are allowed to upload your new profile information or change your preferences.
+## Division of Labor:
+
+Conlan Cesar: Postgres Integration
+Benjamin Tufano: userPreferences DB integration
 Liam Neal Reilly: SQL querys, webSockets for Chat, profile.js DB integration, DB documentation
 Yichong Liu: Roommate matching algorithm, database.js, footer, staff.html, social media, polish the front end
