@@ -68,4 +68,4 @@
 Conlan Cesar: Postgres Integration 
 Benjamin Tufano: userPreferences DB integration 
 Liam Neal Reilly: SQL querys, webSockets for Chat, profile.js DB integration, DB documentation
-Yichong Liu: footer, staff.html, social media, Google login option,  polish the front end
+Yichong Liu: Roommate matching algorithm, database.js, footer, staff.html, social media, polish the front end
