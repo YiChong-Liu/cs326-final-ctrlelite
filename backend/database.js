@@ -315,7 +315,8 @@ export async function getMatches(userID){
 
 
     // pull the user data using fetch
-    let userLocation = getUserData(userID).preferences.location;
+    let userLocation = await getUserData(userID);
+    userLocation = userLocation.preferences.location;
     let userRes = [];
 
     for(let match of notMatchedUsers) {
