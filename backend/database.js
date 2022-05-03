@@ -315,23 +315,28 @@ export async function getMatches(userID){
 
 
     // pull the user data using fetch
-
+    let r  = await fetch(`/apt/user/data?user=${userID}`);
+    let userLocation;
+    if(r.ok) {
+        userLocation = r.user_data.preferences.location;
+    } else { return []; }
     let importanceScore = 0;
     let locationMatch = false;
 
     let userRes = [];
-    /* for(let match of notMatchedUsers) {
+    for(let match of notMatchedUsers) {
         // first, compare location between me and other users, if it's true, continue
+        if(userLocation === match.user_data.preferences.location) { userRes.push(match); }
 
         // second, compare the preference one by one, if it's the same, add the score to the importanceScore
 
         //  finally, if the score is above 18, keep the user and store it in userTemp.
 
         // sort the userTemp by the importance score from high to low. that will be the sequence of the user recommendation displaying on the screen
-    }*/
+    }
 
     // return userRes;
-    return notMatchedUsers;
+    return userRes;
 }
 
 /**
