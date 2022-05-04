@@ -321,7 +321,9 @@ export async function getMatches(userID){
 
     for(let match of notMatchedUsers) {
         // first, compare location between me and other users, if it's true, continue
-        if(userLocation === match.user_data.preferences.location) { userRes.push(match); }
+        let matchLocation = await getUserData(match.uid);
+        matchLocation = matchLocation.preferences.location;
+        if(userLocation === matchLocation) { userRes.push(match); }
     }
 
     // return userRes;
