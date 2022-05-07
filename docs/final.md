@@ -1,5 +1,5 @@
 # CS326 Team 8: ctrlelite - The Rentern
-Spring 2022
+### **Spring 2022**
 
 ## Overview
 
@@ -14,9 +14,57 @@ Our project is to design and implement a corporate roommate finder — for examp
 
 ## The Backend
 
+### User Interface
+
+Home page
+
+![Homepage](./finalimgs/home.jpg)
+
+Staff page
+
+![Staff](./finalimgs/staff.jpg)
+
+Address page
+
+![Address](./finalimgs/address.jpg)
+
+Signup page
+
+![Sign up](./finalimgs/signup.jpg)
+
+Login page
+
+![Login](./finalimgs/login.jpg)
+
+
+
+Terms and conditions page
+
+![Term and conditions](./finalimgs/term.jpg)
+
+User preference page
+
+![User Preference](./finalimgs/userPreference.jpg)
+
+User profile page
+
+![userProfile](./finalimgs/userprofile.jpg)
+
+Profiles page
+
+![Profiles](./finalimgs/profiles.jpg)
+
+Match page
+
+![Match](./finalimgs/match.jpg)
+
+Chat page
+
+![Chat](./finalimgs/chat.jpg)
+
 ### API Endpoints
 
-#### PUT /api/users/newUser:
+##### PUT /api/users/newUser:
 
 Create a new user in the Rentern database. Arguments required: Email, Password.
 
@@ -48,7 +96,7 @@ If accepted is false, the user was not created. Likely because there exists a us
 
 ---
 
-#### PUT /api/matches/acceptMatch
+##### PUT /api/matches/acceptMatch
 
 Attempts to accept a match betwen 2 users. It checks if a match has already been initilized (by the other user) and accepts if so. If not it initializes a match in the database that can be accepted by the other user.
 
@@ -77,7 +125,7 @@ Response:
 If worked is false, the other user has not accepted the match yet. A match is created, but flagged as partially accepted.
 
 ---
-#### POST /api/msg/newChatMsg
+##### POST /api/msg/newChatMsg
 
 Create a new message from one user to another.
 
@@ -107,7 +155,7 @@ Response:
 }
 ```
 
-#### GET /api/msg/fetch
+##### GET /api/msg/fetch
 
 Fetch a number of messages between two users.
 
@@ -133,7 +181,7 @@ Response:
 
 ---
 
-#### GET /api/matches
+##### GET /api/matches
 
 Get the list of matches for a user.
 
@@ -154,7 +202,7 @@ Response:
 
 ---
 
-#### GET /api/user/data
+##### GET /api/user/data
 
 Fetches the profile and preferences of the given user.
 
@@ -176,7 +224,7 @@ Response:
 ```
 ---
 
-#### GET /api/matches/potentialMatches
+##### GET /api/matches/potentialMatches
 
 Requires JWT authentication: TRUE
 
@@ -206,7 +254,7 @@ Response:
 }
 ```
 
-#### PUT /api/update/userPreferences
+##### PUT /api/update/userPreferences
 
 Update userPreferences database with new preferences for the user.
 
@@ -240,7 +288,7 @@ Response:
 
 ---
 
-#### PUT /api/update/userProfile
+##### PUT /api/update/userProfile
 
 Update userProfile database with new profile informtaion for the user.
 
@@ -276,7 +324,7 @@ Response:
 
 ---
 
-#### PUT /api/update/userPassword
+##### PUT /api/update/userPassword
 
 Update the user's password
 
@@ -300,7 +348,7 @@ Response:
 }
 ```
 
-#### DELETE /api/delete/user
+##### DELETE /api/delete/user
 
 Deletes a user from the users database.
 
@@ -319,7 +367,7 @@ Response:
 }
 ```
 
-#### DELETE /api/delete/match
+##### DELETE /api/delete/match
 
 Deletes a match between 2 users.
 
@@ -347,7 +395,7 @@ Response:
 
 ### Databases
 
-#### 5 Tables:
+##### 5 Tables:
 - [Users](#users)
 - [UserPreferences](#userpreferences)
 - [UserProfiles](#userprofiles)
@@ -355,14 +403,14 @@ Response:
 - [Chat](#chat)
 
 
-#### Users
+##### Users
 |  Column  |          Type          | Description |
 | --- | --- | --- |
  uid      | uuid                   | The user's unique ID.
  password | character varying(450) | The user's password stored as a hash.
  email    | character varying(50)  | The user's email address.
 
-#### UserPreferences
+##### UserPreferences
 |  Column  |          Type          | Description |
 | --- | --- | --- |
  uid                   | uuid                  | The user's unique ID.
@@ -381,13 +429,13 @@ Response:
  sharing               | character varying(40) | The user's stance on sharing.
  sharingimportance     | numeric               | The user's importance level of a roommate sharing their stance on sharing.
 
-#### UserProfiles
+##### UserProfiles
 |  Column  |          Type          | Description |
 | --- | --- | --- |
  uid         | uuid | The user's unique ID.
  profilejson | text | The Stringified JSON of the user's profile information (bio, name, profilePicture)
 
-#### Matches
+##### Matches
 |  Column  |          Type          | Description |
 | --- | --- | --- |
  uid1     | uuid   | The unique ID of one of the users in the match.
@@ -395,7 +443,7 @@ Response:
  u1accept | bit(1) | Whether uid1 has accepted the match or not.
  u2accept | bit(1) | Whether uid2 has accepted the match or not.
 
-#### Chat
+##### Chat
 |  Column  |          Type          | Description |
 | --- | --- | --- |
  uid1   | uuid                        | The unique ID of the user that sent the message.
@@ -406,7 +454,10 @@ Response:
 <br>
 <br>
 <br>
-<br>
+
+### URL  Routes/Mappings
+
+
 
 
 ### Authentication and Authorization
@@ -418,9 +469,16 @@ When a user logs in or registers, the page makes a request to those API endpoint
 Further requests contain the cookie, which the backend verifies is secure and non-expired. If the user is allowed, the proper data is returned, otherwise throwing an HTTP 401 error.
 
 All users have the same privileges basic -- there is no concept of an admin or super user. All registered users are visible in the profile matching page. Only you are allowed to upload your new profile information or change your preferences.
-## Division of Labor:
+### Division of Labor:
 
-Conlan Cesar: Postgres Integration
-Benjamin Tufano: userPreferences DB integration
-Liam Neal Reilly: SQL querys, webSockets for Chat, profile.js DB integration, DB documentation
-Yichong Liu: Roommate matching algorithm, database.js, footer, staff.html, social media, polish the front end
+Conlan Cesar: Front-end+ back-end, Postgres Integration, Heroku Deployment, commit management, JWT authentication, documentation
+
+Benjamin Tufano: Back-end,API endpoints, userPreferences Connection, DB integration, Heroku deployment, documentation
+
+Liam Neal Reilly: Back-end, faker integration, Database, API endpoints, User profile, Chat, Heroku deployment, documentation
+
+Yichong Liu: Front-end, User Preferences Design, Matching Algorithm, Social Media, Heroku deployment, documentation
+
+### Conclusion
+
+Yichong Liu: Throughout this project, I learned how to make websites look more beautiful, heroku deployment and how to cooperate with back-end colleagues to meet specific needs. The overall experience is great! And I'm looking forward to finish and improve the matching algorithm, and learn more about web programming in the future! 
