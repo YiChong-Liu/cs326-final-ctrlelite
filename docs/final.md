@@ -48,7 +48,7 @@ User preference page
 
 User profile page
 
-![userProfile](./finalimgs/userprofile.jpg)
+![userProfile](./finalimgs/userProfile.jpg)
 
 Profiles page
 
