@@ -457,7 +457,29 @@ Response:
 
 ### URL  Routes/Mappings
 
+https://therentern.herokuapp.com/ : The rentern home page.
 
+https://therentern.herokuapp.com/login.html : The login page.
+
+https://therentern.herokuapp.com/signup.html : The signup page.
+
+https://therentern.herokuapp.com/staff.html : The staff page.
+
+https://therentern.herokuapp.com/terms.html : The terms and conditions page.
+
+https://therentern.herokuapp.com/chat.html : The chat page.
+
+https://therentern.herokuapp.com/profile.html : The profile page to view other potential matches.
+
+https://therentern.herokuapp.com/personalProfile.html : The page to view and edit your profile.
+
+https://therentern.herokuapp.com/matches.html : The page to view your matches.
+
+https://therentern.herokuapp.com/userPreferences.html : The page to view and edit your preferences.
+
+https://therentern.herokuapp.com/location.html : The page to view the rentern location.
+
+None of these pages explicitly require authorization to visit, however visiting any of the pages behined signup/login authentication such as chat, profile, personalProfile, matches, and userPreferences will not show any data and will have an unauthorized error in the console because they use API calls that require authorization.
 
 
 ### Authentication and Authorization
