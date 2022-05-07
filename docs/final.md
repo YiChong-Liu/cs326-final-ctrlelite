@@ -506,6 +506,6 @@ Yichong Liu: Throughout this project, I learned how to make websites look more b
 
 Liam Neal Reilly: Although I had experience with many of the concepts such as SQL, html, js etc. The process of building and deploying an website from start to finish with a team was a great learning experience.
 
-Conlan Cesar:
+Conlan Cesar: I am very happy with how our project came out. We all contributed something important to the site, we all worked together, and we ended up with a fully functional site. The only major issues we regularly faced were proper git flow, but we were able to resolve those when they came up. Any other technical issue was resolved by working together on the issue.
 
 Benjamin Tufano: It was great to be able to work with a team for a longer period of time. I feel as if I was able to learn from my group members and we all were able to take something away from this project.
