@@ -508,4 +508,4 @@ Liam Neal Reilly: Although I had experience with many of the concepts such as SQ
 
 Conlan Cesar:
 
-Benjamin Tufano:
+Benjamin Tufano: It was great to be able to work with a team for a longer period of time. I feel as if I was able to learn from my group members and we all were able to take something away from this project.
