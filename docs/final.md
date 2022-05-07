@@ -413,21 +413,20 @@ Response:
 ##### UserPreferences
 |  Column  |          Type          | Description |
 | --- | --- | --- |
- uid                   | uuid                  | The user's unique ID.
- state                 | character varying(40) | The user's state.
- city                  | character varying(40) | The user's city.
- gender                | character varying(20) | The user's gender.
- genderimportance      | numeric               | The user's importance level of a roommate sharing their gender.
- age                   | character varying(40) | The user's age range ('teenage', etc.)
- ageimportance         | numeric               | The user's importance level of a roommate sharing their age-range.
- housingtype           | character varying(20) | The user's preference of housing type.
- housingtypeimportance | numeric               | The user's importance level of a roommate sharing their housing type.
- noiselevel            | character varying(30) | The user's preferred noise level.
- noiseimportance       | numeric               | The user's importance level of a roommate sharing their noise level.
- cleanliness           | character varying(40) | The user's preferred cleanliness level.
- cleanlinessimportance | numeric               | The user's importance level of a roommate sharing their cleanliness.
- sharing               | character varying(40) | The user's stance on sharing.
- sharingimportance     | numeric               | The user's importance level of a roommate sharing their stance on sharing.
+| uid                   | uuid                  | The user's unique ID.|
+| location         | character varying(40) | The user's location. |
+| gender                | character varying(20) | The user's gender.|
+| genderimportance      | numeric               | The user's importance level of a roommate sharing their gender.|
+| age                   | character varying(40) | The user's age range ('teenage', etc.)|
+| ageimportance         | numeric               | The user's importance level of a roommate sharing their age-range.|
+| housingtype           | character varying(20) | The user's preference of housing type.|
+| housingtypeimportance | numeric               | The user's importance level of a roommate sharing their housing type.|
+| noiselevel            | character varying(30) | The user's preferred noise level.|
+| noiseimportance       | numeric               | The user's importance level of a roommate sharing their noise level.|
+| cleanliness           | character varying(40) | The user's preferred cleanliness level.|
+| cleanlinessimportance | numeric               | The user's importance level of a roommate sharing their cleanliness.|
+| sharing               | character varying(40) | The user's stance on sharing.|
+| sharingimportance     | numeric               | The user's importance level of a roommate sharing their stance on sharing.|
 
 ##### UserProfiles
 |  Column  |          Type          | Description |
@@ -503,5 +502,10 @@ Yichong Liu: Front-end, User Preferences Design, Matching Algorithm, Social Medi
 
 ### Conclusion
 
-Yichong Liu: Throughout this project, I learned how to make websites look more beautiful, heroku deployment and how to cooperate with back-end colleagues to meet specific needs. The overall experience is great! And I'm looking forward to finish and improve the matching algorithm, and learn more about web programming in the future! \
+Yichong Liu: Throughout this project, I learned how to make websites look more beautiful, heroku deployment and how to cooperate with back-end colleagues to meet specific needs. The overall experience is great! Sometimes I'm not fast enough to make the website appear like what I want, and this definitely needs more practice. And I'm looking forward to finish and improve the matching algorithm, and learn more about web programming in the future.
+
 Liam Neal Reilly: Although I had experience with many of the concepts such as SQL, html, js etc. The process of building and deploying an website from start to finish with a team was a great learning experience.
+
+Conlan Cesar:
+
+Benjamin Tufano:
