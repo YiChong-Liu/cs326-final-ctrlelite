@@ -502,7 +502,7 @@ Yichong Liu: Front-end + back-end, User Preferences Design, Matching Algorithm, 
 
 ### Conclusion
 
-Yichong Liu: Throughout this project, I learned how to make websites look more beautiful, heroku deployment and how to cooperate with colleagues to meet specific needs. The overall experience is great! Sometimes I'm not fast enough to make the website appear like what I want, and this definitely needs more practice. And I'm looking forward to finish and improve the matching algorithm, and learn more about web programming in the future.
+Yichong Liu: Throughout this project, I learned how to make websites look more beautiful, heroku deployment and how to cooperate with colleagues to meet specific needs. The overall experience is great! Sometimes I'm not fast enough to make the website appear like what I want, which definitely needs more practice. And I'm looking forward to finish and improve the matching algorithm, and learn more about web programming in the future.
 
 Liam Neal Reilly: Although I had experience with many of the concepts such as SQL, html, js etc. The process of building and deploying an website from start to finish with a team was a great learning experience.
 
