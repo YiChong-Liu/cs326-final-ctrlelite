@@ -1,7 +1,7 @@
 # CS326 Final Project 
 Group Project for Spring 2022 COMPSCI 326 Web Programming @UMass Amherst 
 
-
+Video description of the project is [here](https://youtu.be/RMXZpA4-i-s)
 
 ### Team Overview
 
